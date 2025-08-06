@@ -89,7 +89,6 @@
   justify-content: center;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  padding-left: 2rem;
   align-self: start;
 }
 
@@ -105,10 +104,10 @@
 .hero-info .hero-series-title {
   font-size: 3.3rem;
   font-weight: 800;
-  line-height: 1em;
+  line-height: 1.2;
   margin-bottom: 0.8rem;
   color: var(--hero-color, #fff);
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, filter 0.3s ease;
 }
 
 .hero-info .hero-tags {
@@ -244,44 +243,17 @@
 }
 
 .hero-nav-dot {
-  position: relative;
   width: 12px;
   height: 12px;
-  border-radius: 5em;
+  border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, width 0.3s ease;
-  overflow: hidden;
-}
-
-.hero-nav-dot::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: #fff;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0s;
-  z-index: 0;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .hero-nav-dot.active {
+  background-color: #fff;
   transform: scale(1.2);
-  width: 50px;
-}
-
-.hero-nav-dot.active::before {
-  animation: fillDot 5s linear forwards;
-}
-
-@keyframes fillDot {
-  from {
-    transform: scaleX(0);
-  }
-
-  to {
-    transform: scaleX(1);
-  }
 }
 
 /* --- SECTION RESPONSIVE MODIFIÉE --- */
@@ -334,7 +306,6 @@
     height: 100%;
     z-index: 3;
     padding: 1.5rem;
-    padding-bottom: 3rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -382,7 +353,6 @@
   }
   .hero-info {
     padding: 1.2rem;
-    padding-bottom: 2.4rem;
   }
   .hero-info .hero-series-title {
     font-size: 2.6rem;
@@ -409,4 +379,13 @@
     width: 10px;
     height: 10px;
   }
+}
+
+.hero-info .hero-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero-info .hero-title-link:hover .hero-series-title {
+  filter: brightness(0.7);
 }

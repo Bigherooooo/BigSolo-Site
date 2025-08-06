@@ -84,12 +84,6 @@ export function navigateToChapter(delta, goToLastPage = false) {
         let url = `/${slugify(state.seriesData.title)}/${nextChapterKey}`;
         if (goToLastPage) url += '#last';
         window.location.href = url;
-    } else {
-        if (delta < 0) {
-            alert("Il n'y a pas de chapitre précédent.");
-        } else if (delta > 0) {
-            alert("Il n'y a pas de prochain chapitre, il n'est peut-être pas encore disponible.");
-        }
     }
 }
 

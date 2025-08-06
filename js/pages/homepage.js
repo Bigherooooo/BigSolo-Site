@@ -52,7 +52,7 @@ function renderHeroSlide(series) {
       (a, b) => b.indice_ep - a.indice_ep
     )[0];
     if (latestEpisode) {
-      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Dernier épisode (Ép. ${latestEpisode.indice_ep})</a>`;
+      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Dernier Épisode</a>`;
     }
   }
 
@@ -75,7 +75,9 @@ function renderHeroSlide(series) {
         <div class="hero-info">
           <div class="hero-info-top">
             <p class="recommended-title">Recommandé</p>
-            <h2 class="hero-series-title">${seriesData.title}</h2>
+            <a href="/${seriesSlug}" class="hero-title-link">
+              <h2 class="hero-series-title">${seriesData.title}</h2>
+            </a>
             <div class="hero-tags">
               ${typeTag}
               ${(seriesData.tags || [])

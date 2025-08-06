@@ -14,7 +14,7 @@ export async function onRequest(context) {
     const ADMIN_USERNAME = env.ADMIN_USERNAME;
     const ADMIN_PASSWORD = env.ADMIN_PASSWORD;
 
-    if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !env.ADMIN_TOKEN) {
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -25,7 +25,10 @@ export async function onRequest(context) {
     }
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      const token = env.ADMIN_TOKEN;
+      // Dans une application réelle, on générerait un token JWT.
+      // Pour la simplicité, nous renvoyons un token simple qui est juste un secret partagé.
+      // On peut le rendre plus complexe plus tard si besoin.
+      const token = "SECRET_STATIC_TOKEN_FOR_SIMPLICITY"; // Ce token sera utilisé pour les autres requêtes
       return new Response(JSON.stringify({ success: true, token: token }), {
         status: 200,
       });

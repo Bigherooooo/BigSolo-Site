@@ -41,15 +41,10 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const originalPathname = url.pathname;
-  let pathname =
+  const pathname =
     originalPathname.endsWith("/") && originalPathname.length > 1
       ? originalPathname.slice(0, -1)
       : originalPathname;
-  // on retire ".html" si présent
-  if (pathname.endsWith(".html")) {
-    pathname = pathname.slice(0, -5);
-  }
-  if (pathname === "/index") pathname = "/"; // Traite "index" comme racine
 
   // Redirection legacy (si besoin)
   if (pathname.startsWith("/series-detail")) {
@@ -80,7 +75,14 @@ export async function onRequest(context) {
 
   // Gestion des pages statiques
   const staticPageMeta = {
-    "/": {
+    "": {
+      title: "Accueil - BigSolo",
+      description:
+        "Retrouvez toutes les sorties de Big_herooooo en un seul et unique endroit !",
+      htmlFile: "/index.html",
+      image: "/img/banner.jpg",
+    },
+    "/index.html": {
       title: "Accueil - BigSolo",
       description:
         "Retrouvez toutes les sorties de Big_herooooo en un seul et unique endroit !",
@@ -88,6 +90,12 @@ export async function onRequest(context) {
       image: "/img/banner.jpg",
     },
     "/presentation": {
+      title: "Questions & Réponses - BigSolo",
+      description:
+        "Les réponses de BigSolo à vos questions sur son parcours dans le scantrad.",
+      htmlFile: "/presentation.html",
+    },
+    "/presentation.html": {
       title: "Questions & Réponses - BigSolo",
       description:
         "Les réponses de BigSolo à vos questions sur son parcours dans le scantrad.",

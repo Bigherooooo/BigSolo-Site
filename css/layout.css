@@ -110,6 +110,22 @@ section {
   .header-left-group {
     gap: 0.8rem;
   }
+  .gallery-grid {
+    column-count: 5;
+  }
+}
+
+@media (max-width: 1100px) {
+  .gallery-grid {
+    column-count: 4;
+  }
+}
+
+@media (max-width: 992px) {
+
+  .gallery-grid {
+    column-count: 2;
+  }
 }
 
 @media (max-width: 768px) {
@@ -119,6 +135,10 @@ section {
 
   header#main-header {
     min-height: 55px;
+  }
+
+  .header-left-group {
+    gap: 0.8rem;
   }
 
   main {

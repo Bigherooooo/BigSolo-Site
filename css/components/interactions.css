@@ -6,10 +6,6 @@
   margin-top: 0.5rem;
 }
 
-.reader-controls-sidebar .chapter-interactions-container {
-  padding-top: 1.5rem;
-}
-
 #reader-viewer-container + .chapter-interactions-container {
   padding: 1.5rem 5%;
   /* MODIFIÉ : Utilise la variable de thème globale */
@@ -63,13 +59,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(89, 89, 89, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-weight: 600;
-  /* MODIFIÉ : Utilise la variable de thème globale */
   color: var(--clr-text);
   cursor: pointer;
   z-index: 2;

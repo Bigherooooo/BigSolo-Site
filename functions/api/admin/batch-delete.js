@@ -1,5 +1,7 @@
 // functions/api/admin/batch-delete.js
 
+const SHARED_TOKEN = "SECRET_STATIC_TOKEN_FOR_SIMPLICITY";
+
 export async function onRequest(context) {
   const { request, env } = context;
   console.log("[API /api/admin/batch-delete] Received batch delete request.");
@@ -11,7 +13,7 @@ export async function onRequest(context) {
   const authToken = request.headers
     .get("Authorization")
     ?.replace("Bearer ", "");
-  if (authToken !== env.ADMIN_TOKEN) {
+  if (authToken !== SHARED_TOKEN) {
     console.error("- Auth token check FAILED.");
     return new Response("Non autorisé", { status: 401 });
   }

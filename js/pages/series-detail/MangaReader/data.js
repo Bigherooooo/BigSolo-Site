@@ -91,7 +91,7 @@ export async function fetchAndLoadPages(initialPageNumber = 1) {
 
     const newDomImages = state.pages.map((src) => {
       const img = new Image();
-      img.addEventListener("contextmenu", (e) => e.preventDefault());
+      img.draggable = false;
       return img;
     });
     setDomImages(newDomImages);

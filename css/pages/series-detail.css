@@ -535,8 +535,9 @@ body.dark .detail-episode-item {
 
 .reading-action-button.continue {
   background-color: rgba(var(--clr-primary-rgb), 0.15);
-  color: var(--clr-text);
+  color: var(--clr-primary);
   border-color: var(--clr-primary);
+  color: white;
 }
 
 .reading-action-button.continue:hover {
