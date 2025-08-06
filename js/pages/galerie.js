@@ -8,6 +8,7 @@ import { qs, qsa } from '../utils/domUtils.js';
 let allColosData = [];
 let authorsInfoData = {};
 let selectedArtistIds = new Set();
+let currentSortMode = 'date-desc'; // 'date-desc', 'date-asc', 'chapter-desc', 'chapter-asc'
 
 // --- SÉLECTEURS DOM ---
 const galleryGridContainer = qs('#gallery-grid-container');
@@ -29,7 +30,7 @@ const lightboxCloseBtn = qs('.lightbox-close');
 function renderColoCard(colo, author) {
   const authorName = author?.username || 'Artiste inconnu';
   const previewUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${colo.id}_preview.webp`;
-  
+
   return `
     <div class="colo-card" data-colo-id="${colo.id}"> 
       <img class="lazy-load-gallery" 
@@ -103,7 +104,7 @@ function openLightboxForId(coloId) {
     displayLightboxInfo(selectedColo, author);
     lightboxModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
+
     history.replaceState({ coloId: coloId }, '', `/galerie/${coloId}`);
   }
 }
@@ -114,23 +115,23 @@ function closeLightbox() {
   document.body.style.overflow = 'auto';
 
   if (window.location.pathname !== '/galerie' && window.location.pathname !== '/galerie/') {
-    history.replaceState(null, '', '/galerie/');
+    history.replaceState(null, '', '/galerie');
   }
 }
 
 // --- LOGIQUE FILTRE & AFFICHAGE ---
 
 function updateFilterText() {
-    if (!filterText) return;
+  if (!filterText) return;
 
-    if (selectedArtistIds.size === 0) {
-        filterText.textContent = "Tous les artistes";
-    } else if (selectedArtistIds.size === 1) {
-        const artistId = selectedArtistIds.values().next().value;
-        filterText.textContent = authorsInfoData[artistId]?.username || "1 artiste sélectionné";
-    } else {
-        filterText.textContent = `${selectedArtistIds.size} artistes sélectionnés`;
-    }
+  if (selectedArtistIds.size === 0) {
+    filterText.textContent = "Tous les artistes";
+  } else if (selectedArtistIds.size === 1) {
+    const artistId = selectedArtistIds.values().next().value;
+    filterText.textContent = authorsInfoData[artistId]?.username || "1 artiste sélectionné";
+  } else {
+    filterText.textContent = `${selectedArtistIds.size} artistes sélectionnés`;
+  }
 }
 
 function populateCustomArtistFilter() {
@@ -147,7 +148,7 @@ function populateCustomArtistFilter() {
   filterMenu.innerHTML = sortedAuthors.map(([id, author]) => {
     const count = artistCounts[id] || 0;
     if (count === 0) return '';
-    
+
     // CORRECTION: L'input est maintenant un sibling avant le label.
     // L'id et le for les lient.
     return `
@@ -160,7 +161,7 @@ function populateCustomArtistFilter() {
         </label>
       </div>`;
   }).join('');
-  
+
   // L'event listener reste le même et fonctionnera correctement avec la nouvelle structure.
   qsa('input[type="checkbox"]', filterMenu).forEach(checkbox => {
     checkbox.addEventListener('change', (e) => {
@@ -188,7 +189,29 @@ function displayColos() {
     colosToDisplay = colosToDisplay.filter(c => selectedArtistIds.has(String(c.author_id)));
   }
 
-  colosToDisplay.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+  // Tri selon le mode sélectionné
+  switch (currentSortMode) {
+    case 'date-desc':
+      colosToDisplay.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+      break;
+    case 'date-asc':
+      colosToDisplay.sort((a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date));
+      break;
+    case 'chapter-desc':
+      colosToDisplay.sort((a, b) => {
+        const chapA = parseInt(a.chapitre) || 0;
+        const chapB = parseInt(b.chapitre) || 0;
+        return chapB - chapA;
+      });
+      break;
+    case 'chapter-asc':
+      colosToDisplay.sort((a, b) => {
+        const chapA = parseInt(a.chapitre) || 0;
+        const chapB = parseInt(b.chapitre) || 0;
+        return chapA - chapB;
+      });
+      break;
+  }
 
   galleryGridContainer.innerHTML = colosToDisplay.map(colo => {
     const author = authorsInfoData[colo.author_id];
@@ -204,6 +227,56 @@ function displayColos() {
 
   initLazyLoadObserver('img.lazy-load-gallery');
   initMainScrollObserver('#gallery-grid-container .colo-card');
+
+  // Initialize Masonry if not already done
+  const masonry = new Masonry(galleryGridContainer, {
+    itemSelector: '.colo-card',
+    columnWidth: '.colo-card',
+    percentPosition: true,
+    gutter: 8,
+    // horizontalOrder: true,
+    transitionDuration: 0,
+    initLayout: false,
+  });
+  
+  imagesLoaded(galleryGridContainer)
+    .on('progress', () => {
+      masonry.layout();
+    });
+
+  // relayout masonry each .5s for the first 5 seconds
+  let relayoutInterval = setInterval(() => {
+    masonry.layout();
+  }, 500);
+  setTimeout(() => {
+    clearInterval(relayoutInterval);
+  }, 5000);
+}
+
+function getSortModeText(mode) {
+  switch(mode) {
+    case 'date-desc': return 'Trier par date (récent)';
+    case 'date-asc': return 'Trier par date (ancien)';
+    case 'chapter-desc': return 'Trier par chapitre (décroissant)';
+    case 'chapter-asc': return 'Trier par chapitre (croissant)';
+    default: return 'Trier par date (récent)';
+  }
+}
+
+function updateSortMode(newMode) {
+  if (['date-desc', 'date-asc', 'chapter-desc', 'chapter-asc'].includes(newMode)) {
+    currentSortMode = newMode;
+    // Update sort text and active state
+    const sortText = qs('#custom-sort-text');
+    if (sortText) {
+      sortText.textContent = getSortModeText(newMode);
+    }
+    // Update active state in dropdown
+    qsa('#custom-sort-filter .custom-dropdown-option').forEach(option => {
+      option.classList.toggle('active', option.dataset.sort === newMode);
+    });
+    displayColos();
+  }
 }
 
 // --- FONCTION D'INITIALISATION ---
@@ -226,24 +299,58 @@ export async function initGaleriePage() {
     authorsInfoData = authors;
 
     if (totalCountSpan) {
-        totalCountSpan.textContent = `(${allColosData.length})`;
+      totalCountSpan.textContent = `(${allColosData.length})`;
     }
 
-    populateCustomArtistFilter();
-    
-    if(filterToggleBtn && filterMenu){
-        filterToggleBtn.addEventListener('click', () => {
-            const isExpanded = filterToggleBtn.getAttribute('aria-expanded') === 'true';
-            filterToggleBtn.setAttribute('aria-expanded', !isExpanded);
-            filterMenu.classList.toggle('show');
-        });
+    // Set up sort dropdown
+    const sortFilter = qs('#custom-sort-filter');
+    const sortToggleBtn = qs('.custom-dropdown-toggle', sortFilter);
+    const sortMenu = qs('.custom-dropdown-menu', sortFilter);
 
-        document.addEventListener('click', (e) => {
-            if (!customFilter.contains(e.target)) {
-                filterToggleBtn.setAttribute('aria-expanded', 'false');
-                filterMenu.classList.remove('show');
-            }
+    if (sortToggleBtn && sortMenu) {
+      // Toggle dropdown
+      sortToggleBtn.addEventListener('click', () => {
+        const isExpanded = sortToggleBtn.getAttribute('aria-expanded') === 'true';
+        sortToggleBtn.setAttribute('aria-expanded', !isExpanded);
+        sortMenu.classList.toggle('show');
+      });
+
+      // Handle option clicks
+      qsa('.custom-dropdown-option', sortMenu).forEach(option => {
+        option.addEventListener('click', () => {
+          updateSortMode(option.dataset.sort);
+          sortToggleBtn.setAttribute('aria-expanded', 'false');
+          sortMenu.classList.remove('show');
         });
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!sortFilter.contains(e.target)) {
+          sortToggleBtn.setAttribute('aria-expanded', 'false');
+          sortMenu.classList.remove('show');
+        }
+      });
+    }
+
+    // Initialize sort state
+    updateSortMode(currentSortMode);
+
+    populateCustomArtistFilter();
+
+    if (filterToggleBtn && filterMenu) {
+      filterToggleBtn.addEventListener('click', () => {
+        const isExpanded = filterToggleBtn.getAttribute('aria-expanded') === 'true';
+        filterToggleBtn.setAttribute('aria-expanded', !isExpanded);
+        filterMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!customFilter.contains(e.target)) {
+          filterToggleBtn.setAttribute('aria-expanded', 'false');
+          filterMenu.classList.remove('show');
+        }
+      });
     }
 
     if (lightboxModal && lightboxCloseBtn) {
@@ -252,23 +359,23 @@ export async function initGaleriePage() {
         if (e.target === lightboxModal) closeLightbox();
       });
     }
-    
+
     window.addEventListener('popstate', (event) => {
-        const path = window.location.pathname;
-        const galleryPathMatch = path.match(/^\/galerie\/(\d+)\/?$/);
-        if (galleryPathMatch) {
-            openLightboxForId(galleryPathMatch[1]);
-        } else {
-            closeLightbox();
-        }
+      const path = window.location.pathname;
+      const galleryPathMatch = path.match(/^\/galerie\/(\d+)\/?$/);
+      if (galleryPathMatch) {
+        openLightboxForId(galleryPathMatch[1]);
+      } else {
+        closeLightbox();
+      }
     });
 
     displayColos();
 
     const galleryPathMatch = window.location.pathname.match(/^\/galerie\/(\d+)\/?$/);
     if (galleryPathMatch) {
-        const coloIdFromUrl = galleryPathMatch[1];
-        setTimeout(() => openLightboxForId(coloIdFromUrl), 100);
+      const coloIdFromUrl = galleryPathMatch[1];
+      setTimeout(() => openLightboxForId(coloIdFromUrl), 100);
     }
 
   } catch (error) {

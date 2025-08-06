@@ -37,6 +37,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet" />
   <link rel="icon" type="image/png" href="/img/icon.png" />
+
+  <!-- scripts pour la gallerie -->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -81,11 +86,36 @@
                 <div class="dropdown-loader">Chargement...</div>
             </div>
           </div>
+          <div id="custom-sort-filter" class="custom-dropdown">
+            <button class="custom-dropdown-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span id="custom-sort-text">Trier par date (récent)</span>
+                <i class="fas fa-chevron-down dropdown-arrow"></i>
+            </button>
+            <div class="custom-dropdown-menu" role="listbox">
+                <div class="custom-dropdown-option" data-sort="date-desc" role="option">
+                    <i class="fas fa-clock"></i>
+                    <span class="sort-name">Date (récent → ancien)</span>
+                </div>
+                <div class="custom-dropdown-option" data-sort="date-asc" role="option">
+                    <i class="fas fa-clock fa-flip-horizontal"></i>
+                    <span class="sort-name">Date (ancien → récent)</span>
+                </div>
+                <div class="custom-dropdown-option" data-sort="chapter-desc" role="option">
+                    <i class="fas fa-sort-numeric-down"></i>
+                    <span class="sort-name">Chapitre (décroissant)</span>
+                </div>
+                <div class="custom-dropdown-option" data-sort="chapter-asc" role="option">
+                    <i class="fas fa-sort-numeric-up"></i>
+                    <span class="sort-name">Chapitre (croissant)</span>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="gallery-grid" id="gallery-grid-container">
         <!-- Les cartes de colorisation seront injectées ici par le JS -->
+         <!-- pour information, le layout utilisé s'appelle un "masonry layout" -->
       </div>
     </section>
   </main>

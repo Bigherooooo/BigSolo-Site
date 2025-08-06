@@ -18,6 +18,18 @@
   margin-bottom: 1.5rem;
 }
 
+.gallery-sort-filter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gallery-sort-filter label {
+  font-weight: 500;
+  color: var(--clr-text);
+}
+
 /* --- STYLES POUR LE MENU DÉROULANT CUSTOM --- */
 
 .custom-dropdown {
@@ -258,4 +270,46 @@
   .custom-dropdown-option .artist-name {
     font-size: 0.9em;
   }
+}
+
+/* Style spécifique pour le menu de tri */
+#custom-sort-filter .custom-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#custom-sort-filter .custom-dropdown-option i {
+  width: 20px;
+  text-align: center;
+  color: var(--clr-text-sub);
+}
+
+#custom-sort-filter .custom-dropdown-option.active {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+  color: var(--clr-primary);
+}
+
+#custom-sort-filter .custom-dropdown-option.active i {
+  color: var(--clr-primary);
+}
+
+#custom-sort-filter .custom-dropdown-option:hover {
+  background-color: rgba(var(--clr-primary-rgb), 0.08);
+}
+
+#custom-sort-filter .sort-name {
+  font-weight: 500;
+}
+
+/* Positionnement des contrôles */
+.gallery-sort-filter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }

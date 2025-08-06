@@ -6,6 +6,7 @@ html {
 html.dark {
   background-color: #15171a !important;
   color: #eceff4 !important;
+  color-scheme: dark;
 }
 
 :root {

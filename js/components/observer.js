@@ -36,7 +36,7 @@ export function initMainScrollObserver(specificSelector = null) {
           if (entry.isIntersecting) {
             // console.log("[Observer] Element intersecting:", entry.target);
             entry.target.style.opacity = 1;
-            entry.target.style.transform = "translateY(0px)"; // Ou "none", "initial", "unset"
+            // entry.target.style.transform = "translateY(0px)"; // Ou "none", "initial", "unset"
             observerInstance.unobserve(entry.target); // Arrêter d'observer une fois animé
           }
         });

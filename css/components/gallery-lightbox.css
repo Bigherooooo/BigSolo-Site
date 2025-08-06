@@ -2,8 +2,7 @@
 
 .colo-card {
   display: inline-block;
-  width: 100%;
-  margin-bottom: 0.8rem;
+  margin-bottom: 8px;
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
@@ -11,11 +10,44 @@
   box-shadow: 0 4px 8px rgba(var(--clr-text-rgb), 0.05);
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: calc(14.2% - 8px);
 }
 
 .colo-card:hover {
-  transform: translateY(-3px) scale(1.015);
+  /* transform: translateY(-3px) scale(1.015); */
   box-shadow: 0 6px 12px rgba(var(--clr-text-rgb), 0.07);
+}
+
+/* .colo-card::after {
+  content: attr(data-colo-id);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: #000000e5;
+} */
+
+@media (max-width: 1300px) {
+  .colo-card {
+    width: calc(20% - 8px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .colo-card {
+    width: calc(25% - 8px);
+  }
+}
+
+@media (max-width: 992px) {
+  .colo-card {
+    width: calc(50% - 8px);
+  }
 }
 
 .colo-card img.lazy-load-gallery {
@@ -219,7 +251,6 @@ body.dark .lightbox-colo-info-block {
 }
 
 @media (max-width: 768px) {
-  .colo-card { margin-bottom: .6rem; }
   .colo-card-overlay { opacity: 1; transform: translateY(0); padding: .4rem; }
   .colo-card-overlay p { font-size: .7rem; }
   .lightbox-modal { padding: 10px; }
