@@ -203,6 +203,25 @@ export function attachInteractionListeners() {
 
 export function initializeEvents() {
   isSpoilerRevealed = false; // Réinitialiser l'état du flou à chaque initialisation de chapitre
+
+  if (dom.readerSidebarToggle) {
+    dom.readerSidebarToggle.addEventListener("click", () => {
+      dom.root.classList.toggle("sidebar-collapsed");
+
+      // Mettre à jour le titre du bouton pour l'accessibilité
+      const isCollapsed = dom.root.classList.contains("sidebar-collapsed");
+      dom.readerSidebarToggle.setAttribute(
+        "title",
+        isCollapsed ? "Afficher les contrôles" : "Masquer les contrôles"
+      );
+
+      // ↓↓↓ MODIFICATION : Sauvegarder l'état dans les paramètres ↓↓↓
+      state.settings.sidebarCollapsed = isCollapsed;
+      saveSettings();
+      // ↑↑↑ FIN DE LA MODIFICATION ↑↑↑
+    });
+  }
+
   document.addEventListener("keydown", handleKeyDown);
   dom.mobileSettingsBtn.addEventListener("click", () => {
     const isOpen = dom.sidebar.classList.contains("open");

@@ -75,7 +75,9 @@ function renderHeroSlide(series) {
         <div class="hero-info">
           <div class="hero-info-top">
             <p class="recommended-title">Recommandé</p>
-            <h2 class="hero-series-title">${seriesData.title}</h2>
+            <a href="/${seriesSlug}" class="hero-title-link">
+              <h2 class="hero-series-title">${seriesData.title}</h2>
+            </a>
             <div class="hero-tags">
               ${typeTag}
               ${(seriesData.tags || [])

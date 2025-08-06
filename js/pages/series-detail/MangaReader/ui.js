@@ -24,8 +24,18 @@ export function handleError(message) {
 
 export async function setupUI() {
   dom.root = qs("#manga-reader-root");
+
+  // ↓↓↓ MODIFICATION : Appliquer la classe si la sidebar doit être réduite au chargement ↓↓↓
+  if (state.settings.sidebarCollapsed) {
+    dom.root.classList.add("sidebar-collapsed");
+  }
+  // ↑↑↑ FIN DE LA MODIFICATION ↑↑↑
+
   // Cet innerHTML est sûr car il s'agit de la structure statique de la page, sans données utilisateur.
   dom.root.innerHTML = `
+    <button id="reader-sidebar-toggle" title="Masquer les contrôles">
+        <i class="fas fa-chevron-left"></i>
+    </button>
     <div id="reader-mobile-header">
         <button id="mobile-settings-toggle" class="reader-button" title="Ouvrir les options"><i class="fas fa-cog"></i></button>
         <div class="mobile-header-info">
@@ -38,9 +48,7 @@ export async function setupUI() {
         </div>
     </div>
     <div id="reader-sidebar-overlay"></div>
-    <aside class="reader-controls-sidebar ${
-      state.isSidebarOpen ? "open" : ""
-    } ${state.settings.direction}-mode"></aside>
+    <aside class="reader-controls-sidebar ${state.settings.direction}-mode"></aside>
     <div class="reader-viewer-container"></div>
     <div id="webtoon-interactions-placeholder"></div>
     <div class="reader-progress-bar"></div>
@@ -57,6 +65,7 @@ export async function setupUI() {
     mobilePageInfo: qs(".mobile-header-page"),
     mobileHeaderStats: qs(".mobile-header-stats"),
     webtoonInteractionsPlaceholder: qs("#webtoon-interactions-placeholder"),
+    readerSidebarToggle: qs("#reader-sidebar-toggle"),
   });
   setupSidebarControls();
 }
@@ -70,9 +79,49 @@ function setupSidebarControls() {
     state.currentChapter.title || ""
   }</h2><p class="reader-series-title"><a href="/${slugify(
     state.seriesData.title
-  )}">${
-    state.seriesData.title
-  }</a></p>${statsHtml}</div><div class="control-group"><label>Chapitre</label><div class="nav-controls"><button id="prev-chapter-btn" title="Chapitre précédent"><i class="fas fa-angle-left"></i></button><div class="custom-dropdown" id="chapter-dropdown"><button class="dropdown-toggle"><span class="chapter-text"></span><i class="fas fa-chevron-down dropdown-arrow"></i></button><div class="dropdown-menu"></div></div><button id="next-chapter-btn" title="Chapitre suivant"><i class="fas fa-angle-right"></i></button></div></div><div class="control-group"><label>Page</label><div class="nav-controls"><button id="first-page-btn" title="Première page"><i class="fas fa-angle-double-left"></i></button><button id="prev-page-btn" title="Page précédente"><i class="fas fa-angle-left"></i></button><div class="custom-dropdown" id="page-dropdown"><button class="dropdown-toggle"><span class="page-text"></span><i class="fas fa-chevron-down dropdown-arrow"></i></button><div class="dropdown-menu"></div></div><button id="next-page-btn" title="Page suivante"><i class="fas fa-angle-right"></i></button><button id="last-page-btn" title="Dernière page"><i class="fas fa-angle-double-right"></i></button></div></div><div class="control-group"><label>Mode de lecture</label><div class="setting-options" data-setting="mode"><button data-value="single"><i class="fas fa-file"></i> Simple</button><button data-value="double"><i class="fas fa-book-open"></i> Double</button><button data-value="webtoon"><i class="fa-solid fa-scroll"></i> Webtoon</button></div></div><div id="mode-options-group" class="sub-control-group"><div class="control-group" id="double-page-controls"><label>Décalage double page</label><div class="setting-options" data-setting="doublePageOffset"><button data-value="false">Non</button><button data-value="true">Oui</button></div></div><div class="control-group" id="direction-control-group"><label>Sens de lecture</label><div class="setting-options" data-setting="direction"><button data-value="rtl">Droite à Gauche</button><button data-value="ltr">Gauche à Droite</button></div></div></div><div class="control-group" id="fit-control-group"><label>Ajustement de l'image</label><div class="setting-options"><button id="fit-mode-btn"></button></div></div><div id="custom-fit-controls" class="sub-control-group"><div class="control-group"><label><input type="checkbox" id="stretch-toggle"><span class="custom-checkbox-box"></span><span class="label-text">Étirez les petites pages</span></label></div><div class="control-group"><label><input type="checkbox" id="limit-width-toggle"><span class="custom-checkbox-box"></span><span class="label-text">Limiter la largeur</span></label><div class="modal-slider-container"><input type="range" id="custom-width-slider" min="400" max="3000" step="10"><input type="number" id="custom-width-input" min="400" max="3000"><span class="slider-unit">px</span></div></div><div class="control-group"><label><input type="checkbox" id="limit-height-toggle"><span class="custom-checkbox-box"></span><span class="label-text">Limiter la hauteur</span></label><div class="modal-slider-container"><input type="range" id="custom-height-slider" min="400" max="3000" step="10"><input type="number" id="custom-height-input" min="400" max="3000"><span class="slider-unit">px</span></div></div></div><div id="sidebar-interactions-placeholder"></div>`;
+  )}">${state.seriesData.title}</a></p>${statsHtml}</div>
+  <div class="control-group"><label>Chapitre</label>
+  <div class="nav-controls"><button id="prev-chapter-btn" title="Chapitre précédent"><i class="fas fa-angle-left"></i></button>
+    <div class="custom-dropdown" id="chapter-dropdown"><button class="dropdown-toggle">
+        <span class="chapter-text"></span><i class="fas fa-chevron-down dropdown-arrow"></i></button>
+      <div class="dropdown-menu"></div>
+    </div><button id="next-chapter-btn" title="Chapitre suivant"><i class="fas fa-angle-right"></i></button>
+  </div>
+</div>
+<div class="control-group"><label>Page</label>
+  <div class="nav-controls"><button id="first-page-btn" title="Première page"><i class="fas fa-angle-double-left"></i></button><button id="prev-page-btn" title="Page précédente"><i class="fas fa-angle-left"></i>
+    </button>
+    <div class="custom-dropdown" id="page-dropdown"><button class="dropdown-toggle"><span class="page-text"></span><i class="fas fa-chevron-down dropdown-arrow"></i></button>
+      <div class="dropdown-menu"></div>
+    </div><button id="next-page-btn" title="Page suivante"><i class="fas fa-angle-right"></i></button><button id="last-page-btn" title="Dernière page"><i class="fas fa-angle-double-right"></i></button>
+  </div>
+</div>
+<div class="control-group">
+  <label>Mode de lecture</label>
+  <div class="setting-options" data-setting="mode"><button data-value="single"><i class="fas fa-file"></i> Simple</button><button data-value="double"><i class="fas fa-book-open"></i> Double</button><button data-value="webtoon"><i class="fa-solid fa-scroll"></i> Webtoon</button></div>
+</div>
+<div id="mode-options-group" class="sub-control-group">
+  <div class="control-group" id="double-page-controls"><label>Décalage double page</label>
+    <div class="setting-options" data-setting="doublePageOffset"><button data-value="false">Non</button><button data-value="true">Oui</button></div>
+  </div>
+  <div class="control-group" id="direction-control-group"><label>Sens de lecture</label>
+    <div class="setting-options" data-setting="direction"><button data-value="rtl">Droite à Gauche</button><button data-value="ltr">Gauche à Droite</button></div>
+  </div>
+</div>
+<div class="control-group" id="fit-control-group"><label>Ajustement de l'image</label>
+  <div class="setting-options"><button id="fit-mode-btn"></button></div>
+</div>
+<div id="custom-fit-controls" class="sub-control-group">
+  <div class="control-group"><label><input type="checkbox" id="stretch-toggle"><span class="custom-checkbox-box"></span><span class="label-text">Étirez les petites pages</span></label></div>
+  <div class="control-group"><label><input type="checkbox" id="limit-width-toggle"><span class="custom-checkbox-box"></span><span class="label-text">Limiter la largeur</span></label>
+    <div class="modal-slider-container"><input type="range" id="custom-width-slider" min="400" max="3000" step="10"><input type="number" id="custom-width-input" min="400" max="3000"><span class="slider-unit">px</span></div>
+  </div>
+  <div class="control-group"><label><input type="checkbox" id="limit-height-toggle"><span class="custom-checkbox-box"></span><span class="label-text">Limiter la hauteur</span></label>
+    <div class="modal-slider-container"><input type="range" id="custom-height-slider" min="400" max="3000" step="10"><input type="number" id="custom-height-input" min="400" max="3000"><span class="slider-unit">px</span></div>
+  </div>
+</div>
+<div id="sidebar-interactions-placeholder">
+</div>`;
   Object.assign(dom, {
     modeOptionsGroup: qs("#mode-options-group"),
     customFitControls: qs("#custom-fit-controls"),
@@ -136,14 +185,14 @@ export function renderInteractionsSection(localState) {
       const actionsDiv = document.createElement("div");
       actionsDiv.className = "comment-actions";
       actionsDiv.innerHTML = `
-                <button class="comment-like-button ${
-                  userLikedComment ? "liked" : ""
-                }">
-                    <i class="fas fa-heart"></i> <span class="comment-like-count">${
-                      comment.likes || 0
-                    }</span>
-                </button>
-            `;
+                                <button class="comment-like-button ${
+                                  userLikedComment ? "liked" : ""
+                                }">
+                                    <i class="fas fa-heart"></i> <span class="comment-like-count">${
+                                      comment.likes || 0
+                                    }</span>
+                                </button>
+                            `;
 
       contentDiv.append(headerDiv, textP, actionsDiv);
       itemDiv.appendChild(contentDiv);
