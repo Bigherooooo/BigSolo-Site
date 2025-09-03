@@ -1,21 +1,63 @@
-.gallery-section {
-  padding-top: 1rem;
+/* ============================================= */
+/* --- SECTION 1 : MISE EN PAGE & BANNIÈRE --- */
+/* ============================================= */
+
+.gallery-grid {
+  width: 101%;
 }
 
-/* Ajout du style pour le compteur total */
+.gallery-section {
+  position: relative;
+  z-index: 1;
+  padding-top: 0;
+}
+
+.gallery-section::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 750px;
+  background-image: var(--random-banner-image);
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px) brightness(0.3);
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  transition: background-image 0.4s ease-in-out; /* Ajoute une transition douce */
+  z-index: -1;
+}
+
+.gallery-header {
+  padding: 2rem 16rem 0 16rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.page-title {
+  margin: 0;
+  padding: 2rem 0 0 0;
+  color: var(--iclr-text-dark);
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
 #colo-total-count {
-  font-size: 0.8em;
-  font-weight: 500;
-  color: var(--clr-text-sub);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--iclr-text-sub-dark);
   margin-left: 0.5rem;
 }
 
-/* --- CORRECTION Z-INDEX --- */
+/* ============================================= */
+/* --- SECTION 2 : CONTRÔLES (FILTRE & TRI) --- */
+/* ============================================= */
+
 .gallery-controls {
-  position: relative; /* Établit un contexte d'empilement */
-  z-index: 10; /* Assure que les contrôles sont au-dessus de la grille */
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 10;
+  padding: 0.5rem 0 4rem 0;
 }
 
 .gallery-sort-filter {
@@ -27,10 +69,8 @@
 
 .gallery-sort-filter label {
   font-weight: 500;
-  color: var(--clr-text);
+  color: var(--iclr-text-sub-dark);
 }
-
-/* --- STYLES POUR LE MENU DÉROULANT CUSTOM --- */
 
 .custom-dropdown {
   position: relative;
@@ -45,10 +85,13 @@
   align-items: center;
   width: 100%;
   padding: 0.6rem 1rem;
-  background-color: var(--clr-bg-card);
-  border: 1px solid rgba(var(--clr-text-rgb), 0.2);
+  background-color: rgba(var(--clr-bg-card-rgb), 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: var(--iclr-text-sub-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  color: var(--clr-text);
   font-size: 0.95rem;
   font-weight: 500;
   text-align: left;
@@ -57,15 +100,15 @@
 }
 
 .custom-dropdown-toggle:hover {
-  border-color: var(--clr-primary);
+  border-color: var(--iclr-bg-card-light);
 }
 
 .custom-dropdown-toggle[aria-expanded="true"] {
-  border-color: var(--clr-primary);
-  box-shadow: 0 0 0 2px rgba(var(--clr-primary-rgb), 0.2);
+  border-color: var(--iclr-bg-card-light);
 }
 
-#custom-filter-text {
+#custom-filter-text,
+#custom-sort-text {
   flex-grow: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -86,24 +129,44 @@
   top: calc(100% + 6px);
   left: 0;
   width: 100%;
-  min-width: 280px; /* Plus large pour le confort */
+  min-width: 280px;
   background-color: var(--clr-bg-card);
   border: 1px solid rgba(var(--clr-text-rgb), 0.15);
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  max-height: 500px; /* Votre modification */
+  max-height: 500px;
   overflow-y: auto;
   opacity: 0;
   transform: translateY(-10px);
   visibility: hidden;
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-text-sub) transparent;
 }
 
 .custom-dropdown-menu.show {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--clr-text-rgb), 0.25);
+  border-radius: 10px;
+  border: 2px solid var(--clr-bg-card);
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background-color: var(--clr-text);
 }
 
 .custom-dropdown-option {
@@ -116,24 +179,19 @@
 }
 
 .custom-dropdown-option:hover {
-  background-color: rgba(var(--clr-primary-rgb), 0.08);
+  background-color: rgba(var(--clr-text-rgb), 0.05);
 }
 
 .custom-dropdown-option label {
-  /* Le label contient maintenant tout sauf la checkbox cachée */
   display: flex;
   align-items: center;
   width: 100%;
   cursor: pointer;
-
-  /* Ajout d'une position relative pour positionner l'icône de la checkbox */
   position: relative;
-  padding-left: 28px; /* Espace pour l'icône */
+  padding-left: 28px;
 }
 
-/* --- STYLES CORRIGÉS POUR LA CHECKBOX AVEC FONT AWESOME --- */
 .custom-dropdown-option input[type="checkbox"] {
-  /* Cache la checkbox native tout en la gardant accessible */
   position: absolute;
   opacity: 0;
   width: 1px;
@@ -142,19 +200,15 @@
   clip: rect(0 0 0 0);
 }
 
-/* Crée une icône personnalisée avant le contenu du label */
 .custom-dropdown-option label::before {
-  content: "\f0c8"; /* Code unicode pour fa-regular fa-square */
-  font-family: "Font Awesome 6 Free"; /* Utilise la police Font Awesome */
-  font-weight: 400; /* Poids pour les icônes 'regular' */
+  content: "\f0c8";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 400;
   color: rgba(var(--clr-text-rgb), 0.4);
-
   font-size: 18px;
   line-height: 1;
   text-align: center;
   transition: color 0.2s ease;
-
-  /* Positionnement absolu à l'intérieur du label */
   position: absolute;
   left: 0;
   top: 50%;
@@ -162,15 +216,11 @@
   width: 18px;
 }
 
-/* Changer l'icône quand le SIBLING input est coché */
 .custom-dropdown-option input[type="checkbox"]:checked + label::before {
-  content: "\f14a"; /* Code unicode pour fa-solid fa-square-check */
-  font-weight: 900; /* Poids pour les icônes 'solid' */
-  color: var(
-    --clr-primary
-  ); /* Couleur principale du thème appliquée à l'icône */
+  content: "\f14a";
+  font-weight: 900;
+  color: var(--clr-text);
 }
-/* --- FIN DES STYLES CHECKBOX --- */
 
 .custom-dropdown-option .artist-pfp {
   width: 32px;
@@ -205,81 +255,8 @@
   color: var(--clr-text-sub);
 }
 
-/* --- STYLES POUR LA BARRE DE SCROLL DU MENU --- */
-
-/* Pour Firefox */
-.custom-dropdown-menu {
-  scrollbar-width: thin;
-  scrollbar-color: var(--clr-text-sub) transparent;
-}
-
-/* Pour Chrome, Safari, Edge */
-.custom-dropdown-menu::-webkit-scrollbar {
-  width: 8px;
-}
-
-.custom-dropdown-menu::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-dropdown-menu::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--clr-text-rgb), 0.25);
-  border-radius: 10px;
-  border: 2px solid var(--clr-bg-card); /* Crée un effet de padding */
-}
-
-.custom-dropdown-menu::-webkit-scrollbar-thumb:hover {
-  background-color: var(--clr-primary);
-}
-
-/* --- STYLES RESPONSIVES POUR LE MENU DÉROULANT --- */
-
-@media (max-width: 768px) {
-  .custom-dropdown {
-    min-width: 180px; /* Réduit la largeur minimale du conteneur */
-  }
-
-  .custom-dropdown-toggle {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.85rem;
-  }
-
-  .custom-dropdown-menu {
-    min-width: 240px; /* Ajuste la largeur du menu ouvert */
-    max-height: 400px; /* Votre modification */
-  }
-
-  .custom-dropdown-option {
-    padding: 0.6rem 0.8rem;
-  }
-
-  .custom-dropdown-option label {
-    padding-left: 26px; /* Ajuste l'espace pour l'icône mobile */
-  }
-
-  .custom-dropdown-option label::before {
-    margin: 0; /* Margin gérée par le padding du label */
-  }
-
-  .custom-dropdown-option .artist-pfp {
-    width: 28px;
-    height: 28px;
-    margin-right: 0.6rem;
-  }
-
-  .custom-dropdown-option .artist-name {
-    font-size: 0.9em;
-  }
-}
-
-/* Style spécifique pour le menu de tri */
 #custom-sort-filter .custom-dropdown-option {
-  display: flex;
-  align-items: center;
   gap: 12px;
-  padding: 0.7rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
 #custom-sort-filter .custom-dropdown-option i {
@@ -289,27 +266,501 @@
 }
 
 #custom-sort-filter .custom-dropdown-option.active {
-  background-color: rgba(var(--clr-primary-rgb), 0.08);
-  color: var(--clr-primary);
+  background-color: rgba(var(--clr-text-rgb), 0.08);
+  color: var(--clr-text);
 }
 
 #custom-sort-filter .custom-dropdown-option.active i {
-  color: var(--clr-primary);
-}
-
-#custom-sort-filter .custom-dropdown-option:hover {
-  background-color: rgba(var(--clr-primary-rgb), 0.08);
+  color: var(--clr-text);
 }
 
 #custom-sort-filter .sort-name {
   font-weight: 500;
 }
 
-/* Positionnement des contrôles */
-.gallery-sort-filter {
-  display: flex;
-  gap: 1rem;
+/* ============================================= */
+/* --- SECTION 3 : GRILLE D'IMAGES --- */
+/* ============================================= */
+
+.colo-card {
+  display: inline-block;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--clr-bg-card);
+  box-shadow: 0 4px 8px rgba(var(--clr-text-rgb), 0.05);
+  position: relative;
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+  width: calc(14.2% - 8px);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.colo-card:hover {
+  box-shadow: 0 6px 12px rgba(var(--clr-text-rgb), 0.07);
+}
+
+.colo-card img.lazy-load-gallery {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.colo-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  color: #fff;
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  text-align: left;
+}
+
+.colo-card:hover .colo-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.colo-card-overlay p {
+  margin: 0.1rem 0;
+  line-height: 1.2;
+}
+
+.gallery-grid.is-ready .colo-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation échelonnée pour un effet plus fluide */
+.gallery-grid.is-ready .colo-card:nth-child(n) {
+  transition-delay: calc(n * 25ms);
+}
+
+/* ============================================= */
+/* --- SECTION 4 : LIGHTBOX (MODAL) --- */
+/* ============================================= */
+
+.lightbox-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 2.5vh 2.5vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
   align-items: center;
+  z-index: 9999;
+  box-sizing: border-box;
+}
+
+body.dark .lightbox-modal {
+  background-color: rgba(10, 10, 12, 0.92);
+}
+
+.lightbox-content-wrapper {
+  display: flex;
+  align-items: flex-start; /* Aligne les éléments en haut */
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  height: 100%;
+  max-width: 95vw;
+  max-height: 95vh;
+}
+
+.lightbox-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* CORRIGÉ : Aligne l'image en haut de son conteneur */
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  color: #ccc;
+  font-size: 35px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+  color: #fff;
+}
+
+/* --- Style du panneau d'info (V2) --- */
+.lightbox-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background-color: var(--clr-bg-card);
+  border-radius: 8px;
+  color: var(--clr-text);
+  flex-shrink: 0;
+  width: 340px;
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+.info-artist-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.artist-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.artist-pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.artist-details {
+  flex-grow: 1;
+}
+
+.artist-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--clr-text);
+}
+
+.artist-colo-count {
+  font-size: 0.9rem;
+  color: var(--clr-text-sub);
+}
+
+.info-colo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.colo-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.detail-label {
+  font-size: 0.95rem;
+  color: var(--clr-text-sub);
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: var(--clr-text);
+  font-weight: 600;
+}
+
+.info-separator {
+  border: none;
+  height: 1px;
+  background-color: rgba(var(--clr-text-rgb), 0.1);
+  margin: 0.5rem 0;
+}
+
+body.dark .info-separator {
+  background-color: rgba(var(--clr-text-rgb), 0.15);
+}
+
+.artist-socials,
+.source-links {
+  display: flex;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  gap: 0.6rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.social-link:hover {
+  background-color: var(--clr-bg-invert);
+  color: var(--clr-text-invert);
+}
+
+.social-link i {
+  font-size: 1.1rem;
+}
+
+.artist-socials .social-link {
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  justify-content: center;
+}
+
+/* ============================================= */
+/* --- SECTION 5 : RESPONSIVE (MEDIA QUERIES) --- */
+/* ============================================= */
+
+@media (max-width: 1300px) {
+  .colo-card {
+    width: calc(20% - 8px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .colo-card {
+    width: calc(25% - 8px);
+  }
+}
+
+/* --- DEBUT MODIFICATION --- */
+@media (max-width: 992px) {
+  .colo-card {
+    width: calc(50% - 8px);
+  }
+
+  /* --- Styles de la Lightbox pour écrans moyens et petits --- */
+  .lightbox-content-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    overflow-y: auto;
+    padding-top: 40px;
+  }
+
+  .lightbox-image-container {
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .lightbox-image {
+    max-height: unset;
+  }
+
+  .lightbox-info-panel {
+    width: 100%;
+    max-width: 600px;
+    margin: 0;
+    overflow-y: visible;
+    max-height: none;
+
+    /* --- Styles pour rendre le panneau plus compact sur mobile --- */
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  /* --- Nouvelle disposition pour la section artiste --- */
+  .info-artist-section {
+    display: flex; /* Active Flexbox */
+    flex-direction: row; /* Met les enfants sur une ligne */
+    justify-content: space-between; /* Espace maximum entre les deux blocs */
+    align-items: center; /* Centre verticalement */
+    gap: 1rem;
+  }
+
+  /* Le header (PFP, nom) reste inchangé */
+  .artist-header {
+    gap: 0.8rem;
+  }
+  .artist-pfp {
+    width: 40px;
+    height: 40px;
+  }
+  .artist-name {
+    font-size: 1.1rem;
+  }
+  .artist-colo-count {
+    font-size: 0.8rem;
+  }
+
+  /* --- Nouvelle disposition pour la section colo --- */
+  .info-colo-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Les détails (Ch, Pg, Date) restent inchangés */
+  .colo-details {
+    gap: 0.3rem;
+  }
+  .detail-label {
+    font-size: 0.85rem;
+  }
+  .detail-value {
+    font-size: 0.9rem;
+  }
+
+  /* On ajuste la taille des boutons de réseaux sociaux */
+  .social-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+  .artist-socials .social-link {
+    width: 34px;
+    height: 34px;
+  }
+  .social-link i {
+    font-size: 1rem;
+  }
+}
+/* --- FIN MODIFICATION --- */
+
+@media (max-width: 768px) {
+  .page-title {
+    padding: 0;
+    line-height: 1.1;
+  }
+
+  .gallery-section {
+    margin: 0;
+  }
+
+  .gallery-section::before {
+    margin: calc(-60px - 15px) -15px 0 -15px;
+    height: 500px;
+  }
+
+  .gallery-controls {
+    padding-bottom: 2rem;
+  }
+
+  .gallery-header {
+    padding: calc(60px + 1rem) 1rem 0 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gallery-sort-filter {
+    display: grid;
+    /* Colonne 1 pour les labels, Colonne 2 pour les boutons */
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem 1rem;
+    align-items: center;
+  }
+
+  /* Cible le PREMIER label ("Artiste :") */
+  .gallery-sort-filter > label:nth-of-type(1) {
+    grid-row: 1;
+    grid-column: 1;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  /* Le dropdown des artistes */
+  #custom-artist-filter {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  /* Cible le DEUXIÈME label ("Tri par :") */
+  .gallery-sort-filter > label:nth-of-type(2) {
+    grid-row: 2;
+    grid-column: 1;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  /* Le dropdown du tri */
+  #custom-sort-filter {
+    grid-row: 2;
+    grid-column: 2;
+  }
+  .custom-dropdown {
+    min-width: 180px;
+  }
+  .custom-dropdown-toggle {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  .custom-dropdown-menu {
+    min-width: 240px;
+    max-height: 400px;
+  }
+  .custom-dropdown-option {
+    padding: 0.6rem 0.8rem;
+  }
+  .custom-dropdown-option label {
+    padding-left: 26px;
+  }
+  .custom-dropdown-option .artist-pfp {
+    width: 28px;
+    height: 28px;
+    margin-right: 0.6rem;
+  }
+  .custom-dropdown-option .artist-name {
+    font-size: 0.9em;
+  }
+
+  .colo-card-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 0.4rem;
+  }
+  .colo-card-overlay p {
+    font-size: 0.7rem;
+  }
+
+  .lightbox-modal {
+    padding: 10px;
+  }
+  .lightbox-image {
+    max-height: unset;
+  }
+  .lightbox-close {
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+  }
 }

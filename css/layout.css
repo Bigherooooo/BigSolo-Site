@@ -80,10 +80,6 @@ section {
   justify-content: start;
 }
 
-.gallery-grid {
-  width: 100%;
-}
-
 .carousel-container {
   position: relative;
   overflow: hidden;

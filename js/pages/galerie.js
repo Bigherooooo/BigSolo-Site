@@ -1,121 +1,212 @@
 // js/pages/galerie.js
-import { fetchData } from '../utils/fetchUtils.js';
-import { parseDateToTimestamp, formatDateForGallery } from '../utils/dateUtils.js';
-import { initLazyLoadObserver, initMainScrollObserver } from '../components/observer.js';
-import { qs, qsa } from '../utils/domUtils.js';
+import { fetchData } from "../utils/fetchUtils.js";
+import {
+  parseDateToTimestamp,
+  formatDateForGallery,
+} from "../utils/dateUtils.js";
+import {
+  initLazyLoadObserver,
+  initMainScrollObserver,
+} from "../components/observer.js";
+import { qs, qsa } from "../utils/domUtils.js";
 
 // --- VARIABLES GLOBALES DU MODULE ---
 let allColosData = [];
 let authorsInfoData = {};
 let selectedArtistIds = new Set();
-let currentSortMode = 'date-desc'; // 'date-desc', 'date-asc', 'chapter-desc', 'chapter-asc'
+let currentSortMode = "date-desc";
 
 // --- SÉLECTEURS DOM ---
-const galleryGridContainer = qs('#gallery-grid-container');
-const totalCountSpan = qs('#colo-total-count');
-
-// Nouveaux sélecteurs pour le filtre custom
-const customFilter = qs('#custom-artist-filter');
-const filterToggleBtn = qs('.custom-dropdown-toggle', customFilter);
-const filterMenu = qs('.custom-dropdown-menu', customFilter);
-const filterText = qs('#custom-filter-text', customFilter);
-
-// Sélecteurs Lightbox
-const lightboxModal = qs('#lightbox-modal');
-const lightboxImg = qs('#lightbox-img');
-const lightboxCloseBtn = qs('.lightbox-close');
+const galleryGridContainer = qs("#gallery-grid-container");
+const totalCountSpan = qs("#colo-total-count");
+const customFilter = qs("#custom-artist-filter");
+const filterToggleBtn = customFilter
+  ? qs(".custom-dropdown-toggle", customFilter)
+  : null;
+const filterMenu = customFilter
+  ? qs(".custom-dropdown-menu", customFilter)
+  : null;
+const filterText = customFilter
+  ? qs("#custom-filter-text", customFilter)
+  : null;
+const lightboxModal = qs("#lightbox-modal");
+const lightboxImg = qs("#lightbox-img");
+const lightboxCloseBtn = qs(".lightbox-close");
 
 // --- FONCTIONS DE RENDU ---
 
 function renderColoCard(colo, author) {
-  const authorName = author?.username || 'Artiste inconnu';
+  const authorName = author?.username || "Artiste inconnu";
   const previewUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${colo.id}_preview.webp`;
 
   return `
     <div class="colo-card" data-colo-id="${colo.id}"> 
       <img class="lazy-load-gallery" 
            src="/img/placeholder_preview.png" 
-           alt="Colorisation Chap. ${colo.chapitre || 'N/A'} par ${authorName}" 
+           alt="Colorisation Chap. ${colo.chapitre || "N/A"} par ${authorName}" 
            data-src="${previewUrl}"> 
       <div class="colo-card-overlay">
-        <p>Chap. ${colo.chapitre || 'N/A'}${colo.page ? `, Page ${colo.page}` : ''}</p>
+        <p>Chap. ${colo.chapitre || "N/A"}${
+    colo.page ? `, Page ${colo.page}` : ""
+  }</p>
         <p>Par ${authorName}</p>
       </div>
     </div>`;
 }
 
-function getSocialsHTML(links, typeClassPrefix) {
-  if (!links || Object.values(links).every(val => !val)) return '';
-  let html = `<div class="${typeClassPrefix}-socials">`;
-  if (links.twitter) html += `<a href="${links.twitter}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a>`;
-  if (links.instagram) html += `<a href="${links.instagram}" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>`;
-  if (links.tiktok) html += `<a href="${links.tiktok}" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i> TikTok</a>`;
-  if (links.reddit) html += `<a href="${links.reddit}" target="_blank" rel="noopener noreferrer"><i class="fab fa-reddit"></i> Reddit</a>`;
-  html += '</div>';
-  return html;
+function setRandomBannerImage(colos) {
+  if (!colos || colos.length === 0) {
+    console.warn(
+      "[Galerie] Aucune image disponible pour définir la bannière aléatoire."
+    );
+    return;
+  }
+  const randomColo = colos[Math.floor(Math.random() * colos.length)];
+  const imageUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${randomColo.id}_preview.webp`;
+  const gallerySection = qs(".gallery-section");
+  if (gallerySection) {
+    gallerySection.style.setProperty(
+      "--random-banner-image",
+      `url('${imageUrl}')`
+    );
+  }
 }
 
 // --- LOGIQUE LIGHTBOX ---
 
-function displayLightboxInfo(colo, author) {
-  const desktopArtistBlock = qs('.lightbox-info-panel-desktop .lightbox-artist-info-block');
-  const desktopColoBlock = qs('.lightbox-info-panel-desktop .lightbox-colo-info-block');
-  const mobileArtistInfoContainer = qs('.lightbox-info-panel-mobile .lightbox-artist-info');
-  const mobileColoInfoContainer = qs('.lightbox-info-panel-mobile .lightbox-colo-info');
+function renderSocialLinks(links, type) {
+  if (!links || Object.values(links).every((val) => !val)) return "";
 
-  let artistHtmlContent = '<p class="lightbox-info-placeholder">Infos artiste non disponibles.</p>';
-  if (author && colo) {
-    const occurrenceCount = allColosData.filter(c => String(c.author_id) === String(colo.author_id)).length;
-    artistHtmlContent = `
-      <div class="artist-header">
-        <img src="${author.profile_img || '/img/profil.png'}" alt="Photo de profil de ${author.username}" class="lightbox-artist-pfp" loading="lazy">
-        <div class="artist-text-details">
-          <h3 class="lightbox-artist-name">${author.username}</h3>
-          <span class="artist-occurrence-count">(${occurrenceCount} colo${occurrenceCount > 1 ? 's' : ''})</span>
+  const socialPlatforms = {
+    twitter: { icon: "fab fa-twitter", name: "Twitter" },
+    instagram: { icon: "fab fa-instagram", name: "Instagram" },
+    tiktok: { icon: "fab fa-tiktok", name: "TikTok" },
+    reddit: { icon: "fab fa-reddit", name: "Reddit" },
+  };
+
+  let html = "";
+  for (const [platform, url] of Object.entries(links)) {
+    if (url && socialPlatforms[platform]) {
+      const { icon, name } = socialPlatforms[platform];
+      const linkText = type === "colo" ? ` ${name}` : ""; // N'ajoute le texte que pour les sources de la colo
+      html += `
+        <a href="${url}" class="social-link" target="_blank" rel="noopener noreferrer" title="${name}">
+          <i class="${icon}"></i>${linkText}
+        </a>`;
+    }
+  }
+  return html;
+}
+
+function displayLightboxInfo(colo, author) {
+  const desktopPanel = qs(".lightbox-info-panel-desktop");
+  const mobilePanel = qs(".lightbox-info-panel-mobile");
+  if (mobilePanel) mobilePanel.style.display = "none";
+
+  if (!desktopPanel) return;
+
+  let panelContent = "<p>Informations non disponibles.</p>";
+
+  if (colo && author) {
+    const occurrenceCount = allColosData.filter(
+      (c) => String(c.author_id) === String(colo.author_id)
+    ).length;
+
+    const artistLinks = {
+      twitter: author.twitter,
+      instagram: author.instagram,
+      tiktok: author.tiktok,
+      reddit: author.reddit,
+    };
+    const artistSocialsHtml = renderSocialLinks(artistLinks, "artist");
+
+    const coloLinks = {
+      twitter: colo.twitter,
+      instagram: colo.instagram,
+      tiktok: colo.tiktok,
+      reddit: colo.reddit,
+    };
+    const coloSocialsHtml = renderSocialLinks(coloLinks, "colo");
+
+    // Nouvelle structure pour les détails
+    const coloDetailsHtml = `
+      <div class="colo-details">
+        <div class="detail-line">
+          <span class="detail-label">Ch.</span>
+          <span class="detail-value">${colo.chapitre || "N/A"}</span>
+          ${
+            colo.page
+              ? `<span class="detail-label">Pg.</span><span class="detail-value">${colo.page}</span>`
+              : ""
+          }
+        </div>
+        <div class="detail-line">
+          <span class="detail-label">Date:</span>
+          <span class="detail-value">${formatDateForGallery(colo.date)}</span>
         </div>
       </div>
-      ${getSocialsHTML(author, 'lightbox-artist')}
+    `;
+
+    panelContent = `
+      <div class="info-artist-section">
+        <div class="artist-header">
+          <img class="artist-pfp" src="${
+            author.profile_img || "/img/profil.png"
+          }" alt="Profil de ${author.username}" loading="lazy">
+          <div class="artist-details">
+            <h3 class="artist-name">${author.username}</h3>
+            <p class="artist-colo-count">${occurrenceCount} colo${
+      occurrenceCount > 1 ? "s" : ""
+    } sur le site</p>
+          </div>
+        </div>
+        ${
+          artistSocialsHtml
+            ? `<div class="artist-socials">${artistSocialsHtml}</div>`
+            : ""
+        }
+      </div>
+
+      <hr class="info-separator">
+
+      <div class="info-colo-section">
+        ${coloDetailsHtml}
+        ${
+          coloSocialsHtml
+            ? `<div class="source-links">${coloSocialsHtml}</div>`
+            : ""
+        }
+      </div>
     `;
   }
 
-  let coloHtmlContent = '<p class="lightbox-info-placeholder">Infos colorisation non disponibles.</p>';
-  if (colo) {
-    coloHtmlContent = `
-      <p><strong>Chapitre :</strong> ${colo.chapitre || 'N/A'}${colo.page ? `, Page ${colo.page}` : ''}</p>
-      <p><strong>Date :</strong> ${formatDateForGallery(colo.date)}</p>
-      <p><strong>ID :</strong> ${colo.id}</p>
-      ${getSocialsHTML(colo, 'lightbox-colo')}
-    `;
-  }
-
-  if (desktopArtistBlock) desktopArtistBlock.innerHTML = artistHtmlContent;
-  if (desktopColoBlock) desktopColoBlock.innerHTML = coloHtmlContent;
-  if (mobileArtistInfoContainer) mobileArtistInfoContainer.innerHTML = artistHtmlContent;
-  if (mobileColoInfoContainer) mobileColoInfoContainer.innerHTML = coloHtmlContent;
+  desktopPanel.innerHTML = panelContent;
 }
 
 function openLightboxForId(coloId) {
   if (!coloId) return;
-  const selectedColo = allColosData.find(c => c.id.toString() === coloId.toString());
-
+  const selectedColo = allColosData.find(
+    (c) => c.id.toString() === coloId.toString()
+  );
   if (selectedColo && lightboxModal && lightboxImg) {
     lightboxImg.src = `https://file.garden/aDmcfobZthZjQO3m/images/${selectedColo.id}.webp`;
     const author = authorsInfoData[selectedColo.author_id];
     displayLightboxInfo(selectedColo, author);
-    lightboxModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-
-    history.replaceState({ coloId: coloId }, '', `/galerie/${coloId}`);
+    lightboxModal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    history.replaceState({ coloId: coloId }, "", `/galerie/${coloId}`);
   }
 }
 
 function closeLightbox() {
-  if (lightboxModal) lightboxModal.style.display = 'none';
+  if (lightboxModal) lightboxModal.style.display = "none";
   if (lightboxImg) lightboxImg.src = "";
-  document.body.style.overflow = 'auto';
-
-  if (window.location.pathname !== '/galerie' && window.location.pathname !== '/galerie/') {
-    history.replaceState(null, '', '/galerie');
+  document.body.style.overflow = "auto";
+  if (
+    window.location.pathname !== "/galerie" &&
+    window.location.pathname !== "/galerie/"
+  ) {
+    history.replaceState(null, "", "/galerie");
   }
 }
 
@@ -123,12 +214,12 @@ function closeLightbox() {
 
 function updateFilterText() {
   if (!filterText) return;
-
   if (selectedArtistIds.size === 0) {
     filterText.textContent = "Tous les artistes";
   } else if (selectedArtistIds.size === 1) {
     const artistId = selectedArtistIds.values().next().value;
-    filterText.textContent = authorsInfoData[artistId]?.username || "1 artiste sélectionné";
+    filterText.textContent =
+      authorsInfoData[artistId]?.username || "1 artiste sélectionné";
   } else {
     filterText.textContent = `${selectedArtistIds.size} artistes sélectionnés`;
   }
@@ -136,41 +227,37 @@ function updateFilterText() {
 
 function populateCustomArtistFilter() {
   if (!filterMenu) return;
-
   const artistCounts = allColosData.reduce((acc, colo) => {
     acc[colo.author_id] = (acc[colo.author_id] || 0) + 1;
     return acc;
   }, {});
-
-  const sortedAuthors = Object.entries(authorsInfoData)
-    .sort(([, a], [, b]) => (a.username || "").localeCompare(b.username || ""));
-
-  filterMenu.innerHTML = sortedAuthors.map(([id, author]) => {
-    const count = artistCounts[id] || 0;
-    if (count === 0) return '';
-
-    // CORRECTION: L'input est maintenant un sibling avant le label.
-    // L'id et le for les lient.
-    return `
+  const sortedAuthors = Object.entries(authorsInfoData).sort(([, a], [, b]) =>
+    (a.username || "").localeCompare(b.username || "")
+  );
+  filterMenu.innerHTML = sortedAuthors
+    .map(([id, author]) => {
+      const count = artistCounts[id] || 0;
+      if (count === 0) return "";
+      return `
       <div class="custom-dropdown-option" role="option">
         <input type="checkbox" value="${id}" id="artist-filter-${id}">
         <label for="artist-filter-${id}">
-          <img src="${author.profile_img || '/img/profil.png'}" class="artist-pfp" alt="Profil de ${author.username}" loading="lazy">
+          <img src="${
+            author.profile_img || "/img/profil.png"
+          }" class="artist-pfp" alt="Profil de ${
+        author.username
+      }" loading="lazy">
           <span class="artist-name">${author.username}</span>
           <span class="artist-count">${count}</span>
         </label>
       </div>`;
-  }).join('');
-
-  // L'event listener reste le même et fonctionnera correctement avec la nouvelle structure.
-  qsa('input[type="checkbox"]', filterMenu).forEach(checkbox => {
-    checkbox.addEventListener('change', (e) => {
+    })
+    .join("");
+  qsa('input[type="checkbox"]', filterMenu).forEach((checkbox) => {
+    checkbox.addEventListener("change", (e) => {
       const artistId = e.target.value;
-      if (e.target.checked) {
-        selectedArtistIds.add(artistId);
-      } else {
-        selectedArtistIds.delete(artistId);
-      }
+      if (e.target.checked) selectedArtistIds.add(artistId);
+      else selectedArtistIds.delete(artistId);
       updateFilterText();
       displayColos();
     });
@@ -178,102 +265,99 @@ function populateCustomArtistFilter() {
 }
 
 function displayColos() {
-  if (!galleryGridContainer || !allColosData.length || !Object.keys(authorsInfoData).length) {
-    if (galleryGridContainer) galleryGridContainer.innerHTML = "<p>Aucune colorisation à afficher.</p>";
+  if (
+    !galleryGridContainer ||
+    !allColosData.length ||
+    !Object.keys(authorsInfoData).length
+  ) {
+    if (galleryGridContainer)
+      galleryGridContainer.innerHTML = "<p>Aucune colorisation à afficher.</p>";
     return;
   }
 
   let colosToDisplay = [...allColosData];
 
   if (selectedArtistIds.size > 0) {
-    colosToDisplay = colosToDisplay.filter(c => selectedArtistIds.has(String(c.author_id)));
+    colosToDisplay = colosToDisplay.filter((c) =>
+      selectedArtistIds.has(String(c.author_id))
+    );
   }
 
-  // Tri selon le mode sélectionné
   switch (currentSortMode) {
-    case 'date-desc':
-      colosToDisplay.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+    case "date-desc":
+      colosToDisplay.sort(
+        (a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date)
+      );
       break;
-    case 'date-asc':
-      colosToDisplay.sort((a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date));
+    case "date-asc":
+      colosToDisplay.sort(
+        (a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date)
+      );
       break;
-    case 'chapter-desc':
-      colosToDisplay.sort((a, b) => {
-        const chapA = parseInt(a.chapitre) || 0;
-        const chapB = parseInt(b.chapitre) || 0;
-        return chapB - chapA;
-      });
+    case "chapter-desc":
+      colosToDisplay.sort(
+        (a, b) => (parseFloat(b.chapitre) || 0) - (parseFloat(a.chapitre) || 0)
+      );
       break;
-    case 'chapter-asc':
-      colosToDisplay.sort((a, b) => {
-        const chapA = parseInt(a.chapitre) || 0;
-        const chapB = parseInt(b.chapitre) || 0;
-        return chapA - chapB;
-      });
+    case "chapter-asc":
+      colosToDisplay.sort(
+        (a, b) => (parseFloat(a.chapitre) || 0) - (parseFloat(b.chapitre) || 0)
+      );
       break;
   }
 
-  galleryGridContainer.innerHTML = colosToDisplay.map(colo => {
-    const author = authorsInfoData[colo.author_id];
-    return renderColoCard(colo, author);
-  }).join('');
+  galleryGridContainer.innerHTML = colosToDisplay
+    .map((colo) => {
+      const author = authorsInfoData[colo.author_id];
+      return renderColoCard(colo, author);
+    })
+    .join("");
 
-  qsa('.colo-card', galleryGridContainer).forEach(card => {
+  galleryGridContainer.classList.remove("is-ready");
+
+  qsa(".colo-card", galleryGridContainer).forEach((card) => {
     if (!card.dataset.lightboxListenerAttached) {
-      card.addEventListener('click', () => openLightboxForId(card.dataset.coloId));
-      card.dataset.lightboxListenerAttached = 'true';
+      card.addEventListener("click", () =>
+        openLightboxForId(card.dataset.coloId)
+      );
+      card.dataset.lightboxListenerAttached = "true";
     }
   });
 
-  initLazyLoadObserver('img.lazy-load-gallery');
-  initMainScrollObserver('#gallery-grid-container .colo-card');
-
-  // Initialize Masonry if not already done
   const masonry = new Masonry(galleryGridContainer, {
-    itemSelector: '.colo-card',
-    columnWidth: '.colo-card',
+    itemSelector: ".colo-card",
+    columnWidth: ".colo-card",
     percentPosition: true,
     gutter: 8,
-    // horizontalOrder: true,
     transitionDuration: 0,
-    initLayout: false,
   });
-  
-  imagesLoaded(galleryGridContainer)
-    .on('progress', () => {
-      masonry.layout();
-    });
 
-  // relayout masonry each .5s for the first 5 seconds
-  let relayoutInterval = setInterval(() => {
-    masonry.layout();
-  }, 500);
+  initLazyLoadObserver("img.lazy-load-gallery", masonry);
+
   setTimeout(() => {
-    clearInterval(relayoutInterval);
-  }, 5000);
+    galleryGridContainer.classList.add("is-ready");
+  }, 100);
 }
 
 function getSortModeText(mode) {
-  switch(mode) {
-    case 'date-desc': return 'Date (récent)';
-    case 'date-asc': return 'Date (ancien)';
-    case 'chapter-desc': return 'Chapitre (décroissant)';
-    case 'chapter-asc': return 'Chapitre (croissant)';
-    default: return 'Date (récent)';
-  }
+  const texts = {
+    "date-desc": "Date (récent)",
+    "date-asc": "Date (ancien)",
+    "chapter-desc": "Chapitre (décroissant)",
+    "chapter-asc": "Chapitre (croissant)",
+  };
+  return texts[mode] || "Date (récent)";
 }
 
 function updateSortMode(newMode) {
-  if (['date-desc', 'date-asc', 'chapter-desc', 'chapter-asc'].includes(newMode)) {
+  if (
+    ["date-desc", "date-asc", "chapter-desc", "chapter-asc"].includes(newMode)
+  ) {
     currentSortMode = newMode;
-    // Update sort text and active state
-    const sortText = qs('#custom-sort-text');
-    if (sortText) {
-      sortText.textContent = getSortModeText(newMode);
-    }
-    // Update active state in dropdown
-    qsa('#custom-sort-filter .custom-dropdown-option').forEach(option => {
-      option.classList.toggle('active', option.dataset.sort === newMode);
+    const sortText = qs("#custom-sort-text");
+    if (sortText) sortText.textContent = getSortModeText(newMode);
+    qsa("#custom-sort-filter .custom-dropdown-option").forEach((option) => {
+      option.classList.toggle("active", option.dataset.sort === newMode);
     });
     displayColos();
   }
@@ -283,101 +367,98 @@ function updateSortMode(newMode) {
 
 export async function initGaleriePage() {
   if (!galleryGridContainer) {
-    console.warn("[Galerie] Initialisation annulée: conteneur de la galerie non trouvé.");
+    console.warn(
+      "[Galerie] Initialisation annulée: conteneur de la galerie non trouvé."
+    );
     return;
   }
 
   try {
     const [colos, authors] = await Promise.all([
-      fetchData('/data/colos/colos.json', { noCache: true }),
-      fetchData('/data/colos/author_info.json', { noCache: true })
+      fetchData("/data/colos/colos.json", { noCache: true }),
+      fetchData("/data/colos/author_info.json", { noCache: true }),
     ]);
 
-    if (!colos || !authors) throw new Error("Données de colos ou d'auteurs manquantes.");
+    if (!colos || !authors)
+      throw new Error("Données de colos ou d'auteurs manquantes.");
 
     allColosData = colos;
     authorsInfoData = authors;
 
-    if (totalCountSpan) {
-      totalCountSpan.textContent = `(${allColosData.length})`;
-    }
+    setRandomBannerImage(allColosData);
 
-    // Set up sort dropdown
-    const sortFilter = qs('#custom-sort-filter');
-    const sortToggleBtn = qs('.custom-dropdown-toggle', sortFilter);
-    const sortMenu = qs('.custom-dropdown-menu', sortFilter);
+    if (totalCountSpan) totalCountSpan.textContent = `(${allColosData.length})`;
+
+    const sortFilter = qs("#custom-sort-filter");
+    const sortToggleBtn = sortFilter
+      ? qs(".custom-dropdown-toggle", sortFilter)
+      : null;
+    const sortMenu = sortFilter
+      ? qs(".custom-dropdown-menu", sortFilter)
+      : null;
 
     if (sortToggleBtn && sortMenu) {
-      // Toggle dropdown
-      sortToggleBtn.addEventListener('click', () => {
-        const isExpanded = sortToggleBtn.getAttribute('aria-expanded') === 'true';
-        sortToggleBtn.setAttribute('aria-expanded', !isExpanded);
-        sortMenu.classList.toggle('show');
+      sortToggleBtn.addEventListener("click", () => {
+        const isExpanded =
+          sortToggleBtn.getAttribute("aria-expanded") === "true";
+        sortToggleBtn.setAttribute("aria-expanded", !isExpanded);
+        sortMenu.classList.toggle("show");
       });
-
-      // Handle option clicks
-      qsa('.custom-dropdown-option', sortMenu).forEach(option => {
-        option.addEventListener('click', () => {
+      qsa(".custom-dropdown-option", sortMenu).forEach((option) => {
+        option.addEventListener("click", () => {
           updateSortMode(option.dataset.sort);
-          sortToggleBtn.setAttribute('aria-expanded', 'false');
-          sortMenu.classList.remove('show');
+          sortToggleBtn.setAttribute("aria-expanded", "false");
+          sortMenu.classList.remove("show");
         });
       });
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!sortFilter.contains(e.target)) {
-          sortToggleBtn.setAttribute('aria-expanded', 'false');
-          sortMenu.classList.remove('show');
+      document.addEventListener("click", (e) => {
+        if (sortFilter && !sortFilter.contains(e.target)) {
+          sortToggleBtn.setAttribute("aria-expanded", "false");
+          sortMenu.classList.remove("show");
         }
       });
     }
 
-    // Initialize sort state
     updateSortMode(currentSortMode);
-
     populateCustomArtistFilter();
 
     if (filterToggleBtn && filterMenu) {
-      filterToggleBtn.addEventListener('click', () => {
-        const isExpanded = filterToggleBtn.getAttribute('aria-expanded') === 'true';
-        filterToggleBtn.setAttribute('aria-expanded', !isExpanded);
-        filterMenu.classList.toggle('show');
+      filterToggleBtn.addEventListener("click", () => {
+        const isExpanded =
+          filterToggleBtn.getAttribute("aria-expanded") === "true";
+        filterToggleBtn.setAttribute("aria-expanded", !isExpanded);
+        filterMenu.classList.toggle("show");
       });
-
-      document.addEventListener('click', (e) => {
-        if (!customFilter.contains(e.target)) {
-          filterToggleBtn.setAttribute('aria-expanded', 'false');
-          filterMenu.classList.remove('show');
+      document.addEventListener("click", (e) => {
+        if (customFilter && !customFilter.contains(e.target)) {
+          filterToggleBtn.setAttribute("aria-expanded", "false");
+          filterMenu.classList.remove("show");
         }
       });
     }
 
     if (lightboxModal && lightboxCloseBtn) {
-      lightboxCloseBtn.addEventListener('click', closeLightbox);
-      lightboxModal.addEventListener('click', (e) => {
+      lightboxCloseBtn.addEventListener("click", closeLightbox);
+      lightboxModal.addEventListener("click", (e) => {
         if (e.target === lightboxModal) closeLightbox();
       });
     }
 
-    window.addEventListener('popstate', (event) => {
+    window.addEventListener("popstate", () => {
       const path = window.location.pathname;
       const galleryPathMatch = path.match(/^\/galerie\/(\d+)\/?$/);
-      if (galleryPathMatch) {
-        openLightboxForId(galleryPathMatch[1]);
-      } else {
-        closeLightbox();
-      }
+      if (galleryPathMatch) openLightboxForId(galleryPathMatch[1]);
+      else closeLightbox();
     });
 
     displayColos();
 
-    const galleryPathMatch = window.location.pathname.match(/^\/galerie\/(\d+)\/?$/);
+    const galleryPathMatch = window.location.pathname.match(
+      /^\/galerie\/(\d+)\/?$/
+    );
     if (galleryPathMatch) {
-      const coloIdFromUrl = galleryPathMatch[1];
-      setTimeout(() => openLightboxForId(coloIdFromUrl), 100);
+      setTimeout(() => openLightboxForId(galleryPathMatch[1]), 100);
     }
-
   } catch (error) {
     console.error("Erreur d'initialisation de la galerie:", error);
     if (galleryGridContainer) {

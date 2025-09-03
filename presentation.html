@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <script>
       (function () {
         try {
-          var theme = localStorage.getItem('mv-theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = localStorage.getItem("mv-theme");
+          var prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
           var htmlEl = document.documentElement;
-          if (theme === 'dark' || (!theme && prefersDark)) {
-            htmlEl.classList.add('dark');
-            htmlEl.style.backgroundColor = '#15171a';
-            htmlEl.style.color = '#eceff4';
+          if (theme === "dark" || (!theme && prefersDark)) {
+            htmlEl.classList.add("dark");
+            htmlEl.style.backgroundColor = "#15171a";
+            htmlEl.style.color = "#eceff4";
           } else {
-            htmlEl.classList.remove('dark');
-            htmlEl.style.backgroundColor = '#f7f8fc';
-            htmlEl.style.color = '#222831';
+            htmlEl.classList.remove("dark");
+            htmlEl.style.backgroundColor = "#f7f8fc";
+            htmlEl.style.color = "#222831";
           }
-        } catch (e) { }
+        } catch (e) {}
       })();
     </script>
     <meta charset="UTF-8" />
@@ -30,47 +32,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet" />
-    <link rel="icon" type="image/png" href="img/icon.png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/img/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/layout.css" />
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
     <link rel="stylesheet" href="/css/components/header.css" />
     <link rel="stylesheet" href="/css/components/mobile-menu.css" />
-    <link rel="stylesheet" href="/css/components/general.css" />
-    <link rel="stylesheet" href="/css/components/cards.css" />
-    <link rel="stylesheet" href="/css/components/carousel.css" />
-    <link rel="stylesheet" href="/css/components/gallery-lightbox.css" />
-    <link rel="stylesheet" href="/css/components/accordion.css" />
-    <link rel="stylesheet" href="css/emojis.css" />
-    <link rel="stylesheet" href="css/pages/presentation.css" />
-  
-    <script src="js/theme-init.js"></script>
-</head>
-<body id="presentationpage">
+    <link rel="stylesheet" href="/css/emojis.css" />
+    <link rel="stylesheet" href="/css/pages/presentation.css" />
+
+    <script src="/js/theme-init.js"></script>
+  </head>
+  <body id="presentationpage">
     <header id="main-header"></header>
     <div class="mobile-menu-overlay" id="main-mobile-menu-overlay"></div>
-  
+
     <main>
-      <section class="presentation-section aesthetic-option-1">
+      <section class="presentation-section">
+        <!-- DEBUT MODIFICATION : Ajout du conteneur pour la bannière -->
+        <div id="presentation-banner"></div>
+        <!-- FIN MODIFICATION -->
+
         <div class="presentation-page-header">
-          <img src="img/profil.png" alt="Photo de profil de BigSolo" class="profile-pic page-header-profile-pic">
+          <img
+            src="img/profil.png"
+            alt="Photo de profil de BigSolo"
+            class="profile-pic page-header-profile-pic"
+          />
           <div class="page-header-text">
-            <h1 class="page-main-title">BigSolo : L'interview<span class="custom-emoji emoji-george"></span></h1>
-            <p class="page-subtitle">Plongez au cœur de mon parcours et de mes passions.</p>
+            <h1 class="page-main-title">
+              BigSolo : L'interview<span
+                class="custom-emoji emoji-george"
+              ></span>
+            </h1>
+            <p class="page-subtitle">
+              Plongez au cœur de mon parcours et de mes passions.
+            </p>
           </div>
         </div>
-  
+
         <div class="qa-dynamic-container" id="qaContainer">
+          <p style="text-align: center; column-span: all">
+            Chargement des questions...
+          </p>
         </div>
       </section>
     </main>
-  
-    <script src="js/pages/presentation.js" type="module"></script>
-    <script src="js/index.js" type="module"></script>
-</body>
+
+    <script src="/js/index.js" type="module"></script>
+  </body>
 </html>

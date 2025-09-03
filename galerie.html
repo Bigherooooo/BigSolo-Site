@@ -1,143 +1,187 @@
 <!DOCTYPE html>
 <html lang="fr">
+  <head>
+    <!-- Le script theme-init reste ici -->
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("mv-theme");
+          var prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          var htmlEl = document.documentElement;
+          if (theme === "dark" || (!theme && prefersDark)) {
+            htmlEl.classList.add("dark");
+            htmlEl.style.backgroundColor = "#15171a";
+            htmlEl.style.color = "#eceff4";
+          } else {
+            htmlEl.classList.remove("dark");
+            htmlEl.style.backgroundColor = "#f7f8fc";
+            htmlEl.style.color = "#222831";
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
 
-<head>
-  <!-- Le script theme-init reste ici -->
-  <script>
-    (function () {
-      try {
-        var theme = localStorage.getItem('mv-theme');
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var htmlEl = document.documentElement;
-        if (theme === 'dark' || (!theme && prefersDark)) {
-          htmlEl.classList.add('dark');
-          htmlEl.style.backgroundColor = '#15171a';
-          htmlEl.style.color = '#eceff4';
-        } else {
-          htmlEl.classList.remove('dark');
-          htmlEl.style.backgroundColor = '#f7f8fc';
-          htmlEl.style.color = '#222831';
-        }
-      } catch (e) { }
-    })();
-  </script>
-  <meta charset="UTF-8" />
+    <!-- ↓↓↓ SECTION MODIFIÉE ↓↓↓ -->
+    <!-- Ces balises seront remplacées ou complétées par le middleware -->
+    <title>BigSolo – Galerie</title>
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->
+    <!-- ↑↑↑ FIN DE LA SECTION MODIFIÉE ↑↑↑ -->
 
-  <!-- ↓↓↓ SECTION MODIFIÉE ↓↓↓ -->
-  <!-- Ces balises seront remplacées ou complétées par le middleware -->
-  <title>BigSolo – Galerie</title>
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->
-  <!-- ↑↑↑ FIN DE LA SECTION MODIFIÉE ↑↑↑ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/img/icon.png" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet" />
-  <link rel="icon" type="image/png" href="/img/icon.png" />
+    <!-- scripts pour la gallerie -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 
-  <!-- scripts pour la gallerie -->
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components/header.css" />
+    <link rel="stylesheet" href="/css/components/mobile-menu.css" />
+    <link rel="stylesheet" href="/css/components/general.css" />
+    <link rel="stylesheet" href="/css/components/cards.css" />
+    <link rel="stylesheet" href="/css/components/carousel.css" />
+    <link rel="stylesheet" href="/css/components/gallery-lightbox.css" />
+    <link rel="stylesheet" href="/css/components/accordion.css" />
+    <link rel="stylesheet" href="/css/pages/galerie.css" />
 
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/layout.css" />
-  <link rel="stylesheet" href="/css/components/header.css" />
-  <link rel="stylesheet" href="/css/components/mobile-menu.css" />
-  <link rel="stylesheet" href="/css/components/general.css" />
-  <link rel="stylesheet" href="/css/components/cards.css" />
-  <link rel="stylesheet" href="/css/components/carousel.css" />
-  <link rel="stylesheet" href="/css/components/gallery-lightbox.css" />
-  <link rel="stylesheet" href="/css/components/accordion.css" />
-  <link rel="stylesheet" href="/css/pages/galerie.css" />
+    <script src="/js/theme-init.js"></script>
+  </head>
 
-  <script src="/js/theme-init.js"></script>
-</head>
+  <!-- Le reste du body reste identique -->
 
-<!-- Le reste du body reste identique -->
+  <body id="galeriepage">
+    <header id="main-header"></header>
+    <div class="mobile-menu-overlay" id="main-mobile-menu-overlay"></div>
 
-<body id="galeriepage">
-  <header id="main-header"></header>
-  <div class="mobile-menu-overlay" id="main-mobile-menu-overlay"></div>
+    <main>
+      <section class="gallery-section">
+        <h1 class="section-title page-title">
+          Galerie des Colorisations <span id="colo-total-count"></span>
+        </h1>
 
-  <main>
-    <section class="gallery-section">
-      <!-- Titre mis à jour pour inclure le compteur -->
-      <h1 class="section-title page-title">Galerie des Colorisations <span id="colo-total-count"></span></h1>
-
-      <!-- Contrôles mis à jour -->
-      <div class="gallery-controls">
-        <div class="gallery-sort-filter">
-          <label for="custom-artist-filter">Artiste :</label>
-          <!-- Nouveau menu déroulant custom -->
-          <div id="custom-artist-filter" class="custom-dropdown">
-            <button class="custom-dropdown-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <!-- Contrôles mis à jour -->
+        <div class="gallery-controls">
+          <div class="gallery-sort-filter">
+            <label for="custom-artist-filter">Artiste :</label>
+            <!-- Nouveau menu déroulant custom -->
+            <div id="custom-artist-filter" class="custom-dropdown">
+              <button
+                class="custom-dropdown-toggle"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
                 <span id="custom-filter-text">Tous les artistes</span>
                 <i class="fas fa-chevron-down dropdown-arrow"></i>
-            </button>
-            <div class="custom-dropdown-menu" id="custom-artist-options" role="listbox" aria-multiselectable="true">
+              </button>
+              <div
+                class="custom-dropdown-menu"
+                id="custom-artist-options"
+                role="listbox"
+                aria-multiselectable="true"
+              >
                 <!-- Les options des artistes seront injectées ici par le JS -->
                 <div class="dropdown-loader">Chargement...</div>
+              </div>
             </div>
-          </div>
-          <div id="custom-sort-filter" class="custom-dropdown">
-            <button class="custom-dropdown-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <label for="custom-artist-filter">Tri par :</label>
+            <div id="custom-sort-filter" class="custom-dropdown">
+              <button
+                class="custom-dropdown-toggle"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
                 <span id="custom-sort-text">Date (récent)</span>
                 <i class="fas fa-chevron-down dropdown-arrow"></i>
-            </button>
-            <div class="custom-dropdown-menu" role="listbox">
-                <div class="custom-dropdown-option" data-sort="date-desc" role="option">
-                    <i class="fas fa-clock"></i>
-                    <span class="sort-name">Date (récent → ancien)</span>
+              </button>
+              <div class="custom-dropdown-menu" role="listbox">
+                <div
+                  class="custom-dropdown-option"
+                  data-sort="date-desc"
+                  role="option"
+                >
+                  <i class="fas fa-clock"></i>
+                  <span class="sort-name">Date (récent → ancien)</span>
                 </div>
-                <div class="custom-dropdown-option" data-sort="date-asc" role="option">
-                    <i class="fas fa-clock fa-flip-horizontal"></i>
-                    <span class="sort-name">Date (ancien → récent)</span>
+                <div
+                  class="custom-dropdown-option"
+                  data-sort="date-asc"
+                  role="option"
+                >
+                  <i class="fas fa-clock fa-flip-horizontal"></i>
+                  <span class="sort-name">Date (ancien → récent)</span>
                 </div>
-                <div class="custom-dropdown-option" data-sort="chapter-desc" role="option">
-                    <i class="fas fa-sort-numeric-down"></i>
-                    <span class="sort-name">Chapitre (décroissant)</span>
+                <div
+                  class="custom-dropdown-option"
+                  data-sort="chapter-desc"
+                  role="option"
+                >
+                  <i class="fas fa-sort-numeric-down"></i>
+                  <span class="sort-name">Chapitre (décroissant)</span>
                 </div>
-                <div class="custom-dropdown-option" data-sort="chapter-asc" role="option">
-                    <i class="fas fa-sort-numeric-up"></i>
-                    <span class="sort-name">Chapitre (croissant)</span>
+                <div
+                  class="custom-dropdown-option"
+                  data-sort="chapter-asc"
+                  role="option"
+                >
+                  <i class="fas fa-sort-numeric-up"></i>
+                  <span class="sort-name">Chapitre (croissant)</span>
                 </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="gallery-grid" id="gallery-grid-container">
-        <!-- Les cartes de colorisation seront injectées ici par le JS -->
-         <!-- pour information, le layout utilisé s'appelle un "masonry layout" -->
-      </div>
-    </section>
-  </main>
+        <div class="gallery-grid" id="gallery-grid-container">
+          <!-- Les cartes de colorisation seront injectées ici par le JS -->
+          <!-- pour information, le layout utilisé s'appelle un "masonry layout" -->
+        </div>
+      </section>
+    </main>
 
-  <div id="lightbox-modal" class="lightbox-modal" style="display:none;">
-    <span class="lightbox-close">×</span>
-    <div class="lightbox-content-wrapper">
-      <div class="lightbox-image-container">
-        <img class="lightbox-image" id="lightbox-img" src="" alt="Colorisation en grand" />
-      </div>
-      <div class="lightbox-info-panel lightbox-info-panel-desktop">
-        <div class="lightbox-artist-info-block"></div>
-        <div class="lightbox-colo-info-block"></div>
-      </div>
-      <div class="lightbox-info-panel lightbox-info-panel-mobile">
-        <div class="lightbox-artist-info"></div>
-        <div class="lightbox-colo-info"></div>
+    <div id="lightbox-modal" class="lightbox-modal" style="display: none">
+      <span class="lightbox-close">×</span>
+      <div class="lightbox-content-wrapper">
+        <div class="lightbox-image-container">
+          <img
+            class="lightbox-image"
+            id="lightbox-img"
+            src=""
+            alt="Colorisation en grand"
+          />
+        </div>
+        <div class="lightbox-info-panel lightbox-info-panel-desktop">
+          <div class="lightbox-artist-info-block"></div>
+          <div class="lightbox-colo-info-block"></div>
+        </div>
+        <div class="lightbox-info-panel lightbox-info-panel-mobile">
+          <div class="lightbox-artist-info"></div>
+          <div class="lightbox-colo-info"></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="/js/index.js" type="module"></script>
-</body>
-
+    <script src="/js/index.js" type="module"></script>
+  </body>
 </html>

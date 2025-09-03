@@ -1041,6 +1041,10 @@ a.chapter-card-list-item:hover {
     width: 100%;
   }
 
+  #mobile-actions-target #series-rating-btn {
+    padding: 0.56rem 1.3rem;
+  }
+
   /* Style de base pour TOUS les boutons en mobile */
   #mobile-actions-target .detail-action-btn {
     font-size: 0.85rem;
