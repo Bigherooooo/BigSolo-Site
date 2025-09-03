@@ -560,11 +560,6 @@
   gap: 1rem;
 }
 
-.chapters-list-container .chapter-card-list-item {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
 .chapter-card-list-item {
   font-weight: 600;
   background: var(--clr-bg-card);
@@ -583,12 +578,6 @@
 .chapter-card-list-item:hover {
   background: var(--clr-bg-card-invert);
   color: var(--clr-text-invert);
-}
-
-.chapter-card-list-number {
-  display: flex;
-  align-items: baseline; /* Aligne sur la ligne de base du texte */
-  gap: 0.5em; /* Espace entre "Vol." et "Ch." */
 }
 
 .volume-prefix {
@@ -639,7 +628,7 @@
   color: var(--clr-text-fifth);
   margin-top: 0.2rem;
   display: block;
-  max-width: 170px;
+  max-width: 95%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

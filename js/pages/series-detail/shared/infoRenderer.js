@@ -281,12 +281,19 @@ function setupRatingComponentLogic(
       totalVotes++;
       totalScore += currentUserRating;
     }
-    const displayAvg = totalVotes > 0 ? totalScore / totalVotes : 0;
-    avgSpan.textContent = (Math.round(displayAvg * 10) / 10).toLocaleString(
-      "fr-FR",
-      { minimumFractionDigits: 1, maximumFractionDigits: 1 }
-    );
-    tooltip.textContent = `${totalVotes} vote${totalVotes > 1 ? "s" : ""}`;
+
+    if (totalVotes === 0) {
+      avgSpan.textContent = "—";
+      tooltip.textContent = "Aucun vote";
+    } else {
+      const displayAvg = totalScore / totalVotes;
+      avgSpan.textContent = (Math.round(displayAvg * 10) / 10).toLocaleString(
+        "fr-FR",
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 }
+      );
+      tooltip.textContent = `${totalVotes} vote${totalVotes > 1 ? "s" : ""}`;
+    }
+
     btn.classList.toggle("accent", currentUserRating !== null);
   }
   btn.addEventListener("mouseenter", (e) => {

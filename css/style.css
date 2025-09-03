@@ -151,7 +151,7 @@ img {
 .series-detail-container,
 .colo-card {
   transform: translateY(20px);
-  opacity: 0;
+  opacity: .5;
 }
 
 img.lazy-load-gallery[src*="placeholder_preview.png"] {

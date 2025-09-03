@@ -121,7 +121,6 @@ function displayChapterList({ sort, search }) {
 
   attachChapterItemEventListeners(container);
   updateAllVisibleChapterViews();
-  initMainScrollObserver(".chapters-list-container .chapter-card-list-item");
 }
 
 /**
