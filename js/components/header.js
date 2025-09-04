@@ -161,29 +161,44 @@ function populateDesktopNavigation() {
 
 function populateMobileNavigation() {
   const mobileMainNavContainer = qs("#mobile-nav-main");
-  const mobileSubNavContainer = qs("#mobile-nav-sub");
-  const mobileSubNavTitleElement = qs("#mobile-sub-nav-title");
-  const mobileSubNavSection = qs("#mobile-sub-nav-section");
+  if (!mobileMainNavContainer) return;
 
+  mobileMainNavContainer.innerHTML = ""; // Vider le conteneur
   const currentPageId = getCurrentPageId();
-
-  renderNavLinks(mobileMainNavContainer, mainNavLinksConfig, true);
-
   const subLinksForCurrentPage = getSubNavLinksForPage(currentPageId);
-  if (subLinksForCurrentPage.length > 0) {
-    renderNavLinks(mobileSubNavContainer, subLinksForCurrentPage, true);
-    if (mobileSubNavTitleElement) {
-      mobileSubNavTitleElement.textContent =
-        subNavTitlesConfig[currentPageId] || "Navigation rapide";
-      mobileSubNavTitleElement.style.display = "block";
+
+  mainNavLinksConfig.forEach((link) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = link.href;
+    a.innerHTML = `<i class="${link.icon}"></i> ${link.text}`;
+    li.appendChild(a);
+
+    // Vérifier si ce lien correspond à la page actuelle
+    const isCurrentPageLink =
+      (link.href === "/" && window.location.pathname === "/") ||
+      (link.href !== "/" && window.location.pathname.startsWith(link.href));
+
+    if (isCurrentPageLink) {
+      li.classList.add("active-parent-link");
+
+      // Si c'est la page active ET qu'il y a des sous-liens, on les imbrique
+      if (subLinksForCurrentPage.length > 0) {
+        const subUl = document.createElement("ul");
+        subUl.className = "mobile-sub-nav";
+        subLinksForCurrentPage.forEach((subLink) => {
+          const subLi = document.createElement("li");
+          const subA = document.createElement("a");
+          subA.href = subLink.href;
+          subA.textContent = subLink.text;
+          subLi.appendChild(subA);
+          subUl.appendChild(subLi);
+        });
+        li.appendChild(subUl);
+      }
     }
-    if (mobileSubNavSection) mobileSubNavSection.style.display = "block";
-  } else {
-    if (mobileSubNavTitleElement)
-      mobileSubNavTitleElement.style.display = "none";
-    if (mobileSubNavContainer) mobileSubNavContainer.innerHTML = "";
-    if (mobileSubNavSection) mobileSubNavSection.style.display = "none";
-  }
+    mobileMainNavContainer.appendChild(li);
+  });
 }
 
 function updateThemeToggleIcon() {
@@ -294,42 +309,60 @@ function updateActiveNavLinks() {
 function setupMobileMenuInteractions() {
   const hamburgerBtn = qs(".hamburger-menu-btn");
   const mobileMenuOverlayContainer = qs("#main-mobile-menu-overlay");
+  if (!hamburgerBtn || !mobileMenuOverlayContainer) return;
 
-  function openMobileMenu() {
-    if (mobileMenuOverlayContainer) {
-      populateMobileNavigation();
-      updateActiveNavLinks();
-      mobileMenuOverlayContainer.classList.add("open");
-      document.body.classList.add("mobile-menu-open");
+  let savedScrollY = 0;
+
+  const openMobileMenu = () => {
+    // 1. Sauvegarder la position de scroll actuelle de la page
+    savedScrollY = window.scrollY;
+
+    populateMobileNavigation();
+
+    // 2. Positionner dynamiquement l'overlay (en position: absolute)
+    // pour qu'il commence en haut de la fenêtre visible actuelle
+    mobileMenuOverlayContainer.style.top = `${savedScrollY}px`;
+    mobileMenuOverlayContainer.classList.add("open");
+
+    // 3. Bloquer le scroll du body
+    document.body.classList.add("mobile-menu-is-open");
+
+    hamburgerBtn.setAttribute("aria-expanded", "true");
+  };
+
+  const closeMobileMenu = () => {
+    mobileMenuOverlayContainer.classList.remove("open");
+
+    // 4. Restaurer le scroll du body
+    document.body.classList.remove("mobile-menu-is-open");
+
+    hamburgerBtn.setAttribute("aria-expanded", "false");
+  };
+
+  // Clic sur le hamburger pour ouvrir/fermer
+  hamburgerBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (mobileMenuOverlayContainer.classList.contains("open")) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
     }
-    if (hamburgerBtn) hamburgerBtn.setAttribute("aria-expanded", "true");
-  }
+  });
 
-  function closeMobileMenu() {
-    if (mobileMenuOverlayContainer)
-      mobileMenuOverlayContainer.classList.remove("open");
-    if (hamburgerBtn) hamburgerBtn.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("mobile-menu-open");
-  }
+  // Clic sur l'overlay (le fond) pour fermer
+  mobileMenuOverlayContainer.addEventListener("click", (e) => {
+    // On ferme uniquement si le clic est sur l'overlay lui-même
+    // et non sur le contenu du menu qui est à l'intérieur.
+    if (e.target === mobileMenuOverlayContainer) {
+      closeMobileMenu();
+    }
+  });
 
-  if (hamburgerBtn && mobileMenuOverlayContainer) {
-    hamburgerBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (mobileMenuOverlayContainer.classList.contains("open")) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
-    });
-
-    mobileMenuOverlayContainer.addEventListener("click", (e) => {
-      if (e.target === mobileMenuOverlayContainer) closeMobileMenu();
-    });
-
-    mobileMenuOverlayContainer.addEventListener("click", (e) => {
-      if (e.target.closest(".close-mobile-menu-btn")) {
-        closeMobileMenu();
-      } else if (e.target.closest("a")) {
+  // Clic sur un lien à l'intérieur du menu pour fermer (après un court délai)
+  const menuContent = qs(".mobile-menu-content", mobileMenuOverlayContainer);
+  if (menuContent) {
+    menuContent.addEventListener("click", (e) => {
+      if (e.target.closest("a")) {
         setTimeout(closeMobileMenu, 150);
       }
     });

@@ -204,7 +204,7 @@
 
 /* --- HERO BANNER --- */
 #hero-banner-section.full-width {
-  top: 0px;
+  top: -60px;
   left: 0px;
   z-index: -1;
   position: absolute;
@@ -566,7 +566,7 @@
 
 .chapters-list-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
 }
 

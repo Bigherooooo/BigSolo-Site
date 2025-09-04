@@ -160,10 +160,23 @@ body.cover-gallery-open {
 }
 
 @media (max-width: 768px) {
-  .cover-gallery-overlay {
-    padding: 1rem;
-  }
   .cover-gallery-grid {
     gap: 1rem;
+    justify-content: center;
+  }
+
+  .cover-gallery-close {
+    top: 0.4rem;
+    right: 1rem;
+    font-size: 2rem;
+  }
+
+  .cover-gallery-grid-container {
+    padding: 75px 15px;
+  }
+
+  .cover-gallery-item .cover-info-overlay {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

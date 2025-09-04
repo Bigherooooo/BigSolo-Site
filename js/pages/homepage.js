@@ -18,7 +18,12 @@ function hexToRgb(hex) {
   return [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",");
 }
 
-// CORRECTION : La fonction est maintenant à la racine du module
+/**
+ * Tronque un texte s'il dépasse une longueur maximale.
+ * @param {string} text - Le texte à tronquer.
+ * @param {number} maxLength - La longueur maximale.
+ * @returns {string} Le texte tronqué ou original.
+ */
 function truncateText(text, maxLength) {
   if (typeof text !== "string") return "";
   if (text.length > maxLength) {
@@ -50,7 +55,11 @@ function renderHeroSlide(series) {
   // Boutons
   let latestChapterButtonHtml = "";
   if (latestChapter) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(
+      latestChapter.chapter
+    )}" class="hero-cta-button">Dernier chapitre (Ch. ${
+      latestChapter.chapter
+    })</a>`;
   }
   let latestEpisodeButtonHtml = "";
   if (seriesData.episodes && seriesData.episodes.length > 0) {
@@ -64,7 +73,9 @@ function renderHeroSlide(series) {
 
   // Statut + pastille (desktop)
   let statusText = seriesData.release_status || "En cours";
-  let statusDotClass = statusText.toLowerCase().includes("fini") ? "status-dot finished" : "status-dot";
+  let statusDotClass = statusText.toLowerCase().includes("fini")
+    ? "status-dot finished"
+    : "status-dot";
   let statusHtml = `
     <span class="status">
       <span class="${statusDotClass}"></span>
@@ -125,9 +136,9 @@ function renderHeroSlide(series) {
             <div class="hero-tags">
               ${typeTag}
               ${(seriesData.tags || [])
-      .slice(0, 4)
-      .map((tag) => `<span class="tag">${tag}</span>`)
-      .join("")}
+                .slice(0, 4)
+                .map((tag) => `<span class="tag">${tag}</span>`)
+                .join("")}
             </div>
             <div class="hero-mobile-status mobile-only">
               ${mobileStatusHtml}
@@ -142,7 +153,9 @@ function renderHeroSlide(series) {
           </div>
         </div>
         <div class="hero-image">
-          <img src="${characterImageUrl}" alt="${seriesData.title}" onerror="this.style.display='none'">
+          <img src="${characterImageUrl}" alt="${
+    seriesData.title
+  }" onerror="this.style.display='none'">
         </div>
       </div>
     </div>
@@ -266,14 +279,12 @@ function renderSeriesCard(series) {
     .filter((chap) => chap.url)
     .sort((a, b) => b.last_updated_ts - a.last_updated_ts);
 
-  // Détermine si la série a un anime
   const hasAnime = series.episodes && series.episodes.length > 0;
+  const lastChapterUrl =
+    chaptersArray.length > 0 ? chaptersArray[0].url : `/${seriesSlug}`;
+  const lastChapterNum =
+    chaptersArray.length > 0 ? chaptersArray[0].chapter : null;
 
-  // Récupère le dernier chapitre
-  const lastChapterUrl = chaptersArray.length > 0 ? chaptersArray[0].url : `/${seriesSlug}`;
-  const lastChapterNum = chaptersArray.length > 0 ? chaptersArray[0].chapter : null;
-
-  // Récupère le dernier épisode d'anime s'il existe
   let lastEpisodeUrl = null;
   let lastEpisodeNum = null;
   if (hasAnime && series.episodes.length > 0) {
@@ -286,20 +297,16 @@ function renderSeriesCard(series) {
     }
   }
 
-  // Génère les tags
   let tagsHtml =
     Array.isArray(series.tags) && series.tags.length > 0
       ? `<div class="series-tags">${series.tags
-        .map((t) => `<span class="tag">${t}</span>`)
-        .join("")}</div>`
+          .map((t) => `<span class="tag">${t}</span>`)
+          .join("")}</div>`
       : "";
 
   const imageUrl = series.cover || "img/placeholder_preview.png";
-
-  // Description pour le tooltip
   const description = series.description || "Pas de description disponible.";
 
-  // Boutons d'action selon le nombre de boutons
   let actionsHtml = "";
   if (lastChapterNum && lastEpisodeNum) {
     actionsHtml = `<div class="series-actions">
@@ -316,9 +323,11 @@ function renderSeriesCard(series) {
     </div>`;
   }
 
-  // Nouvelle structure verticale interactive + data-description pour tooltip
   return `
-    <div class="series-card" style="background-image: url('${imageUrl}');" data-url="/${seriesSlug}" data-description="${description.replace(/"/g, '&quot;')}">
+    <div class="series-card" style="background-image: url('${imageUrl}');" data-url="/${seriesSlug}" data-description="${description.replace(
+    /"/g,
+    "&quot;"
+  )}">
       <div class="series-content">
         <h3 class="series-title">${series.title}</h3>
         <div class="series-extra">
@@ -330,28 +339,47 @@ function renderSeriesCard(series) {
   `;
 }
 
-// Modification de la fonction makeSeriesCardsClickable pour le nouveau design
 function makeSeriesCardsClickable() {
   qsa(".series-card").forEach((card) => {
-    // Gestion générale du clic sur la carte (sauf boutons)
-    card.addEventListener("click", (e) => {
-      // Ne pas déclencher si on clique sur un bouton spécifique
-      if (e.target.closest(".series-action-btn")) {
-        return;
-      }
-
-      const url = card.dataset.url;
-      if (url) window.location.href = url;
+    card.addEventListener("mousedown", (e) => {
+      if (e.button === 2) return;
+      const actionButton = e.target.closest(".series-action-btn");
+      e.preventDefault();
+      card.addEventListener(
+        "mouseup",
+        (upEvent) => {
+          if (upEvent.button !== e.button) return;
+          let url;
+          const finalTargetIsButton =
+            upEvent.target.closest(".series-action-btn");
+          if (finalTargetIsButton) {
+            url = finalTargetIsButton.getAttribute("href");
+          } else {
+            // Sinon, on prend le data-url de la carte
+            url = card.getAttribute("data-url");
+          }
+          if (!url) return;
+          const openInNewTab = e.button === 1 || e.ctrlKey || e.metaKey;
+          if (openInNewTab) {
+            window.open(url, "_blank");
+          } else {
+            window.location.href = url;
+          }
+        },
+        { once: true }
+      );
+    });
+    card.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("dragstart", (e) => e.preventDefault());
     });
   });
 }
 
-// Tooltip description qui suit la souris après un délai
 function setupSeriesCardDescriptionTooltip() {
-  let tooltip = document.querySelector('.series-tooltip-description');
+  let tooltip = document.querySelector(".series-tooltip-description");
   if (!tooltip) {
-    tooltip = document.createElement('div');
-    tooltip.className = 'series-tooltip-description';
+    tooltip = document.createElement("div");
+    tooltip.className = "series-tooltip-description";
     document.body.appendChild(tooltip);
   }
   let showTimer = null;
@@ -359,16 +387,17 @@ function setupSeriesCardDescriptionTooltip() {
   let lastMouseEvent = null;
 
   function showTooltip(card) {
-    tooltip.textContent = card.dataset.description || "Pas de description disponible.";
-    tooltip.classList.add('visible');
+    tooltip.textContent =
+      card.dataset.description || "Pas de description disponible.";
+    tooltip.classList.add("visible");
     if (lastMouseEvent) {
       positionTooltip(lastMouseEvent);
     }
   }
 
   function hideTooltip() {
-    tooltip.classList.remove('visible');
-    tooltip.textContent = '';
+    tooltip.classList.remove("visible");
+    tooltip.textContent = "";
     activeCard = null;
     if (showTimer) {
       clearTimeout(showTimer);
@@ -379,7 +408,7 @@ function setupSeriesCardDescriptionTooltip() {
   function positionTooltip(e) {
     const tooltipRect = tooltip.getBoundingClientRect();
     let left = e.clientX + 24;
-    let top = e.clientY; // <-- Aligné en haut du curseur
+    let top = e.clientY;
     if (left + tooltipRect.width > window.innerWidth - 8) {
       left = window.innerWidth - tooltipRect.width - 8;
     }
@@ -391,15 +420,15 @@ function setupSeriesCardDescriptionTooltip() {
     tooltip.style.top = top + "px";
   }
 
-  document.addEventListener('mousemove', (e) => {
+  document.addEventListener("mousemove", (e) => {
     lastMouseEvent = e;
-    if (activeCard && tooltip.classList.contains('visible')) {
+    if (activeCard && tooltip.classList.contains("visible")) {
       positionTooltip(e);
     }
   });
 
-  qsa(".series-card").forEach(card => {
-    card.addEventListener('mouseenter', (e) => {
+  qsa(".series-card").forEach((card) => {
+    card.addEventListener("mouseenter", (e) => {
       lastMouseEvent = e;
       if (showTimer) clearTimeout(showTimer);
       showTimer = setTimeout(() => {
@@ -407,27 +436,25 @@ function setupSeriesCardDescriptionTooltip() {
         showTooltip(card);
       }, 600);
     });
-    card.addEventListener('mousemove', (e) => {
+    card.addEventListener("mousemove", (e) => {
       lastMouseEvent = e;
-      // Désactive la tooltip si sur un bouton d'action
-      if (e.target.closest('.series-action-btn')) {
+      if (e.target.closest(".series-action-btn")) {
         hideTooltip();
         return;
       }
-      if (activeCard === card && tooltip.classList.contains('visible')) {
+      if (activeCard === card && tooltip.classList.contains("visible")) {
         positionTooltip(e);
       }
     });
-    card.addEventListener('mouseleave', () => {
+    card.addEventListener("mouseleave", () => {
       hideTooltip();
     });
-    card.addEventListener('mousedown', () => {
+    card.addEventListener("mousedown", () => {
       hideTooltip();
     });
-    // Ajout : désactive la tooltip si on entre sur un bouton d'action
-    card.querySelectorAll('.series-action-btn').forEach(btn => {
-      btn.addEventListener('mouseenter', hideTooltip);
-      btn.addEventListener('mousemove', hideTooltip);
+    card.querySelectorAll(".series-action-btn").forEach((btn) => {
+      btn.addEventListener("mouseenter", hideTooltip);
+      btn.addEventListener("mousemove", hideTooltip);
     });
   });
 }
@@ -454,7 +481,6 @@ export async function initHomepage() {
         onGoingSeries.length > 0
           ? onGoingSeries.map(renderSeriesCard).join("")
           : "<p>Aucune série en cours.</p>";
-      // Les tags sont tous affichés, pas de limitVisibleTags
     }
 
     if (seriesGridOneShot) {
@@ -463,13 +489,10 @@ export async function initHomepage() {
         oneShots.length > 0
           ? oneShots.map(renderSeriesCard).join("")
           : "<p>Aucun one-shot.</p>";
-      // Les tags sont tous affichés, pas de limitVisibleTags
     }
 
     makeSeriesCardsClickable();
-
     setupSeriesCardDescriptionTooltip();
-
   } catch (error) {
     console.error(
       "🚨 Erreur lors de l'initialisation des grilles de séries:",

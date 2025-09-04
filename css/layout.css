@@ -40,28 +40,6 @@ body.dark header#main-header {
   gap: 0.8rem;
 }
 
-.mobile-menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.mobile-menu-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-}
-
 @media (min-width: 769px) {
   main > section:not(.full-width) {
     padding-left: 16rem;
