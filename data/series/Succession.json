@@ -1,30 +1,25 @@
 {
-	"title": "Succession",
-	"description": "Séduite par un manga anonyme qui s'efface mystérieusement de sa mémoire, une lectrice se met à en écrire sa propre version pour combattre cet oubli. Elle la publie à son tour, dans l'espoir de retrouver la trace de l'insaisissable auteur original.",
-	"artist": "Tyomevv2",
-	"author": "Tyomevv2",
-	"cover": "https://cdn.imgchest.com/files/45xcv8828o7.png",
-	"manga_type": "Seinen",
-	"magazine": "Twitter",
-	"release_year": 2024,
-	"tags": [
-		"Mystère",
-		"Fantaisie",
-		"Tranche de vie"
-	],
-	"alternative_titles": [
-		"継ぎ穂"
-	],
-	"release_status": "Fini",
-	"os": true,
-	"chapters": {
-		"0": {
-			"title": "Succession",
-			"volume": "",
-			"last_updated": "1753214400",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/9p4nj99q5yn"
-			}
-		}
-	}
+  "title": "Succession",
+  "description": "Séduite par un manga anonyme qui s'efface mystérieusement de sa mémoire, une lectrice se met à en écrire sa propre version pour combattre cet oubli. Elle la publie à son tour, dans l'espoir de retrouver la trace de l'insaisissable auteur original.",
+  "artist": "Tyomevv2",
+  "author": "Tyomevv2",
+  "cover": "https://cdn.imgchest.com/files/45xcv8828o7.png",
+  "manga_type": "Seinen",
+  "magazine": "Twitter",
+  "release_year": 2024,
+  "tags": ["Mystère", "Fantaisie", "Tranche de vie"],
+  "jp_title": "継ぎ穂",
+  "alternative_titles": ["Greffon"],
+  "release_status": "Fini",
+  "os": true,
+  "chapters": {
+    "0": {
+      "title": "Succession",
+      "volume": "",
+      "last_updated": "1753214400",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nj99q5yn"
+      }
+    }
+  }
 }

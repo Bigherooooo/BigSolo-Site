@@ -73,11 +73,13 @@ export function render() {
   imagesToRenderIndices.forEach((pageIndex) => {
     const img = domImages[pageIndex];
 
-    // Si l'image n'est pas encore chargée (pas de .src), on crée un placeholder.
-    if (!img.src) {
+    // MODIFICATION : On vérifie si l'image est complète. Si non, on crée un placeholder.
+    if (!img.src || !img.complete) {
       const placeholder = document.createElement("div");
       placeholder.className = "image-placeholder";
-      placeholder.style.aspectRatio = "2 / 3"; // Ratio standard manga
+      placeholder.style.aspectRatio = "2 / 3";
+      // AJOUT : On marque le placeholder avec son index pour le retrouver plus tard.
+      placeholder.dataset.pageIndex = pageIndex;
       placeholder.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
       viewer.appendChild(placeholder);
     } else {

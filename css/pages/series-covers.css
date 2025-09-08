@@ -1,268 +1,182 @@
-#covers-gallery-section {
-  padding: 20px;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
+/* Nouveaux styles pour la galerie de couvertures en overlay */
+
+/* L'overlay qui couvre toute la page */
+.cover-gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(var(--clr-bg-rgb-val), 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-.covers-gallery-title.page-title.section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  display: block;
-  text-align: left;
-  margin-bottom: 1.5rem;
-  position: relative;
-  color: var(--text-color-headings, var(--clr-text));
+body.cover-gallery-open .cover-gallery-overlay {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.covers-gallery-title.page-title.section-title::after {
-  content: "";
+/* Le bouton pour fermer la galerie */
+.cover-gallery-close {
   position: absolute;
-  left: 0;
-  bottom: -8px;
-  width: 80px;
-  height: 4px;
-  background: var(--clr-primary);
-}
-
-.back-to-series {
-  display: block;
-  text-align: center;
-  margin-top: -10px;
-  margin-bottom: 25px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-decoration: none;
-  color: var(--accent-color);
-}
-
-.back-to-series:hover {
-  text-decoration: underline;
-  color: var(--accent-color-hover);
-}
-
-.covers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-}
-
-.cover-item {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 2.5rem;
+  color: var(--clr-text);
+  background: none;
+  border: none;
   cursor: pointer;
-  background-color: var(--card-bg-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  line-height: 1;
+  padding: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
-.cover-item:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+.cover-gallery-close:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
-.cover-item img {
-  display: block;
+/* Le conteneur scrollable pour la grille */
+.cover-gallery-grid-container {
   width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-  border-radius: 8px;
+  height: 100%;
+  padding: 80px 16rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-text-sub) transparent;
 }
 
-.volume-caption-overlay {
+.cover-gallery-grid-container::-webkit-scrollbar {
+  width: 8px;
+}
+.cover-gallery-grid-container::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--clr-text-rgb), 0.25);
+  border-radius: 4px;
+}
+
+/* La grille des couvertures */
+.cover-gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0 auto;
+}
+
+/* Chaque item de la grille */
+.cover-gallery-item {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  /* - Debut modification */
+  position: relative; /* Nécessaire pour positionner l'overlay */
+  cursor: pointer; /* Indique que l'élément est cliquable */
+  transition: transform 0.2s ease; /* Ajoute une petite animation au survol */
+}
+
+.cover-gallery-item:hover {
+  transform: scale(1.03);
+}
+
+.cover-info-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
   color: #fff;
-  padding: 0.8rem 0.6rem 0.6rem;
-  font-size: 0.9em;
+  padding: 0.8rem 0.6rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
   text-align: center;
-  pointer-events: none;
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none; /* Pour que le clic passe à travers */
 }
 
-.cover-item:hover .volume-caption-overlay {
+.cover-gallery-item:hover .cover-info-overlay {
   opacity: 1;
   transform: translateY(0);
 }
 
-.loading-message,
-.no-covers {
-  grid-column: 1 / -1;
-  text-align: center;
-  font-style: italic;
-  margin-top: 30px;
-  padding: 20px;
-  color: var(--text-color-secondary);
-}
-
-#lightbox-modal {
+/* NOUVEAU : Styles pour la lightbox plein écran */
+.cover-lightbox {
   position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  z-index: 2000; /* Doit être au-dessus de l'overlay de la galerie */
   background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 1rem;
+  cursor: pointer; /* Permet de fermer en cliquant sur le fond */
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-#lightbox-modal .lightbox-content-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+.cover-lightbox.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-#lightbox-modal .lightbox-image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-#lightbox-modal #lightbox-img {
+.cover-lightbox img {
   display: block;
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
-  margin: auto;
   border-radius: 4px;
-  animation: lightboxZoom 0.3s ease-out;
+  cursor: default; /* Le curseur par défaut sur l'image */
+  /* Animation d'apparition */
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
 }
 
-@keyframes lightboxZoom {
-  from {
-    transform: scale(0.9);
+.cover-lightbox.is-visible img {
+  transform: scale(1);
+}
+
+.cover-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Classe pour bloquer le scroll du body */
+body.cover-gallery-open {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .cover-gallery-grid {
+    gap: 1rem;
+    justify-content: center;
   }
 
-  to {
-    transform: scale(1);
-  }
-}
-
-#lightbox-modal .lightbox-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  color: #f1f1f1;
-  font-size: 35px;
-  font-weight: bold;
-  transition: 0.3s;
-  cursor: pointer;
-  user-select: none;
-  z-index: 1001;
-}
-
-#lightbox-modal .lightbox-close:hover,
-#lightbox-modal .lightbox-close:focus {
-  color: #bbb;
-}
-
-#lightbox-modal .lightbox-caption {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  max-width: 90%;
-  padding: 8px 15px;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: #f0f0f0;
-  border-radius: 4px;
-  font-size: 1em;
-  font-weight: 500;
-  text-align: center;
-  user-select: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  line-height: 1.4;
-}
-
-#lightbox-modal .lightbox-prev,
-#lightbox-modal .lightbox-next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 12px 16px;
-  margin-top: -25px;
-  color: white;
-  font-weight: bold;
-  font-size: 22px;
-  transition: 0.4s ease;
-  user-select: none;
-  border-radius: 3px;
-  background-color: rgba(50, 50, 50, 0.4);
-}
-
-#lightbox-modal .lightbox-prev:hover,
-#lightbox-modal .lightbox-next:hover {
-  background-color: rgba(50, 50, 50, 0.7);
-}
-
-#lightbox-modal .lightbox-next {
-  right: 20px;
-}
-
-#lightbox-modal .lightbox-prev {
-  left: 20px;
-}
-
-
-@media (max-width: 700px) {
-
-  .covers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 15px;
+  .cover-gallery-close {
+    top: 0.4rem;
+    right: 1rem;
+    font-size: 2rem;
   }
 
-  .covers-gallery-title.page-title.section-title {
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
+  .cover-gallery-grid-container {
+    padding: 75px 15px;
   }
 
-  .covers-gallery-title.page-title.section-title::after {
-    width: 50px;
-    height: 3px;
-    bottom: -6px;
-  }
-
-  #lightbox-modal {
-    padding: 10px;
-  }
-
-  #lightbox-modal .lightbox-prev,
-  #lightbox-modal .lightbox-next {
-    font-size: 18px;
-    padding: 10px 12px;
-    margin-top: -22px;
-  }
-
-  #lightbox-modal .lightbox-close {
-    font-size: 28px;
-    top: 10px;
-    right: 10px;
-  }
-
-  #lightbox-modal .lightbox-caption {
-    font-size: 0.9em;
-    bottom: 8px;
-    padding: 6px 10px;
+  .cover-gallery-item .cover-info-overlay {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

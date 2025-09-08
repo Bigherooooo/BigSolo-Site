@@ -12,6 +12,7 @@ import { renderActionButtons } from "./shared/actionButtons.js";
 import { initListControls } from "./shared/listControls.js";
 import { fetchStats } from "./shared/statsManager.js";
 import { initMainScrollObserver } from "../../components/observer.js";
+import { initCoverGallery } from "./shared/coverGallery.js";
 
 let currentSeriesData = null;
 let currentSeriesStats = null;
@@ -151,6 +152,7 @@ export async function render(mainContainer, seriesData) {
 
   // Appel de la fonction de réorganisation responsive
   setupResponsiveLayout(viewContainer);
+  initCoverGallery(viewContainer, currentSeriesData);
 }
 
 function handleFilterOrSortChange(controls) {

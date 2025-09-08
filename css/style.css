@@ -1,6 +1,6 @@
 :root {
   --iclr-bg-light: #e9ecef;
-  --iclr-bg-dark: #111;
+  --iclr-bg-dark: #111111;
   --iclr-bg-card-light: #ffffff;
   --iclr-bg-card-dark: #1b1c1e;
   --iclr-text-light: #222329;
@@ -18,9 +18,9 @@
 
   /* Main Light */
   --clr-bg: var(--iclr-bg-light);
-  --clr-bg-rgb: 247, 248, 252;
+  --clr-bg-rgb: 255, 255, 255;
   --clr-bg-card: var(--iclr-bg-card-light);
-  --clr-bg-card-rgb: 255, 255, 255;
+  --clr-bg-card-rgb: 247, 248, 252;
   --clr-text: var(--iclr-text-light);
   --clr-text-rgb: 34, 40, 49;
   --clr-text-sub: var(--iclr-text-sub-light);
@@ -37,7 +37,7 @@
 
   /* Invert Light */
   --clr-bg-invert: var(--iclr-bg-dark);
-  --clr-bg-invert-rgb: 21, 23, 26;
+  --clr-bg-invert-rgb: 17, 17, 17;
   --clr-bg-card-invert: var(--iclr-bg-card-dark);
   --clr-bg-card-invert-rgb: 27, 28, 30;
   --clr-text-invert: var(--iclr-text-dark);
@@ -64,7 +64,7 @@ html.dark:root,
 body.dark {
   /* Main Dark */
   --clr-bg: var(--iclr-bg-dark);
-  --clr-bg-rgb: 21, 23, 26;
+  --clr-bg-rgb: 17, 17, 17;
   --clr-bg-card: var(--iclr-bg-card-dark);
   --clr-bg-card-rgb: 27, 28, 30;
   --clr-text: var(--iclr-text-dark);
@@ -141,7 +141,8 @@ img {
 .profile-pic,
 .gallery-controls,
 .series-detail-container,
-.colo-card {
+.colo-card,
+.chapter-card-list-item {
   transform: translateY(20px);
   opacity: .5;
 }

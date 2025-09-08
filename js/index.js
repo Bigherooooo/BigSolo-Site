@@ -88,7 +88,7 @@ function handleInternalNavigation(event, seriesData) {
     return;
   }
 
-  const link = event.target.closest("a, .chapter-tab-btn"); // On inclut les boutons d'onglet
+  const link = event.target.closest("a, .chapter-tab-btn");
   if (!link) return;
 
   const isReaderLink =
@@ -130,6 +130,13 @@ async function routeAndInitPage() {
   const path = window.location.pathname;
   const bodyId = document.body.id;
   console.log(`[Index] Routing for path: "${path}", bodyId: "${bodyId}"`);
+
+  // Si on est sur la nouvelle page admin, on ne fait rien ici.
+  // Le script /js/admin/main.js gère tout.
+  if (bodyId === "admin-page") {
+    console.log("[Index] Page admin détectée, le routeur principal l'ignore.");
+    return;
+  }
 
   switch (bodyId) {
     case "homepage":
@@ -200,12 +207,6 @@ async function routeAndInitPage() {
       await initAnimePlayer();
       break;
 
-    case "dashboardpage":
-      console.log("[Index] Initializing Admin Dashboard page.");
-      const { initDashboardPage } = await import("./pages/dashboard.js");
-      await initDashboardPage();
-      break;
-
     default:
       console.log(
         `[Index] No specific JS logic for bodyId "${bodyId}" or route not recognized.`
@@ -219,9 +220,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bodyId = document.body.id;
   console.log("[Index] DOMContentLoaded event fired.");
 
-  const isAdminPage =
-    bodyId === "dashboardpage" ||
-    window.location.pathname.startsWith("/admins");
+  const isAdminPage = bodyId === "admin-page";
 
   try {
     if (!isAdminPage) {

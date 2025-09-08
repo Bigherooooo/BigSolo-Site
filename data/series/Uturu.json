@@ -1,24 +1,25 @@
 {
-	"title": "Uturu",
-	"description": "One Shot de Uchida Akira",
-	"artist": "Uchida Akira",
-	"author": "Uchida Akira",
-	"cover": "https://meo.comick.pictures/W8Y5Rr.png",
-	"manga_type": "Seinen",
-    "magazine": "Twitter",
-	"release_year": 2023,
-	"tags": ["Drame", "Fantaisie"],
-	"alternative_titles": ["水いらず"],
-	"release_status": "Fini",
-	"os": true,
-	"chapters": {
-		"0": {
-			"title": "Uturu",
-			"volume": "",
-			"last_updated": "1718481600",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdeomn45"
-			}
-		}
-	}
+  "title": "Uturu",
+  "description": "One Shot de Uchida Akira",
+  "artist": "Uchida Akira",
+  "author": "Uchida Akira",
+  "cover": "https://meo.comick.pictures/W8Y5Rr.png",
+  "manga_type": "Seinen",
+  "magazine": "Twitter",
+  "release_year": 2023,
+  "tags": ["Drame", "Fantaisie"],
+  "jp_title": "ウツル",
+  "alternative_titles": [""],
+  "release_status": "Fini",
+  "os": true,
+  "chapters": {
+    "0": {
+      "title": "Uturu",
+      "volume": "",
+      "last_updated": "1718481600",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdeomn45"
+      }
+    }
+  }
 }

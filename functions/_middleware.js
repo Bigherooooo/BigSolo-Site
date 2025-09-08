@@ -8,9 +8,9 @@ function slugify(text) {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim()
-    .replace(/[\s\u3000]+/g, "_")
+    .replace(/[\s_]+/g, "-")
     .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "_");
+    .replace(/--+/g, "-");
 }
 
 function generateMetaTags(meta) {
@@ -68,6 +68,15 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const originalPathname = url.pathname;
+  if (originalPathname.includes("_")) {
+    const newPathname = originalPathname.replaceAll("_", "-");
+    const newUrl = new URL(newPathname, url.origin);
+    newUrl.search = url.search;
+    console.log(
+      `[Redirect] Old URL detected: ${originalPathname} -> Redirecting to: ${newUrl.toString()}`
+    );
+    return Response.redirect(newUrl, 301);
+  }
   let pathname =
     originalPathname.endsWith("/") && originalPathname.length > 1
       ? originalPathname.slice(0, -1)
@@ -267,22 +276,6 @@ export async function onRequest(context) {
           headers: { "Content-Type": "text/html;charset=UTF-8" },
         });
       }
-    }
-
-    if (pathSegments.length > 1 && pathSegments[1] === "cover") {
-      const metaData = {
-        title: `Couvertures de ${seriesData.title} - BigSolo`,
-        description: `Découvrez toutes les couvertures de la série ${seriesData.title} !`,
-        image: ogImageUrl,
-      };
-      const assetUrl = new URL("/series-covers.html", url.origin);
-      let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());
-
-      const tags = generateMetaTags({ ...metaData, url: url.href });
-      html = html.replace("<!-- DYNAMIC_OG_TAGS_PLACEHOLDER -->", tags);
-      return new Response(html, {
-        headers: { "Content-Type": "text/html;charset=UTF-8" },
-      });
     }
 
     if (pathSegments.length === 1) {

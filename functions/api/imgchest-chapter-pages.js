@@ -25,6 +25,32 @@ export async function onRequest(context) {
     if (cachedData) {
       console.log(`[IMG_CHEST_CHAPTER] Cache HIT → key "${cacheKey}"`);
       headers["X-Cache"] = "HIT";
+      const incrementViewPromise = fetch(`https://imgchest.com/p/${id}`, {
+        method: "HEAD", // Une requête HEAD est plus légère, on n'a pas besoin du corps de la page
+        headers: {
+          "User-Agent":
+            "BigSolo-Site-View-Incrementer/1.0 (+https://bigsolo.org)",
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            console.log(
+              `[IMG_CHEST_CHAPTER] Vue incrémentée avec succès pour l'ID '${id}' (en arrière-plan).`
+            );
+          } else {
+            console.warn(
+              `[IMG_CHEST_CHAPTER] Échec de l'incrémentation de la vue pour l'ID '${id}' (status: ${res.status}).`
+            );
+          }
+        })
+        .catch((err) => {
+          console.error(
+            `[IMG_CHEST_CHAPTER] Erreur lors de l'incrémentation de la vue pour l'ID '${id}':`,
+            err
+          );
+        });
+
+      context.waitUntil(incrementViewPromise);
       return new Response(cachedData, { headers });
     }
     console.log(`[IMG_CHEST_CHAPTER] Cache MISS → key "${cacheKey}"`);

@@ -1,0 +1,60 @@
+{
+  "title": "The Wakaba Home's Green Loves",
+  "description": "Une comédie romantique sur quatre sœurs qui vivent leur premier amour en même temps. Alors que l'aînée a le béguin pour le garçon de son travail à temps partiel, les trois autres font face à leurs premières expériences romantiques avec les garçons de leurs classes et clubs scolaires. Tous les soirs, les quatre sœurs ont des discussions entre filles, à cœur ouvert, sur leurs premiers amours respectifs",
+  "artist": "Ogata Akane",
+  "author": "Ogata Akane",
+  "cover": "https://meo.comick.pictures/Q8z7Lp.png",
+  "manga_type": "Shonen",
+  "magazine": "Sunday Webry",
+  "release_year": 2024,
+  "tags": ["Romance", "comédie", "Ecole", "Tranche de vie"],
+  "jp_title": "若葉さんちの青い恋",
+  "alternative_titles": ["The Wakaba Home's Blue Loves"],
+  "release_status": "En cours",
+  "covers_gallery": [
+    {
+      "url_hq": "https://meo.comick.pictures/Q8z7Lp.jpg",
+      "url_lq": "https://meo.comick.pictures/Q8z7Lp-s.jpg",
+      "volume": "2"
+    },
+    {
+      "url_hq": "https://meo.comick.pictures/2NRx7L.jpg",
+      "url_lq": "https://meo.comick.pictures/2NRx7L-s.jpg",
+      "volume": "1"
+    }
+  ],
+  "chapters": {
+    "1": {
+      "title": "Les quatre sœurs et leur premier amour",
+      "volume": "1",
+      "last_updated": "1747094400",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxjeoo42"
+      }
+    },
+    "2": {
+      "title": "Je veux savoir",
+      "volume": "1",
+      "last_updated": "1747094401",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkxjb278"
+      }
+    },
+    "3": {
+      "title": "Mauvais perdant",
+      "volume": "1",
+      "last_updated": "1747094402",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgndbpyx"
+      }
+    },
+    "4": {
+      "title": "Être franche",
+      "volume": "1",
+      "last_updated": "1751486400",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wxjvxbyx"
+      }
+    }
+  }
+}

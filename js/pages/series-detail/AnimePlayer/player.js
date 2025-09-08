@@ -225,7 +225,7 @@ function renderMobileControls() {
       </button>
       <div class="mrc-info-wrapper">
           <div class="mrc-top-row">
-              <span class="mrc-series-title"></span>
+              <a class="mrc-series-title"></a>
               <span class="mrc-page-counter"></span>
           </div>
           <div class="mrc-bottom-row">
@@ -250,6 +250,12 @@ function renderMobileControls() {
 }
 
 function updateMobileControlsUI() {
+  const titleLink = qs(".mrc-series-title");
+  if (titleLink) {
+    titleLink.textContent = state.seriesData.title;
+    titleLink.href = `/${state.seriesData.slug}/episodes/`;
+  }
+
   qs(".mrc-series-title").textContent = state.seriesData.title;
   qs(".mrc-page-counter").textContent = `Saison ${
     state.currentEpisode.saison_ep || 1

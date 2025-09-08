@@ -1,0 +1,25 @@
+{
+  "title": "Sous une nuit étoilée",
+  "description": "Deux amis partagent une nuit sous les étoiles, discutant et savourant chaque instant avant l'inévitable...",
+  "artist": "Iwamune Haruo",
+  "author": "Iwamune Haruo",
+  "cover": "https://meo.comick.pictures/l6X4B0.jpg",
+  "manga_type": "Seinen",
+  "magazine": "Harta 2021",
+  "release_year": 2021,
+  "tags": ["Tranche de vie", "Fantaisie", "Post-appocalyptique"],
+  "jp_title": "星降る夜に",
+  "alternative_titles": ["On a Starry Night", "Hoshi Furu Yoru ni"],
+  "release_status": "Fini",
+  "os": true,
+  "chapters": {
+    "0": {
+      "title": "Sous une nuit étoilée",
+      "volume": "",
+      "last_updated": "1711922400",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9qpgeyp"
+      }
+    }
+  }
+}

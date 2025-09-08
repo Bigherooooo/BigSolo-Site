@@ -1,24 +1,25 @@
 {
-	"title": "Futari.",
-	"description": "Deux adolescentes se lient en partageant de lourds secrets jusqu'à qu'un ressurgisse...",
-	"artist": "Ashioka Rangyo",
-	"author": "Ashioka Rangyo",
-	"cover": "https://meo.comick.pictures/0ZokDa.jpg",
-	"manga_type": "Shonen",
-    "magazine": "Shonen Jump Plus",
-	"release_year": 2023,
-	"tags": ["Drame", "Action", "Crime"],
-	"alternative_titles": ["ふたり。"],
-	"release_status": "Fini",
-	"os": true,
-	"chapters": {
-		"0": {
-			"title": "Futari.",
-			"volume": "",
-			"last_updated": "1722204000",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxjnle42"
-			}
-		}
-	}
+  "title": "Futari.",
+  "description": "Deux adolescentes se lient en partageant de lourds secrets jusqu'à qu'un ressurgisse...",
+  "artist": "Ashioka Rangyo",
+  "author": "Ashioka Rangyo",
+  "cover": "https://meo.comick.pictures/0ZokDa.jpg",
+  "manga_type": "Shonen",
+  "magazine": "Shonen Jump Plus",
+  "release_year": 2023,
+  "tags": ["Drame", "Action", "Crime"],
+  "jp_title": "ふたり。",
+  "alternative_titles": ["Jumelles"],
+  "release_status": "Fini",
+  "os": true,
+  "chapters": {
+    "0": {
+      "title": "Futari.",
+      "volume": "",
+      "last_updated": "1722204000",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxjnle42"
+      }
+    }
+  }
 }

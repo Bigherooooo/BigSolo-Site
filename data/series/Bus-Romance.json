@@ -1,0 +1,25 @@
+{
+  "title": "Bus Romance",
+  "description": "Une jeune femme observe secrètement l'homme qu'elle aime dans le bus. Un jour, tout change...",
+  "artist": "itukaki",
+  "author": "itukaki",
+  "cover": "https://meo.comick.pictures/X8XDQX.jpg",
+  "manga_type": "Shonen",
+  "magazine": "Twitter",
+  "release_year": 2023,
+  "tags": ["Comedie", "Romance", "Tranche de vie"],
+  "jp_title": "バスロマンス",
+  "alternative_titles": [""],
+  "release_status": "Fini",
+  "os": true,
+  "chapters": {
+    "0": {
+      "title": "Bus Romance",
+      "volume": "",
+      "last_updated": "1725660000",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nwp5lz4n"
+      }
+    }
+  }
+}

@@ -71,16 +71,22 @@ export function goToSpread(spreadIndex, isInitializing = false) {
     const finalSpreadIndex = state.pageToSpreadMap[anchorPageIndex];
     state.currentSpreadIndex = finalSpreadIndex;
 
-    // 5. Procéder au rendu et au positionnement
+    // 5. (CORRECTION CLÉ) On appelle TOUJOURS renderViewer() pour s'assurer que le DOM est à jour
+    // C'est cette étape qui manquait pour le mode webtoon au chargement initial.
+    renderViewer();
+
+    // 6. Procéder au positionnement (scroll)
     if (state.settings.mode === "webtoon") {
       const pageIndex = state.spreads[finalSpreadIndex]?.[0];
       if (pageIndex !== undefined) {
+        // Le viewer a été rendu, l'image existe maintenant dans le DOM
         const imageInDom = qs(`.reader-viewer img:nth-child(${pageIndex + 1})`);
         if (imageInDom) {
           const behavior = isInitializing ? "auto" : "smooth";
-          const isMobile = window.innerWidth <= 768;
 
-          if (isInitializing && isMobile) {
+          // Au premier chargement sur mobile, on calcule manuellement la position
+          // pour prendre en compte la hauteur des barres de navigation.
+          if (isInitializing && window.innerWidth <= 768) {
             const imageTopOffset =
               imageInDom.getBoundingClientRect().top + window.scrollY;
             const barsHeight =
@@ -96,14 +102,14 @@ export function goToSpread(spreadIndex, isInitializing = false) {
         }
       }
     } else {
-      renderViewer();
+      // Pour les modes paginés, on s'assure d'être en haut du conteneur
+      if (!isInitializing) {
+        dom.viewerContainer.scrollTop = 0;
+      }
     }
 
+    // 7. Mettre à jour l'interface utilisateur et l'URL
     updateUIOnPageChange();
-
-    if (!isInitializing && state.settings.mode !== "webtoon") {
-      dom.viewerContainer.scrollTop = 0;
-    }
     updateUrlForCurrentPage();
   };
 

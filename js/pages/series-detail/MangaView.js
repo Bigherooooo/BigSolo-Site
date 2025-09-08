@@ -18,6 +18,7 @@ import {
 } from "./shared/statsManager.js";
 import { initAccordion } from "./shared/accordion.js";
 import { renderItemNumber } from "./shared/itemNumberRenderer.js";
+import { initCoverGallery } from "./shared/coverGallery.js";
 
 let currentSeriesData = null;
 let currentSeriesStats = null;
@@ -66,6 +67,7 @@ export async function render(mainContainer, seriesData) {
 
   setupResponsiveLayout(viewContainer);
   preloadAllImgChestViewsOnce();
+  initCoverGallery(viewContainer, currentSeriesData);
 }
 
 /**

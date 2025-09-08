@@ -317,11 +317,6 @@ function setupRatingComponentLogic(
     e.stopPropagation();
     menuOpen = !menuOpen;
     menu.classList.toggle("visible", menuOpen);
-    if (menuOpen) {
-      const rect = btn.getBoundingClientRect();
-      menu.style.top = `${rect.bottom + 6}px`;
-      menu.style.left = `${rect.left}px`;
-    }
   });
   document.addEventListener("click", (e) => {
     if (menuOpen && !menu.contains(e.target)) {

@@ -9,7 +9,8 @@ let deletionQueue = [];
 
 function renderModerationView() {
   const contentArea = qs("#admin-content");
-  qs("#save-changes-btn").style.display = "none"; // Cacher le bouton par défaut
+  qs("#save-changes-btn").style.display =
+    deletionQueue.length > 0 ? "inline-block" : "none";
 
   contentArea.innerHTML = `
         <p id="status">Chargement des commentaires...</p>
@@ -75,7 +76,7 @@ async function loadAndDisplayComments() {
 
       const date = new Date(comment.timestamp).toLocaleString("fr-FR");
 
-      // Cellule Série / Chapitre (construite de manière sécurisée)
+      // Cellule Série / Chapitre
       const cellSeries = document.createElement("td");
       const strong = document.createElement("strong");
       strong.innerText = `Ch. ${comment.chapterNumber}`;
@@ -85,25 +86,25 @@ async function loadAndDisplayComments() {
         strong
       );
 
-      // Cellule Auteur (sécurisée avec .innerText)
+      // Cellule Auteur
       const cellUsername = document.createElement("td");
       cellUsername.innerText = comment.username;
 
-      // Cellule Commentaire (sécurisée avec .innerText)
+      // Cellule Commentaire
       const cellComment = document.createElement("td");
       cellComment.innerText = comment.comment;
       cellComment.className = "comment-content";
 
-      // Cellule Date (sécurisée avec .innerText)
+      // Cellule Date
       const cellDate = document.createElement("td");
       cellDate.innerText = date;
 
-      // Cellule Actions (HTML statique donc sûr, créé par élément pour la cohérence)
+      // Cellule Actions
       const cellActions = document.createElement("td");
       const deleteButton = document.createElement("button");
       deleteButton.className = "action-btn delete-btn";
       deleteButton.title = "Marquer pour suppression";
-      deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Sûr car c'est une chaîne statique
+      deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
       cellActions.appendChild(deleteButton);
 
       row.append(cellSeries, cellUsername, cellComment, cellDate, cellActions);
@@ -134,25 +135,25 @@ async function loadAndDisplayCacheList() {
       const seriesGroupEl = document.createElement("div");
       seriesGroupEl.className = "series-group";
       seriesGroupEl.innerHTML = `
-                <div class="series-header">${series.title}</div>
-                <ul class="chapters-list">
-                    ${chapters
-                      .map(
-                        ([num, data]) => `
-                        <li class="chapter-item" data-series-slug="${seriesSlug}" data-chapter-number="${num}">
-                            <div class="chapter-info">
-                                Chapitre ${num}
-                                <span class="chapter-title">${
-                                  data.title || ""
-                                }</span>
-                            </div>
-                            <button class="purge-btn"><i class="fas fa-sync-alt"></i> Vider le cache</button>
-                        </li>
-                    `
-                      )
-                      .join("")}
-                </ul>
-            `; // .innerHTML sûr ici car series.title et data.title viennent de vos fichiers JSON
+            <div class="series-header">${series.title}</div>
+            <ul class="chapters-list">
+                ${chapters
+                  .map(
+                    ([num, data]) => `
+                    <li class="chapter-item" data-series-slug="${seriesSlug}" data-chapter-number="${num}">
+                        <div class="chapter-info">
+                            Chapitre ${num}
+                            <span class="chapter-title">${
+                              data.title || ""
+                            }</span>
+                        </div>
+                        <button class="purge-btn"><i class="fas fa-sync-alt"></i> Vider le cache</button>
+                    </li>
+                `
+                  )
+                  .join("")}
+            </ul>
+        `;
       container.appendChild(seriesGroupEl);
     });
   } catch (error) {
@@ -183,6 +184,35 @@ function router() {
   }
 }
 
+/**
+ * Envoie la liste des commentaires à supprimer à l'API backend.
+ */
+function sendDeletionQueue() {
+  if (deletionQueue.length === 0) return;
+
+  console.log("[Dashboard] Envoi de la file de suppression :", deletionQueue);
+
+  try {
+    fetch("/api/admin/batch-delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(deletionQueue),
+      keepalive: true, // Très important : permet à la requête de continuer même si la page se ferme
+    });
+
+    // On vide la file d'attente localement après l'envoi
+    deletionQueue = [];
+  } catch (e) {
+    console.error("Erreur lors de l'envoi de la file de suppression", e);
+    alert(
+      "Une erreur est survenue lors de la tentative de sauvegarde des changements."
+    );
+  }
+}
+
 export function initDashboardPage() {
   if (!token) {
     window.location.href = "/admins.html";
@@ -193,7 +223,30 @@ export function initDashboardPage() {
   const saveBtn = qs("#save-changes-btn");
   const pendingCountSpan = qs("#pending-count");
 
+  // Écouteur d'événement pour le bouton "Sauvegarder"
+  saveBtn.addEventListener("click", () => {
+    sendDeletionQueue();
+    alert(
+      "Changements sauvegardés ! La page va maintenant se recharger pour afficher le résultat."
+    );
+    // Recharger la page pour voir les changements
+    window.location.reload();
+  });
+
+  // Écouteur pour envoyer les suppressions en attente avant de quitter/recharger la page
+  window.addEventListener("pagehide", sendDeletionQueue);
+
   qs("#logout-btn").addEventListener("click", () => {
+    // Si des suppressions sont en attente, on demande confirmation avant de se déconnecter
+    if (deletionQueue.length > 0) {
+      if (
+        confirm(
+          "Vous avez des changements non sauvegardés. Voulez-vous les sauvegarder avant de vous déconnecter ?"
+        )
+      ) {
+        sendDeletionQueue();
+      }
+    }
     sessionStorage.removeItem("admin_token");
     window.location.href = "/admins.html";
   });
@@ -206,6 +259,7 @@ export function initDashboardPage() {
   });
 
   contentArea.addEventListener("click", async (e) => {
+    // Gestion du purge-cache
     const purgeBtn = e.target.closest(".purge-btn");
     if (purgeBtn) {
       const item = purgeBtn.closest(".chapter-item");
@@ -246,6 +300,7 @@ export function initDashboardPage() {
       }
     }
 
+    // Gestion de la modération des commentaires
     const actionBtn = e.target.closest(".action-btn");
     if (actionBtn) {
       const row = actionBtn.closest("tr");
@@ -273,5 +328,5 @@ export function initDashboardPage() {
   });
 
   window.addEventListener("hashchange", router);
-  router();
+  router(); // Appelle le routeur au chargement initial
 }

@@ -70,6 +70,7 @@ export function calculateSpreads(useImageDimensions = false) {
   }
 }
 
+// - Debut modification
 /**
  * Gère le chargement en arrière-plan et priorisé du reste des images.
  * @param {number} startIndex - L'index de la page à partir de laquelle commencer le chargement.
@@ -90,7 +91,7 @@ function startProgressiveLoading(startIndex) {
     }
   }
 
-  // Filtrer les doublons et les pages déjà en cours de chargement
+  // Filtrer les doublons
   const uniquePagesToLoad = [...new Set(pagesToLoad)];
 
   let currentLoadIndex = 0;
@@ -103,6 +104,21 @@ function startProgressiveLoading(startIndex) {
 
     // Si l'image n'a pas encore de source, on la charge
     if (img && !img.src) {
+      // AJOUT : Logique de remplacement du placeholder
+      img.onload = () => {
+        // Uniquement en mode webtoon, on cherche et remplace le placeholder
+        if (state.settings.mode === "webtoon") {
+          const placeholder = qs(
+            `.image-placeholder[data-page-index="${pageIndex}"]`
+          );
+          if (placeholder) {
+            // On clone l'image chargée pour l'insérer dans le DOM
+            const imgClone = img.cloneNode(true);
+            placeholder.replaceWith(imgClone);
+          }
+        }
+      };
+
       img.src = state.pages[pageIndex];
     }
 
@@ -114,6 +130,7 @@ function startProgressiveLoading(startIndex) {
   // Démarrer le processus
   loadNext();
 }
+// - Fin modification
 
 /**
  * Récupère la liste des pages et gère le chargement progressif.
@@ -162,7 +179,7 @@ export async function fetchAndLoadPages(initialPageNumber = 1) {
     if (initialPageNumber === "last") {
       targetPageIndex = state.pages.length - 1;
     } else if (typeof initialPageNumber === "number" && initialPageNumber > 0) {
-      targetPageIndex = initialPageNumber - 1;
+      targetPageIndex = Math.min(initialPageNumber - 1, state.pages.length - 1);
     }
 
     const targetSpreadIndex = state.pageToSpreadMap[targetPageIndex];

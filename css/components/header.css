@@ -34,9 +34,7 @@ header#main-header {
   right: 0;
   z-index: 500;
   min-height: 60px;
-  /* - Debut modification */
   transition: transform 0.3s ease-in-out; /* Assure que la transition est définie */
-  /* - Fin modification */
   @media (max-width: 768px) {
     position: fixed;
   }

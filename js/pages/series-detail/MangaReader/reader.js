@@ -197,7 +197,9 @@ function renderMobileControls() {
       </button>
       <div class="mrc-info-wrapper">
           <div class="mrc-top-row">
-              <span class="mrc-series-title">${state.seriesData.title}</span>
+              <a href="/${slugify(
+                state.seriesData.title
+              )}" class="mrc-series-title">${state.seriesData.title}</a>
               <span class="mrc-page-counter">Page ? / ?</span>
           </div>
           <div class="mrc-bottom-row">
@@ -413,19 +415,61 @@ function initializeDesktopEvents() {
   dom.toggleLikeBtn.addEventListener("click", handleGlobalLike);
 }
 
-// - Debut modification
 function initializeMobileEvents() {
-  const readerContainer = dom.viewerContainer?.parentElement;
   const barsWrapper = dom.barsWrapper;
   const interactionsSection = qs("#interactions-share");
   const commentsSection = qs("#comments-mobile-section");
   let lastScrollY = window.scrollY;
+
+  if (!barsWrapper) {
+    console.error(
+      "[Mobile Events] barsWrapper non trouvé. L'initialisation est annulée."
+    );
+    return;
+  }
+
+  // --- Fonctions d'aide pour gérer l'affichage/masquage des barres ---
+
+  const hideBars = () => {
+    if (!barsWrapper.classList.contains("is-hidden")) {
+      barsWrapper.classList.add("is-hidden");
+      document.body.classList.add("bars-hidden");
+
+      // Écouteur pour la fin de la transition
+      const onTransitionEnd = () => {
+        // On vérifie si la barre est toujours censée être cachée
+        if (barsWrapper.classList.contains("is-hidden")) {
+          barsWrapper.style.display = "none";
+        }
+      };
+
+      // On attache l'écouteur qui se supprimera de lui-même après exécution
+      barsWrapper.addEventListener("transitionend", onTransitionEnd, {
+        once: true,
+      });
+    }
+  };
+
+  const showBars = () => {
+    if (barsWrapper.classList.contains("is-hidden")) {
+      // ÉTAPE 1 : Rendre l'élément visible mais toujours hors de l'écran
+      barsWrapper.style.display = "";
+
+      // ÉTAPE 2 : Attendre que le navigateur traite le changement de 'display'
+      // avant de déclencher la transition de retour.
+      requestAnimationFrame(() => {
+        barsWrapper.classList.remove("is-hidden");
+        document.body.classList.remove("bars-hidden");
+      });
+    }
+  };
 
   // --- Logique de focus sur le footer ---
   const handleFooterFocus = () => {
     if (!document.body.classList.contains("footer-focused")) {
       console.log("[Mobile Events] Focusing on footer sections, hiding bars.");
       document.body.classList.add("footer-focused");
+      hideBars(); // Utilise notre nouvelle fonction
     }
   };
 
@@ -444,7 +488,6 @@ function initializeMobileEvents() {
       const isScrollingDown = currentScrollY > lastScrollY;
       const scrollThreshold = 10;
 
-      // Si on remonte, on affiche toujours les barres et on retire le focus du footer
       if (
         !isScrollingDown &&
         Math.abs(currentScrollY - lastScrollY) > scrollThreshold
@@ -455,21 +498,16 @@ function initializeMobileEvents() {
           );
           document.body.classList.remove("footer-focused");
         }
-        if (barsWrapper) barsWrapper.classList.remove("is-hidden");
-        document.body.classList.remove("bars-hidden");
-      }
-      // Si on descend (et que le mode interactif est activé)
-      else if (
+        showBars(); // Utilise notre nouvelle fonction
+      } else if (
         isScrollingDown &&
         document.body.classList.contains("bars-interactive")
       ) {
-        // On cache les barres seulement si le footer n'est pas focus et qu'on a assez scrollé
         if (
           !document.body.classList.contains("footer-focused") &&
           currentScrollY > 150
         ) {
-          if (barsWrapper) barsWrapper.classList.add("is-hidden");
-          document.body.classList.add("bars-hidden");
+          hideBars(); // Utilise notre nouvelle fonction
         }
       }
       lastScrollY = currentScrollY;
@@ -478,15 +516,18 @@ function initializeMobileEvents() {
   );
 
   // --- Logique des clics sur les boutons des barres ---
+  const readerContainer = dom.viewerContainer?.parentElement;
   if (readerContainer) {
     readerContainer.addEventListener("click", (e) => {
       if (!document.body.classList.contains("bars-interactive")) return;
       if (e.target.closest("#reader-bars-wrapper")) return;
-      if (document.body.classList.contains("footer-focused")) return; // Ne pas réafficher si on clique sur le viewer alors que le footer est focus
+      if (document.body.classList.contains("footer-focused")) return;
 
-      const shouldBeHidden = !barsWrapper.classList.contains("is-hidden");
-      barsWrapper.classList.toggle("is-hidden", shouldBeHidden);
-      document.body.classList.toggle("bars-hidden", shouldBeHidden);
+      if (barsWrapper.classList.contains("is-hidden")) {
+        showBars();
+      } else {
+        hideBars();
+      }
     });
   }
 
@@ -497,13 +538,12 @@ function initializeMobileEvents() {
   dom.mobileCommentsStat.addEventListener("click", () => {
     if (commentsSection) {
       commentsSection.scrollIntoView({ behavior: "smooth" });
-      handleFooterFocus(); // On active aussi le focus
+      handleFooterFocus();
     }
   });
   dom.mobileSidebarOverlay.addEventListener("click", closeAllSidebars);
   document.addEventListener("close-sidebars", closeAllSidebars);
 }
-// - Fin modification
 
 function toggleSidebar(sidebarToOpen) {
   const isAlreadyOpen = sidebarToOpen.classList.contains("is-open");

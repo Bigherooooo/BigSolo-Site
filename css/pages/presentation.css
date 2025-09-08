@@ -10,8 +10,8 @@
   top: calc(-60px - 2rem);
   left: 0;
   right: 0;
-  height: 560px;
-  background-image: url("/img/bannierepresentation.jpg");
+  height: 900px;
+  background-image: url("/img/BanniereProjets.png");
   background-size: cover;
   background-position: center;
   filter: blur(4px) brightness(0.3);

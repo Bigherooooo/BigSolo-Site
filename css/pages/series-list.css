@@ -16,7 +16,7 @@
   color: var(--clr-accent);
   border-radius: 4px;
   font-size: 1.1rem;
-  padding: 0.75rem 1.3rem;
+  padding: 0 1.3rem;
   cursor: pointer;
   transition: background 0.18s, border 0.18s, color 0.18s;
   position: relative;
@@ -67,8 +67,7 @@
 .series-rating-menu {
   display: none;
   position: absolute;
-  top: 110%;
-  left: 0;
+  margin-top: 20px;
   z-index: 10011;
   background: var(--clr-bg-card);
   border: 1.5px solid var(--clr-bg-card-invert);
@@ -91,7 +90,7 @@
   padding: 0;
 }
 .series-rating-menu li {
-  padding: 0.5em 1.2em;
+  padding: 0.5rem 1.2rem;
   cursor: pointer;
   transition: background 0.13s, color 0.13s;
   font-weight: 500;
@@ -103,7 +102,7 @@
 .series-rating-menu .remove-rating {
   color: var(--clr-accent);
   font-weight: 600;
-  margin-top: 0.2em;
+  margin-top: 0.2rem;
 }
 .series-rating-menu .remove-rating:hover {
   background: rgba(var(--clr-accent-rgb), 0.3);
@@ -204,7 +203,7 @@
 
 /* --- HERO BANNER --- */
 #hero-banner-section.full-width {
-  top: 0px;
+  top: -60px;
   left: 0px;
   z-index: -1;
   position: absolute;
@@ -283,6 +282,16 @@
   background: #fff;
   object-fit: cover;
   display: block;
+}
+
+.detail-cover-wrapper.is-clickable {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail-cover-wrapper.is-clickable:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* Texte à droite */
@@ -384,13 +393,13 @@
 #reading-actions-container {
   margin-top: 1.2rem;
   display: flex;
-  gap: 1rem;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
 .detail-action-btn,
 .reading-action-button {
-  padding: 0.65rem 1.3rem;
+  padding: 0 1.3rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 700;
@@ -546,7 +555,7 @@
 
 .chapters-list-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
 }
 
@@ -561,7 +570,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: background 0.18s, color 0.18s;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.3s ease-out,
+    opacity 0.3s ease-out;
   cursor: pointer;
 }
 
@@ -696,7 +706,8 @@ a.chapter-card-list-item {
   padding: 1.1rem;
   display: flex;
   justify-content: space-between;
-  transition: background 0.18s, color 0.18s;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.3s ease-out,
+    opacity 0.3s ease-out;
   cursor: pointer;
 }
 
@@ -708,6 +719,13 @@ a.chapter-card-list-item:hover {
   color: inherit;
   text-decoration: none;
   outline: none;
+}
+
+.detail-action-btn,
+#series-rating-bt,
+.detail-action-btn.detail-action-btn--disabled,
+.op-ed-btn {
+  min-height: 50px;
 }
 
 @media (max-width: 900px) {
@@ -1030,13 +1048,13 @@ a.chapter-card-list-item:hover {
   }
 
   #mobile-actions-target #series-rating-btn {
-    padding: 0.56rem 1.3rem;
+    padding: 0 1.3rem;
   }
 
   /* Style de base pour TOUS les boutons en mobile */
   #mobile-actions-target .detail-action-btn {
     font-size: 0.85rem;
-    padding: 0.4rem 1.1rem;
+    padding: 0 1.1rem;
     border-radius: 4px; /* Un peu plus arrondi pour un look moderne */
     flex-grow: 1; /* Permet aux boutons de partager l'espace disponible */
     text-align: center;
@@ -1069,7 +1087,7 @@ a.chapter-card-list-item:hover {
     color: rgba(var(--clr-bg-invert-rgb), 0.5);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    padding: 0.4rem 0.1rem;
+    padding: 0 0.1rem;
   }
 
   #series-rating-btn .rating-star {
@@ -1122,7 +1140,7 @@ a.chapter-card-list-item:hover {
     border: 1.5px solid var(--clr-accent);
     background-color: rgba(var(--clr-accent-rgb), 0.1);
     color: var(--clr-text);
-    padding: 0.4rem 1.1rem;
+    padding: 0 1.1rem;
     flex-grow: 1;
   }
 
@@ -1134,5 +1152,22 @@ a.chapter-card-list-item:hover {
 
   .op-ed-buttons-wrapper .op-ed-btn {
     flex: 1;
+  }
+
+  .series-rating-menu {
+    margin-top: 10px;
+    min-width: 180px;
+  }
+
+  .series-rating-menu li {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  #mobile-actions-target .detail-action-btn,
+  #mobile-actions-target #series-rating-bt,
+  #mobile-actions-target .detail-action-btn.detail-action-btn--disabled,
+  #mobile-actions-target .op-ed-btn {
+    min-height: 36px;
   }
 }
