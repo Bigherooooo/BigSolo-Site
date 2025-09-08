@@ -1,17 +1,6 @@
 // --- File: functions/_middleware.js ---
 
-function slugify(text) {
-  if (!text) return "";
-  return text
-    .toString()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[\s_]+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-");
-}
+import { slugify } from "../js/utils/domUtils.js";
 
 function generateMetaTags(meta) {
   const title = meta.title || "BigSolo";
@@ -67,16 +56,24 @@ function enrichEpisodesWithAbsoluteIndex(episodes) {
 export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
+
+  // redirect pour les anciennes urls (avec des underscores au lieu de tirets)
+  // modif : évite de rediriger si le fichier demandé n'est pas une série
+  // (les dossiers ne devraient pas contenir d'espace dans tous les cas, donc ça ne devrait pas poser de problème)
+  // pour le redirect legacy /series-detail, check le fichier _redirects
   const originalPathname = url.pathname;
-  if (originalPathname.includes("_")) {
-    const newPathname = originalPathname.replaceAll("_", "-");
+  const seriesName = originalPathname.split("/")[0];
+  if (seriesName.includes("_")) {
+    const newPathname = pathname.replaceAll("_", "-");
     const newUrl = new URL(newPathname, url.origin);
     newUrl.search = url.search;
+    newUrl.hash = url.hash;
     console.log(
-      `[Redirect] Old URL detected: ${originalPathname} -> Redirecting to: ${newUrl.toString()}`
+      `[Redirect] Old URL detected: ${pathname} -> Redirecting to: ${newUrl.pathname}`
     );
-    return Response.redirect(newUrl, 301);
+    return Response.redirect(newUrl.toString(), 301);
   }
+
   let pathname =
     originalPathname.endsWith("/") && originalPathname.length > 1
       ? originalPathname.slice(0, -1)

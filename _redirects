@@ -1,0 +1,6 @@
+# redirection lien series-detail
+/series-detail/* /:splat
+
+# rediriger les url /episode et /anime vers /episodes
+/:series/episode/:episode /:series/episodes/:episode
+/:series/anime/:episode /:series/episodes/:episode
