@@ -1472,7 +1472,7 @@
     },
     "134": {
       "title": "Les soucis de Subaru",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1734912000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkarm378"
@@ -1480,7 +1480,7 @@
     },
     "135": {
       "title": "Examens de premier trimestre",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1735862400",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgvewxyx"
@@ -1488,7 +1488,7 @@
     },
     "136": {
       "title": "Sortie au Zoo",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1737244800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxge9yd"
@@ -1496,7 +1496,7 @@
     },
     "137": {
       "title": "Retour à la plage",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1737676800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwv2ayk"
@@ -1504,7 +1504,7 @@
     },
     "138": {
       "title": "Émotions naissantes",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1738540800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxlnkd42"
@@ -1512,7 +1512,7 @@
     },
     "139": {
       "title": "Plus qu'un ami",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1739059200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jpnxyp"
@@ -1520,7 +1520,7 @@
     },
     "140": {
       "title": "Qu'est-ce que l'Amour ?",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1740787200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zezap54j"
@@ -1528,7 +1528,7 @@
     },
     "141": {
       "title": "Mots d'affection",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1740787200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgoqq4j"
@@ -1536,7 +1536,7 @@
     },
     "142": {
       "title": "La chambre de Kaoruko",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1741564800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/n87wd3wnx4x"
@@ -1544,7 +1544,7 @@
     },
     "143": {
       "title": "Réunion parents-profs",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1742169600",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdb627b"
@@ -1552,7 +1552,7 @@
     },
     "144": {
       "title": "L'été de Rintaro",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1742688000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/o24aqrz6d7l"
@@ -1560,7 +1560,7 @@
     },
     "145": {
       "title": "Le futur de Rintaro",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1743379200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/a846wjvozyx"
@@ -1568,7 +1568,7 @@
     },
     "146": {
       "title": "Décompression",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1744243200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkmnb48"
@@ -1576,7 +1576,7 @@
     },
     "147": {
       "title": "Le Futur de Natsusawa",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1744848000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwznpyq"
@@ -1584,7 +1584,7 @@
     },
     "148": {
       "title": "Premier Anniversaire",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1745452800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/9249wrokbyn"
@@ -1592,7 +1592,7 @@
     },
     "149": {
       "title": "Entretien D'embauche",
-      "volume": "",
+      "volume": "19",
       "last_updated": "1746144000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw95zb4n"
@@ -1702,9 +1702,17 @@
         "Big_herooooo": "/proxy/api/imgchest/chapter/wl7loodop7x"
       }
     },
+    "162.5": {
+      "title": "Chapitre Bonus - Kaoruko L'artiste",
+      "volume": "19",
+      "last_updated": "1757343600",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/o24ajmw924l"
+      }
+    },
     "136.5": {
       "title": "L'affaire de la glace",
-      "volume": "",
+      "volume": "18",
       "last_updated": "1754838000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/agyvrewak78"
