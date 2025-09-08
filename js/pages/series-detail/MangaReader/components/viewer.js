@@ -55,6 +55,9 @@ export function render() {
     if (imgElement && imgElement.naturalWidth > 0) {
       isLandscape = imgElement.naturalWidth > imgElement.naturalHeight;
     }
+    if (imagesToRenderIndices[0] === domImages.length - 1) {
+      viewer.classList.add("last-page");
+    }
   }
 
   if (mode === "double" && isSingleImageSpread && isLandscape) {

@@ -46,9 +46,8 @@ function renderColoCard(colo, author) {
            alt="Colorisation Chap. ${colo.chapitre || "N/A"} par ${authorName}" 
            data-src="${previewUrl}"> 
       <div class="colo-card-overlay">
-        <p>Chap. ${colo.chapitre || "N/A"}${
-    colo.page ? `, Page ${colo.page}` : ""
-  }</p>
+        <p>Chap. ${colo.chapitre || "N/A"}${colo.page ? `, Page ${colo.page}` : ""
+    }</p>
         <p>Par ${authorName}</p>
       </div>
     </div>`;
@@ -134,11 +133,10 @@ function displayLightboxInfo(colo, author) {
         <div class="detail-line">
           <span class="detail-label">Ch.</span>
           <span class="detail-value">${colo.chapitre || "N/A"}</span>
-          ${
-            colo.page
-              ? `<span class="detail-label">Pg.</span><span class="detail-value">${colo.page}</span>`
-              : ""
-          }
+          ${colo.page
+        ? `<span class="detail-label">Pg.</span><span class="detail-value">${colo.page}</span>`
+        : ""
+      }
         </div>
         <div class="detail-line">
           <span class="detail-label">Date:</span>
@@ -150,32 +148,28 @@ function displayLightboxInfo(colo, author) {
     panelContent = `
       <div class="info-artist-section">
         <div class="artist-header">
-          <img class="artist-pfp" src="${
-            author.profile_img || "/img/profil.png"
-          }" alt="Profil de ${author.username}" loading="lazy">
+          <img class="artist-pfp" src="${author.profile_img || "/img/profil.png"
+      }" alt="Profil de ${author.username}" loading="lazy">
           <div class="artist-details">
             <h3 class="artist-name">${author.username}</h3>
-            <p class="artist-colo-count">${occurrenceCount} colo${
-      occurrenceCount > 1 ? "s" : ""
-    } sur le site</p>
+            <p class="artist-colo-count">${occurrenceCount} colo${occurrenceCount > 1 ? "s" : ""
+      } sur le site</p>
           </div>
         </div>
-        ${
-          artistSocialsHtml
-            ? `<div class="artist-socials">${artistSocialsHtml}</div>`
-            : ""
-        }
+        ${artistSocialsHtml
+        ? `<div class="artist-socials">${artistSocialsHtml}</div>`
+        : ""
+      }
       </div>
 
       <hr class="info-separator">
 
       <div class="info-colo-section">
         ${coloDetailsHtml}
-        ${
-          coloSocialsHtml
-            ? `<div class="source-links">${coloSocialsHtml}</div>`
-            : ""
-        }
+        ${coloSocialsHtml
+        ? `<div class="source-links">${coloSocialsHtml}</div>`
+        : ""
+      }
       </div>
     `;
   }
@@ -242,11 +236,9 @@ function populateCustomArtistFilter() {
       <div class="custom-dropdown-option" role="option">
         <input type="checkbox" value="${id}" id="artist-filter-${id}">
         <label for="artist-filter-${id}">
-          <img src="${
-            author.profile_img || "/img/profil.png"
-          }" class="artist-pfp" alt="Profil de ${
-        author.username
-      }" loading="lazy">
+          <img src="${author.profile_img || "/img/profil.png"
+        }" class="artist-pfp" alt="Profil de ${author.username
+        }" loading="lazy">
           <span class="artist-name">${author.username}</span>
           <span class="artist-count">${count}</span>
         </label>
@@ -334,6 +326,9 @@ function displayColos() {
 
   initLazyLoadObserver("img.lazy-load-gallery", masonry);
 
+  // on attend que toutes les images soient positionnées avec masonry avant le fade-in
+  masonry.layout();
+  console.log("[Galerie] Colos affichées:", colosToDisplay.length);
   setTimeout(() => {
     galleryGridContainer.classList.add("is-ready");
   }, 100);
@@ -450,8 +445,6 @@ export async function initGaleriePage() {
       if (galleryPathMatch) openLightboxForId(galleryPathMatch[1]);
       else closeLightbox();
     });
-
-    displayColos();
 
     const galleryPathMatch = window.location.pathname.match(
       /^\/galerie\/(\d+)\/?$/

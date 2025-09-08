@@ -1,14 +1,3 @@
-html {
-  background-color: #e9ecef !important;
-  color: #222831 !important;
-}
-
-html.dark {
-  background-color: #111 !important;
-  color: #eceff4 !important;
-  color-scheme: dark;
-}
-
 :root {
   --iclr-bg-light: #e9ecef;
   --iclr-bg-dark: #111;
@@ -119,10 +108,12 @@ body.dark {
   box-sizing: border-box;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
     transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%; 
 }
 
 body {

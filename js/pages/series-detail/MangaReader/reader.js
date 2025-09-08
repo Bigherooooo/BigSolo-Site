@@ -64,7 +64,7 @@ export async function initMangaReader() {
       .filter((key) => readerData.series.chapters[key].groups?.Big_herooooo)
       .sort((a, b) => parseFloat(a) - parseFloat(b));
 
-    document.title = `${state.seriesData.title} - Ch. ${state.currentChapter.number} | BigSolo`;
+    document.title = `${state.seriesData.title} - Ch. ${state.currentChapter.number} VF | BigSolo`;
     saveReadingProgress();
     loadSettings();
 

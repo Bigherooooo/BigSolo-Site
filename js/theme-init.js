@@ -63,14 +63,6 @@ window.themeUtils = {
 
     localStorage.setItem("mv-theme", isDark ? "dark" : "light");
 
-    // Les styles inline ne sont plus nécessaires ici, car les variables CSS s'en chargent.
-    // if (isDark) {
-    //   htmlEl.style.backgroundColor = '#15171a';
-    //   htmlEl.style.color = '#eceff4';
-    // } else {
-    //   htmlEl.style.backgroundColor = '#f7f8fc';
-    //   htmlEl.style.color = '#222831';
-    // }
     return isDark;
   },
 

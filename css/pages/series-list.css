@@ -230,7 +230,6 @@
   background-position: center;
   /* On récupère l'URL du style inline JS */
   /* Mais on va le faire via JS juste après */
-  filter: blur(12px) brightness(0.4);
   pointer-events: none;
   transition: filter 0.3s;
 }
@@ -241,13 +240,7 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
-}
-
-.hero-banner-overlay {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
+  backdrop-filter: blur(12px) brightness(0.4);
 }
 
 /* --- INFOS PRINCIPALES --- */
@@ -272,20 +265,20 @@
 
 .detail-cover-wrapper {
   flex: 0 0 auto;
-  width: 220px;
+  width: 215px;
   min-width: 180px;
   max-width: 240px;
   display: flex;
   align-items: flex-start;
   /* <-- ici */
   justify-content: flex-start;
-  height: 330px;
+  height: 320px;
   /* <-- ici */
 }
 
 .detail-cover {
   width: 100%;
-  height: 330px;
+  height: 100%;
   border-radius: 4px;
   background: #fff;
   object-fit: cover;
@@ -301,7 +294,7 @@
   min-width: 0;
   color: #fff;
   z-index: 3;
-  height: 330px;
+  height: 320px;
   /* même hauteur que la couverture */
 }
 
@@ -349,12 +342,9 @@
 }
 
 .detail-tag {
-  background: rgba(var(--clr-bg-card-invert-rgb), 0.2);
-  color: #fff;
-  border-radius: 4px;
   padding: 0.2em 0.7em;
   font-size: 0.85em;
-  font-weight: 400;
+  --clr-bg-card-invert-rgb: 255, 255, 255;
 }
 
 .series-status-year {
@@ -513,7 +503,7 @@
 }
 
 .search-chapter input[type="text"] {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem .7rem;
   border-radius: 6px;
   border: 1.5px solid rgba(var(--clr-bg-invert-rgb), 0.15);
   background: var(--clr-bg-card);
@@ -940,8 +930,6 @@ a.chapter-card-list-item:hover {
     font-size: 0.7rem;
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
-    background: rgba(var(--clr-bg-card-invert-rgb), 0.2);
-    color: #fff;
   }
 
   .detail-cover-wrapper {

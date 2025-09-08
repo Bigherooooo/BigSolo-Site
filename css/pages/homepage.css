@@ -21,7 +21,7 @@
   height: 470px;
   border-radius: 0; /* Suppression des coins arrondis */
   overflow: hidden;
-  background-color: var(--clr-bg-card);
+  background-color: var(--iclr-bg-card-dark);
   margin: 0;
 }
 
@@ -64,24 +64,6 @@
   background-position: center;
   filter: blur(12px) brightness(0.4);
   z-index: -1;
-}
-
-.hero-slide::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 75%;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85) 20%,
-    rgba(0, 0, 0, 0.5) 60%,
-    transparent 100%
-  );
-  z-index: 2;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .hero-slide-content {
@@ -127,11 +109,6 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 0.6rem;
-}
-.hero-info .hero-tags .tag {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-info .hero-description {
@@ -260,7 +237,7 @@
 /* Navigation */
 .hero-carousel-arrow {
   position: absolute;
-  top: calc(60px + 50%);
+  top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.3);
   border: none;
@@ -270,6 +247,7 @@
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
+  margin-top: 35px;
 }
 .hero-carousel-arrow:hover {
   background-color: rgba(0, 0, 0, 0.6);

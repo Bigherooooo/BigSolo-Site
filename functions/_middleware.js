@@ -96,7 +96,7 @@ export async function onRequest(context) {
 
   const staticPageMeta = {
     "/": {
-      title: "Accueil - BigSolo",
+      title: "BigSolo",
       description:
         "Retrouvez toutes les sorties de Big_herooooo en un seul et unique endroit !",
       htmlFile: "/index.html",

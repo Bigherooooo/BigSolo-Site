@@ -3,7 +3,7 @@
   "description": "Deux lycées que tout oppose se font face : Chidori, le repaire des garçons cancres, et Kikyô, l'établissement prestigieux des filles d'élite. Rintarô, élève de Chidori, sympathise avec Kaoruko, une cliente de la pâtisserie familiale. Alors qu'un lien se tisse entre eux, il découvre qu'elle étudie à Kikyô... et qu'ils sont censés se détester. Leur relation naissante pourra-t-elle survivre à la haine qui oppose leurs écoles ?",
   "artist": "Saka Mikami",
   "author": "Saka Mikami",
-  "cover": "https://meo.comick.pictures/O8kJK5.jpg",
+  "cover": "https://meo.comick.pictures/GXm0op.jpg",
   "manga_type": "Shonen",
   "magazine": "Pocket Magazine",
   "release_year": 2021,
@@ -16,6 +16,11 @@
   ],
   "release_status": "En cours",
   "covers_gallery": [
+    {
+      "url_hq": "https://meo.comick.pictures/GXm0op.jpg",
+      "url_lq": "https://meo.comick.pictures/GXm0op-s.jpg",
+      "volume": "19"
+    },
     {
       "url_hq": "https://meo.comick.pictures/O8kJK5.jpg",
       "url_lq": "https://meo.comick.pictures/O8kJK5-s.jpg",

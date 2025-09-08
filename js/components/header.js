@@ -3,7 +3,7 @@ import { qs, qsa, slugify } from "../utils/domUtils.js";
 const mainNavLinksConfig = [
   { text: "Accueil", href: "/", icon: "fas fa-home", id: "home" },
   {
-    text: "Fan-Arts",
+    text: "Colorisations",
     href: "/galerie",
     icon: "fa-solid fa-palette",
     id: "gallery",
@@ -13,8 +13,8 @@ const mainNavLinksConfig = [
 
 const subNavTitlesConfig = {
   homepage: "Sur cette page",
-  seriesdetailpage: "Navigation Série",
-  seriescoverspage: "Navigation Série",
+  seriesdetailpage: "Navigation série",
+  seriescoverspage: "Navigation série",
 };
 
 const subNavLinksConfig = {
@@ -86,12 +86,6 @@ function getSubNavLinksForPage(pageId) {
   if (pageId === "seriesdetailpage" || pageId === "seriescoverspage") {
     const seriesSlug = getCurrentSeriesSlugFromPath();
     if (seriesSlug) {
-      const coversLink = {
-        text: "Galerie des Couvertures",
-        href: `/${seriesSlug}/cover`,
-        id: "series-covers-gallery",
-      };
-
       if (pageId === "seriescoverspage") {
         baseLinks = [
           {
@@ -124,7 +118,7 @@ function getSubNavLinksForPage(pageId) {
               id: "series-info",
             },
             {
-              text: "Galerie des Couvertures",
+              text: "Couvertures",
               href: `/${seriesSlug}/cover`,
               id: "series-covers-gallery",
             },

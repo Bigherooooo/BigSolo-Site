@@ -1,27 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <!-- Le script theme-init reste ici -->
-    <script>
-      (function () {
-        try {
-          var theme = localStorage.getItem("mv-theme");
-          var prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-          ).matches;
-          var htmlEl = document.documentElement;
-          if (theme === "dark" || (!theme && prefersDark)) {
-            htmlEl.classList.add("dark");
-            htmlEl.style.backgroundColor = "#15171a";
-            htmlEl.style.color = "#eceff4";
-          } else {
-            htmlEl.classList.remove("dark");
-            htmlEl.style.backgroundColor = "#f7f8fc";
-            htmlEl.style.color = "#222831";
-          }
-        } catch (e) {}
-      })();
-    </script>
     <meta charset="UTF-8" />
 
     <!-- ↓↓↓ SECTION MODIFIÉE ↓↓↓ -->
@@ -76,7 +55,7 @@
     <main>
       <section class="gallery-section">
         <h1 class="section-title page-title">
-          Galerie des Colorisations <span id="colo-total-count"></span>
+          Galerie des colorisations <span id="colo-total-count"></span>
         </h1>
 
         <!-- Contrôles mis à jour -->

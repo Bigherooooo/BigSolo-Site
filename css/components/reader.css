@@ -10,6 +10,7 @@
   height: calc(100vh - 60px);
   position: relative; /* Le cadre de référence pour ses enfants */
   background-color: var(--clr-bg-reader);
+  overflow: hidden;
 }
 
 /* --- Contrôles Globaux (en haut à gauche) --- */
@@ -226,6 +227,10 @@ body.dark .reader-viewer-container {
 }
 .reader-viewer.double-mode.rtl-mode img:last-child {
   justify-self: end; /* La 2ème (logique) se colle à droite */
+}
+.reader-viewer.double-mode.rtl-mode.last-page img {
+  justify-self: start;
+  grid-column: 2;
 }
 
 /* --- NOUVELLE LOGIQUE POUR LA PAGE UNIQUE (PORTRAIT) --- */
