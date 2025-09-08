@@ -957,6 +957,8 @@ body.dark .reader-viewer-container {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: none;
+    color: inherit;
   }
 
   .mrc-chapter-details {

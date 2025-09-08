@@ -150,7 +150,8 @@ img {
 .profile-pic,
 .gallery-controls,
 .series-detail-container,
-.colo-card {
+.colo-card,
+.chapter-card-list-item {
   transform: translateY(20px);
   opacity: 0;
 }

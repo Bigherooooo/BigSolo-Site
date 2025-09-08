@@ -1,0 +1,324 @@
+/* --- File: css/admin/admin.css (Fichier complet et réécrit) --- */
+
+/* --- Variables de Thème & Styles Généraux --- */
+:root {
+  --admin-bg: #111111;
+  --admin-card-bg: #1b1c1e;
+  --admin-border-color: rgba(255, 255, 255, 0.1);
+  --admin-text-primary: #eff2f6;
+  --admin-text-secondary: #a8b2c0;
+  --admin-primary: #3b82f6; /* Bleu plus moderne */
+  --admin-primary-hover: #2563eb;
+  --admin-danger: #ef4444;
+  --admin-warning: #f59e0b;
+  --admin-success: #22c55e;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  margin: 0;
+  background-color: var(--admin-bg);
+  color: var(--admin-text-primary);
+}
+
+#app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px; /* Plus large pour les grands écrans */
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.loading-container,
+#status-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  color: var(--admin-text-secondary);
+  font-size: 1.2rem;
+  padding: 2rem;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: var(--admin-primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Page de Connexion --- */
+.login-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.login-container {
+  background: var(--admin-card-bg);
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--admin-border-color);
+  width: 100%;
+  max-width: 400px;
+}
+.login-container h1 {
+  margin-top: 0;
+  text-align: center;
+}
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--admin-border-color);
+  background-color: var(--admin-bg);
+  color: var(--admin-text-primary);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.login-container button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--admin-primary);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.login-container button:hover {
+  background-color: var(--admin-primary-hover);
+}
+.error-message {
+  color: var(--admin-danger);
+  text-align: center;
+  margin-top: 1rem;
+  display: none;
+}
+
+/* --- Tableau de Bord --- */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-border-color);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+.nav-btn {
+  background: transparent;
+  color: var(--admin-text-secondary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+.nav-btn.active {
+  background-color: var(--admin-primary);
+  color: white;
+}
+.nav-btn:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--admin-text-primary);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#logout-btn,
+#save-changes-btn {
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border-color);
+  color: var(--admin-text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+#logout-btn:hover {
+  background-color: #374151;
+  border-color: #374151;
+}
+#save-changes-btn {
+  background: var(--admin-success);
+  border-color: var(--admin-success);
+  display: none;
+}
+#save-changes-btn:hover {
+  background-color: #16a34a;
+  border-color: #16a34a;
+}
+
+/* --- Tableaux (Modération & Cache) --- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border-color);
+  border-radius: 8px;
+}
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--admin-border-color);
+}
+tr:last-child td {
+  border-bottom: none;
+}
+th {
+  color: var(--admin-text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Styles pour le tri */
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+th.sortable:hover {
+  color: var(--admin-text-primary);
+}
+th.sortable::after {
+  content: " ";
+  display: inline-block;
+  margin-left: 0.5em;
+  opacity: 0.4;
+  width: 1em;
+}
+th.sort-asc::after {
+  content: "▲";
+  opacity: 1;
+}
+th.sort-desc::after {
+  content: "▼";
+  opacity: 1;
+}
+
+td {
+  font-size: 0.9rem;
+}
+.comment-content {
+  max-width: 450px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--admin-text-secondary);
+}
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 5px;
+}
+.delete-btn {
+  color: var(--admin-danger);
+}
+.undo-btn {
+  color: var(--admin-warning);
+}
+
+.marked-for-deletion {
+  opacity: 0.5;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+.marked-for-deletion td {
+  text-decoration: line-through;
+}
+
+/* Vue Gestion du Cache */
+.series-group {
+  margin-bottom: 2rem;
+  background: var(--admin-card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--admin-border-color);
+  overflow: hidden;
+}
+.series-header {
+  padding: 1rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--admin-border-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.chapters-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border-color);
+}
+.chapter-item:last-child {
+  border-bottom: none;
+}
+.chapter-title {
+  color: var(--admin-text-secondary);
+  font-size: 0.9em;
+  margin-left: 0.5em;
+}
+.purge-btn {
+  background: var(--admin-primary);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.purge-btn:hover {
+  background: var(--admin-primary-hover);
+}
+.purge-btn:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+}

@@ -197,7 +197,9 @@ function renderMobileControls() {
       </button>
       <div class="mrc-info-wrapper">
           <div class="mrc-top-row">
-              <span class="mrc-series-title">${state.seriesData.title}</span>
+              <a href="/${slugify(
+                state.seriesData.title
+              )}" class="mrc-series-title">${state.seriesData.title}</a>
               <span class="mrc-page-counter">Page ? / ?</span>
           </div>
           <div class="mrc-bottom-row">

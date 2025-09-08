@@ -1,5 +1,0 @@
-# redirection legacy
-/series-detail/* /:splat
-
-# rediriger les url /episode vers /episodes
-/:series/episode/:episode /:series/episodes/:episode

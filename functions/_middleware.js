@@ -8,9 +8,9 @@ function slugify(text) {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim()
-    .replace(/[\s\u3000]+/g, "_")
+    .replace(/[\s_]+/g, "-")
     .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "_");
+    .replace(/--+/g, "-");
 }
 
 function generateMetaTags(meta) {
@@ -68,6 +68,15 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const originalPathname = url.pathname;
+  if (originalPathname.includes("_")) {
+    const newPathname = originalPathname.replaceAll("_", "-");
+    const newUrl = new URL(newPathname, url.origin);
+    newUrl.search = url.search;
+    console.log(
+      `[Redirect] Old URL detected: ${originalPathname} -> Redirecting to: ${newUrl.toString()}`
+    );
+    return Response.redirect(newUrl, 301);
+  }
   let pathname =
     originalPathname.endsWith("/") && originalPathname.length > 1
       ? originalPathname.slice(0, -1)
