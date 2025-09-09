@@ -1,3 +1,9 @@
+# anciens liens admin
+/moderation /admin#moderation
+/dashboard /admin
+/admins /admin
+/cache-management /admin#cache
+
 # redirection lien series-detail
 /series-detail/* /:splat
 

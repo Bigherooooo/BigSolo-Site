@@ -22,7 +22,6 @@ export function initCoverGallery(viewContainer, seriesData) {
   }
 
   trigger.classList.add("is-clickable");
-  trigger.title = "Afficher la galerie des couvertures";
 
   const closeBtn = qs(".cover-gallery-close", overlay);
   const gridContainer = qs(".cover-gallery-grid-container", overlay); // Ciblons le conteneur

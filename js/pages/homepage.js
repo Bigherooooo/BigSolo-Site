@@ -472,7 +472,7 @@ export async function initHomepage() {
       if (seriesGridOngoing)
         seriesGridOngoing.innerHTML = "<p>Aucune série en cours.</p>";
       if (seriesGridOneShot)
-        seriesGridOneShot.innerHTML = "<p>Aucun one-shot.</p>";
+        seriesGridOneShot.innerHTML = "<p>Aucun One-shot.</p>";
       return;
     }
 
@@ -489,7 +489,7 @@ export async function initHomepage() {
       seriesGridOneShot.innerHTML =
         oneShots.length > 0
           ? oneShots.map(renderSeriesCard).join("")
-          : "<p>Aucun one-shot.</p>";
+          : "<p>Aucun One-shot.</p>";
     }
 
     makeSeriesCardsClickable();
@@ -502,6 +502,6 @@ export async function initHomepage() {
     if (seriesGridOngoing)
       seriesGridOngoing.innerHTML = "<p>Erreur chargement séries.</p>";
     if (seriesGridOneShot)
-      seriesGridOneShot.innerHTML = "<p>Erreur chargement one-shots.</p>";
+      seriesGridOneShot.innerHTML = "<p>Erreur chargement One-shots.</p>";
   }
 }

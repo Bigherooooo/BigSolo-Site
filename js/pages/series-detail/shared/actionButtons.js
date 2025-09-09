@@ -63,6 +63,11 @@ export function renderActionButtons(viewContainer, seriesData, viewType) {
   });
 
   const seriesSlug = seriesData.slug;
+
+  const isOneShot = seriesData.os && Object.keys(seriesData.chapters).length === 1 && seriesData.chapters.hasOwnProperty("0");
+  const isOneShotCollection = seriesData.os;
+  console.log("[ActionButtons] Série One-shot :", isOneShot);
+
   const localKey =
     viewType === "manga"
       ? `reading-progress-${seriesSlug}`
@@ -121,6 +126,21 @@ export function renderActionButtons(viewContainer, seriesData, viewType) {
   }
 
   if (!savedProgress) {
+    if (isOneShot) {
+      const oneShotBtn = createButton(
+        `Lire le One-shot`,
+        `/${seriesSlug}${urlPath}/${lastItemKey}`
+      );
+      actionsDiv.appendChild(oneShotBtn);
+      return;
+    } else if (isOneShotCollection) {
+      const collectionBtn = createButton(
+        `Dernier One-shot (${lastItemKey})`,
+        `/${seriesSlug}${urlPath}/${lastItemKey}`
+      );
+      actionsDiv.appendChild(collectionBtn);
+      return;
+    }
     const lastBtn = createButton(
       `Dernier ${currentLabels.singular} (${lastItemLabel})`,
       `/${seriesSlug}${urlPath}/${lastItemKey}`

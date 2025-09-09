@@ -81,11 +81,6 @@ function updatePlayerState(absoluteEpisodeIndex, isFirstLoad = false) {
 
   saveWatchingProgress();
 
-  const seasonText = state.currentEpisode.saison_ep
-    ? `S${state.currentEpisode.saison_ep}`
-    : "";
-  document.title = `${state.seriesData.title} - ${seasonText} ÉP.${state.currentEpisode.indice_ep} | BigSolo`;
-
   if (isFirstLoad) {
     infoSidebar.updateEpisodeList();
   } else {

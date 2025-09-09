@@ -11,7 +11,7 @@
   top: -70px;
   margin-left: -50vw;
   margin-right: -50vw;
-  margin-bottom: -25px;
+  margin-bottom: -30px;
 }
 
 .hero-carousel {
@@ -62,7 +62,7 @@
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-  filter: blur(12px) brightness(0.4);
+  filter: blur(8px) brightness(0.4);
   z-index: -1;
 }
 

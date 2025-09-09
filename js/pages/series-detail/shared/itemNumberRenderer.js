@@ -6,12 +6,14 @@
  * @param {object} itemData - L'objet contenant les données de l'item (doit avoir .id et optionnellement .volume).
  * @returns {string} Le code HTML formaté.
  */
-export function renderItemNumber(itemData) {
+export function renderItemNumber(itemData, isOneShot = false) {
   // Sécurité : si les données sont invalides, on retourne une chaîne vide.
   if (!itemData || typeof itemData.id === "undefined") return "";
 
-  if (String(itemData.id) === "0") {
-    return "One-Shot";
+  if (isOneShot && itemData.id == 0) {
+    return "One-shot";
+  } else if (isOneShot) {
+    return `One-shot ${itemData.id}`;
   }
 
   if (itemData.volume) {

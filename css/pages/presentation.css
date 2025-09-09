@@ -17,6 +17,7 @@
   filter: blur(4px) brightness(0.3);
   mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   z-index: -1;
+  opacity: .3;
 }
 
 .presentation-page-header {
@@ -45,7 +46,7 @@
 .page-main-title {
   font-size: 2.8rem;
   font-weight: 800;
-  color: var(--iclr-text-dark);
+  color: var(--iclr-text);
   margin-bottom: 0.5rem;
   line-height: 1.2;
 }
@@ -56,7 +57,7 @@
 
 .page-subtitle {
   font-size: 1.1rem;
-  color: var(--iclr-text-sub-dark);
+  color: var(--iclr-text-sub);
   line-height: 1.6;
 }
 

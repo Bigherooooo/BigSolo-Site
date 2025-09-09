@@ -65,6 +65,15 @@ export async function render(mainContainer, seriesData) {
     search: "",
   });
 
+  // change quelques textes si one-shot
+  if (seriesData.os && Object.keys(seriesData.chapters).length === 1 && seriesData.chapters.hasOwnProperty("0")) {
+    // si one-shot et un seul chapitre
+    qs("[data-tab='chapters']").textContent = "One-shot";
+  } else if (seriesData.os) {
+    // si collection/compilation de one-shots (comme ceux de takaki tsuyoshi)
+    qs("[data-tab='chapters']").textContent = "One-shots";
+  }
+
   setupResponsiveLayout(viewContainer);
   preloadAllImgChestViewsOnce();
   initCoverGallery(viewContainer, currentSeriesData);
@@ -94,11 +103,11 @@ function displayChapterList({ sort, search }) {
   );
 
   if (search.trim()) {
-    const searchTerm = search.trim().toLowerCase();
+    const searchTerm = search.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     chapters = chapters.filter(
       (chap) =>
         chap.id.toLowerCase().includes(searchTerm) ||
-        (chap.title && chap.title.toLowerCase().includes(searchTerm))
+        (chap.title && chap.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(searchTerm))
     );
   }
 
@@ -123,6 +132,7 @@ function displayChapterList({ sort, search }) {
 
   attachChapterItemEventListeners(container);
   updateAllVisibleChapterViews();
+  initMainScrollObserver(".chapters-list-container .chapter-card-list-item");
 }
 
 /**
@@ -139,10 +149,10 @@ function renderChapterItem(chapterData) {
     cardClasses.push("licensed-chapter");
   }
   const tooltipText = isLicensed
-    ? `Licencié, sortie le ${chapterData.licencied[1]}`
+    ? `Le volume français est sorti officiellement le ${chapterData.licencied[1]}.`
     : "";
   const href = isLicensed
-    ? `href="#"`
+    ? ''
     : `href="/${seriesSlug}/${chapterData.id}"`;
 
   const interactionKey = `interactions_${seriesSlug}_${chapterData.id}`;
@@ -169,17 +179,14 @@ function renderChapterItem(chapterData) {
     ? `<span class="chapter-card-list-views detail-chapter-views" data-imgchest-id="${imgchestId}">
            <i class="fas fa-eye"></i> ...
          </span>`
-    : `<span class="chapter-card-list-views">
-           <i class="fas fa-eye-slash" title="Vues non disponibles"></i>
-         </span>`;
+    : '';
 
   // Utilisation de la nouvelle fonction partagée
-  const chapterNumberHtml = renderItemNumber(chapterData);
+  const chapterNumberHtml = renderItemNumber(chapterData, currentSeriesData.os);
 
   return `
-      <a ${href} class="${cardClasses.join(" ")}" data-chapter-id="${
-    chapterData.id
-  }" title="${tooltipText}">
+      <a ${href} class="${cardClasses.join(" ")}" data-chapter-id="${chapterData.id
+    }" title="${tooltipText}">
         <div class="chapter-card-list-top">
           <div class="chapter-card-list-left">
             <span class="chapter-card-list-number">${chapterNumberHtml}</span>
@@ -190,14 +197,12 @@ function renderChapterItem(chapterData) {
         </div>
         <div class="chapter-card-list-bottom">
           <div class="chapter-card-list-left">
-            <span class="chapter-card-list-title">${
-              chapterData.title || ""
-            }</span>
+            <span class="chapter-card-list-title">${chapterData.title || ""
+    }</span>
           </div>
           <div class="chapter-card-list-right">
-            <span class="chapter-card-list-likes${
-              isLiked ? " liked" : ""
-            }" data-base-likes="${chapterStats.likes || 0}">
+            <span class="chapter-card-list-likes${isLiked ? " liked" : ""
+    }" data-base-likes="${chapterStats.likes || 0}">
               <i class="fas fa-heart"></i>
               <span class="likes-count">${displayLikes}</span>
             </span>
@@ -256,8 +261,7 @@ function handleLikeToggle(seriesSlug, chapterId, likeButton) {
   });
 
   console.log(
-    `[MangaView] Action de like mise en file: ${
-      !isLiked ? "like" : "unlike"
+    `[MangaView] Action de like mise en file: ${!isLiked ? "like" : "unlike"
     } pour chap. ${chapterId}`
   );
 }

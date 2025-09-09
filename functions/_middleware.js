@@ -57,15 +57,26 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
 
+  const knownPrefixes = [
+    "/css/",
+    "/js/",
+    "/img/",
+    "/data/",
+    "/includes/",
+    "/functions/",
+    "/api/",
+    "/fonts/",
+  ];
+
   // redirect pour les anciennes urls (avec des underscores au lieu de tirets)
   // modif : évite de rediriger si le fichier demandé n'est pas une série
-  // (les dossiers ne devraient pas contenir d'espace dans tous les cas, donc ça ne devrait pas poser de problème)
   // pour le redirect legacy /series-detail, check le fichier _redirects
   const originalPathname = url.pathname;
-  const seriesName = originalPathname.split("/")[0];
-  if (seriesName.includes("_")) {
-    const newPathname = pathname.replaceAll("_", "-");
-    const newUrl = new URL(newPathname, url.origin);
+  const seriesName = originalPathname.split("/")[1];
+  if (seriesName.includes("_") && !knownPrefixes.includes(`/${seriesName}/`)) {
+    const newSeriesName = seriesName.replaceAll("_", "-");
+    const pathname = originalPathname.replace(seriesName, newSeriesName);
+    const newUrl = new URL(newSeriesName, url.origin);
     newUrl.search = url.search;
     newUrl.hash = url.hash;
     console.log(
@@ -85,7 +96,7 @@ export async function onRequest(context) {
 
   if (pathname.startsWith("/galerie")) {
     const metaData = {
-      title: "Galerie - BigSolo",
+      title: "Colorisations – BigSolo",
       description:
         "Découvrez toutes les colorisations et fan-arts de la communauté !",
       htmlFile: "/galerie.html",
@@ -109,7 +120,7 @@ export async function onRequest(context) {
       image: "/img/banner.jpg",
     },
     "/presentation": {
-      title: "Questions & Réponses - BigSolo",
+      title: "Questions & Réponses – BigSolo",
       description:
         "Les réponses de BigSolo à vos questions sur son parcours dans le scantrad.",
       htmlFile: "/presentation.html",
@@ -128,16 +139,6 @@ export async function onRequest(context) {
     });
   }
 
-  const knownPrefixes = [
-    "/css/",
-    "/js/",
-    "/img/",
-    "/data/",
-    "/includes/",
-    "/functions/",
-    "/api/",
-    "/fonts/",
-  ];
   if (knownPrefixes.some((prefix) => originalPathname.startsWith(prefix))) {
     return next();
   }
@@ -174,6 +175,9 @@ export async function onRequest(context) {
       url.origin
     ).toString();
 
+    let alternativeTitles = (seriesData.alternative_titles || []);
+    alternativeTitles = alternativeTitles.length > 0 ? ` (${alternativeTitles.join(", ")})` : "";
+
     const isChapterRoute =
       (pathSegments.length === 2 || pathSegments.length === 3) &&
       !isNaN(parseFloat(pathSegments[1]));
@@ -182,8 +186,8 @@ export async function onRequest(context) {
       const chapterNumber = pathSegments[1];
       if (seriesData.chapters[chapterNumber]) {
         const metaData = {
-          title: `${seriesData.title} - Chapitre ${chapterNumber} | BigSolo`,
-          description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title}. ${seriesData.description}`,
+          title: `Chapitre ${chapterNumber} VF | ${seriesData.title} – BigSolo`,
+          description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title} ${seriesData.alternative_titles?.join(", ")} en VF. ${seriesData.description}`,
           image: ogImageUrl,
         };
 
@@ -208,8 +212,7 @@ export async function onRequest(context) {
       }
     }
 
-    const isEpisodeRoute =
-      pathSegments.length > 1 && pathSegments[1] === "episodes";
+    const isEpisodeRoute = pathSegments.length > 1 && pathSegments[1] === "episodes";
 
     if (isEpisodeRoute) {
       if (pathSegments.length === 3) {
@@ -223,15 +226,14 @@ export async function onRequest(context) {
 
         if (currentEpisode) {
           const animeInfo = seriesData.anime?.[0];
+
+          const seasonText = currentEpisode.saison_ep && Math.max(seriesData.episodes.map(ep => ep.saison_ep || 1)) > 1 ? `S${currentEpisode.saison_ep}, ` : "";
+
           const metaData = {
-            title: `S${currentEpisode.saison_ep || 1} Épisode ${
-              currentEpisode.indice_ep
-            } de ${seriesData.title} - BigSolo`,
-            description: `Regardez l'épisode ${
-              currentEpisode.indice_ep
-            } de la saison ${currentEpisode.saison_ep || 1} de l'anime ${
-              seriesData.title
-            }.`,
+            title: `${seasonText}${seasonText ? "Ép." : "Épisode"} ${currentEpisode.indice_ep} | ${seriesData.title} VOSTFR – BigSolo`,
+            description: `Regardez l'épisode ${currentEpisode.indice_ep
+              } de la saison ${currentEpisode.saison_ep || 1} de l'anime ${seriesData.title
+              }${alternativeTitles} en VOSTFR.`,
             image: animeInfo?.cover_an || ogImageUrl,
           };
 
@@ -257,8 +259,8 @@ export async function onRequest(context) {
         return next();
       } else {
         const metaData = {
-          title: `Épisodes de ${seriesData.title} - BigSolo`,
-          description: `Liste de tous les épisodes de l'anime ${seriesData.title}.`,
+          title: `${seriesData.title} (Anime VOSTFR) – BigSolo`,
+          description: `Regardez tous les épisodes de l'anime ${seriesData.title}${alternativeTitles} en VOSTFR.`,
           image: seriesData.anime?.[0]?.cover_an || ogImageUrl,
         };
         const assetUrl = new URL("/series-detail.html", url.origin);
@@ -277,7 +279,7 @@ export async function onRequest(context) {
 
     if (pathSegments.length === 1) {
       const metaData = {
-        title: `${seriesData.title} - BigSolo`,
+        title: `${seriesData.title} (Manga VF) – BigSolo`,
         description: seriesData.description,
         image: ogImageUrl,
       };
