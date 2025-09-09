@@ -85,6 +85,23 @@ export async function onRequest(context) {
     return Response.redirect(newUrl.toString(), 301);
   }
 
+  // redirect pour les anciennes url (cubari & aidoku)
+  // remplace les underscores par des tirets
+  if (originalPathname.startsWith("/data/series/")) {
+    const fileName = originalPathname.split("/").pop();
+    if (fileName && fileName.includes("_")) {
+      const newFileName = fileName.replaceAll("_", "-");
+      const newPathname = originalPathname.replace(fileName, newFileName);
+      const newUrl = new URL(newPathname, url.origin);
+      newUrl.search = url.search;
+      newUrl.hash = url.hash;
+      console.log(
+        `[Redirect] Old data URL detected (Cubari/Aidoku): ${originalPathname} -> Redirecting to: ${newUrl.pathname}`
+      );
+      return Response.redirect(newUrl.toString(), 301);
+    }
+  }
+
   let pathname =
     originalPathname.endsWith("/") && originalPathname.length > 1
       ? originalPathname.slice(0, -1)
