@@ -130,7 +130,7 @@ export async function onRequest(context) {
             avgRating !== null ? Math.round(avgRating * 100) / 100 : null,
         };
       }
-      await env.INTERACTIONS_CACHE.put(
+      if (cacheKey) await env.INTERACTIONS_CACHE.put(
         cacheKey,
         JSON.stringify(seriesInteractions)
       );
@@ -154,7 +154,7 @@ export async function onRequest(context) {
     // Ajout : retourne l'erreur détaillée dans la réponse pour debug local
     return new Response(
       "Erreur lors du traitement : " +
-        (error && error.stack ? error.stack : error),
+      (error && error.stack ? error.stack : error),
       { status: 500 }
     );
   }

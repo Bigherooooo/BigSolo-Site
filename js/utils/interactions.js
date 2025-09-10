@@ -1,5 +1,5 @@
 // --- Gestion des notes utilisateur (rating) ---
-const RATING_KEY_PREFIX = "series_rating_";
+const RATING_KEY_PREFIX = "series-rating-";
 
 /**
  * Récupère la note locale de l'utilisateur pour une série
@@ -25,7 +25,7 @@ export function setLocalSeriesRating(seriesSlug, value) {
   if (!queue[seriesSlug]) queue[seriesSlug] = [];
   // Supprime toute ancienne action de type 'rate'
   queue[seriesSlug] = queue[seriesSlug].filter((a) => a.type !== "rate");
-  queue[seriesSlug].push({ type: "rate", value });
+  queue[seriesSlug].push({ type: "rate", payload: { value } });
   saveActionQueue(queue);
   console.log(
     `[interactions.js] setLocalSeriesRating: ${seriesSlug} = ${value} (old: ${old})`

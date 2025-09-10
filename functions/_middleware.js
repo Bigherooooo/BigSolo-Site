@@ -74,13 +74,13 @@ export async function onRequest(context) {
   const originalPathname = url.pathname;
   const seriesName = originalPathname.split("/")[1];
   if (seriesName.includes("_") && !knownPrefixes.includes(`/${seriesName}/`)) {
-    const newSeriesName = seriesName.replaceAll("_", "-");
+    const newSeriesName = slugify(seriesName);
     const pathname = originalPathname.replace(seriesName, newSeriesName);
     const newUrl = new URL(newSeriesName, url.origin);
     newUrl.search = url.search;
     newUrl.hash = url.hash;
     console.log(
-      `[Redirect] Old URL detected: ${pathname} -> Redirecting to: ${newUrl.pathname}`
+      `[Redirect] Old URL detected: ${originalPathname} -> Redirecting to: ${newUrl.pathname}`
     );
     return Response.redirect(newUrl.toString(), 301);
   }

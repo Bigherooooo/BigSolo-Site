@@ -148,7 +148,6 @@ async function handleCommentSubmit(event) {
     avatarUrl: userIdentity.avatarUrl,
     comment: commentText,
     timestamp: Date.now(),
-    likes: 0,
   };
   addPendingComment(interactionKey, newComment);
   state.chapterStats.comments.unshift(newComment);
