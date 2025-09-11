@@ -111,7 +111,7 @@
   "episodes": [
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5954978",
       "saison_ep": 1,
       "indice_ep": 1,
       "date_ep": "1720137600",
@@ -119,7 +119,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5963238",
       "saison_ep": 1,
       "indice_ep": 2,
       "date_ep": "1752429600",
@@ -135,7 +135,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5976752",
       "saison_ep": 1,
       "indice_ep": 4,
       "date_ep": "1753650000",
@@ -143,7 +143,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5981911",
       "saison_ep": 1,
       "indice_ep": 5,
       "date_ep": "1754244000",
@@ -151,7 +151,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5990112",
       "saison_ep": 1,
       "indice_ep": 6,
       "date_ep": "1755104400",
@@ -167,7 +167,7 @@
     },
     {
       "type": "sibnet",
-      "id": "6002054",
+      "id": "5997593",
       "saison_ep": 1,
       "indice_ep": 8,
       "date_ep": "1756065600",
@@ -2005,6 +2005,14 @@
       "last_updated": "1709164800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9ozyd"
+      }
+    },
+    "162.5": {
+      "title": "L'artiste Kaoruko",
+      "volume": "19",
+      "last_updated": "1757343600",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/o24ajmw924l"
       }
     }
   }

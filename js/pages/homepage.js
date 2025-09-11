@@ -52,20 +52,23 @@ function renderHeroSlide(series) {
   const latestChapter = chaptersArray.length > 0 ? chaptersArray[0] : null;
 
   // Boutons
-  let latestChapterButtonHtml = "";
-  if (latestChapter && latestChapter.chapter > 0) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
-  } else if (latestChapter && latestChapter.chapter == 0) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}" class="hero-cta-button">Lire le One-shot</a>`;
-  }
   let latestEpisodeButtonHtml = "";
   if (seriesData.episodes && seriesData.episodes.length > 0) {
     const latestEpisode = [...seriesData.episodes].sort(
       (a, b) => b.indice_ep - a.indice_ep
     )[0];
     if (latestEpisode) {
-      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Dernier épisode (Ép. ${latestEpisode.indice_ep})</a>`;
+      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Épisode ${latestEpisode.indice_ep}</a>`;
     }
+  }
+  let latestChapterButtonHtml = "";
+  if (latestEpisodeButtonHtml) {
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Chapitre ${latestChapter.chapter}</a>`;
+  }
+  else if (latestChapter && latestChapter.chapter > 0) {
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
+  } else if (latestChapter && latestChapter.chapter == 0) {
+    latestChapterButtonHtml = `<a href="/${seriesSlug}" class="hero-cta-button">Lire le One-shot</a>`;
   }
 
   // Statut + pastille (desktop)
@@ -217,7 +220,7 @@ async function initHeroCarousel() {
 
     function startAutoPlay() {
       if (autoPlayInterval) clearInterval(autoPlayInterval);
-      autoPlayInterval = setInterval(next, 5000);
+      autoPlayInterval = setInterval(next, 7500);
     }
 
     function stopAutoPlay() {

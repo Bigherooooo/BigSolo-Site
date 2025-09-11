@@ -83,47 +83,37 @@ function renderNavLinks(container, links, isMobile = false) {
 function getSubNavLinksForPage(pageId) {
   let baseLinks = [...(subNavLinksConfig[pageId] || [])];
 
-  if (pageId === "seriesdetailpage" || pageId === "seriescoverspage") {
+  if (pageId === "seriesdetailpage") {
     const seriesSlug = getCurrentSeriesSlugFromPath();
     if (seriesSlug) {
-      if (pageId === "seriescoverspage") {
+      const currentView = getCurrentSeriesViewFromPath();
+
+      if (currentView === "anime") {
         baseLinks = [
           {
-            text: "Retour à la Série",
-            href: `/${seriesSlug}`,
-            id: "back-to-series",
+            text: "Informations",
+            href: `#series-detail-section`,
+            id: "series-info",
+          },
+          {
+            text: "Épisodes",
+            href: `#chapters-list-section`,
+            id: "series-episodes",
           },
         ];
-      } else if (pageId === "seriesdetailpage") {
-        const currentView = getCurrentSeriesViewFromPath();
-
-        if (currentView === "anime") {
-          baseLinks = [
-            {
-              text: "Informations",
-              href: `#series-detail-section`,
-              id: "series-info",
-            },
-            {
-              text: "Épisodes",
-              href: `#chapters-list-section`,
-              id: "series-episodes",
-            },
-          ];
-        } else {
-          baseLinks = [
-            {
-              text: "Informations",
-              href: `#series-detail-section`,
-              id: "series-info",
-            },
-            {
-              text: "Chapitres",
-              href: `#chapters-list-section`,
-              id: "series-chapters",
-            },
-          ];
-        }
+      } else {
+        baseLinks = [
+          {
+            text: "Informations",
+            href: `#series-detail-section`,
+            id: "series-info",
+          },
+          {
+            text: "Chapitres",
+            href: `#chapters-list-section`,
+            id: "series-chapters",
+          },
+        ];
       }
     }
   }

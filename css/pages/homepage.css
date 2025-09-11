@@ -96,7 +96,7 @@
 }
 
 .hero-info .hero-series-title {
-  font-size: 3.3rem;
+  font-size: 3rem;
   font-weight: 800;
   line-height: 1em;
   margin-bottom: 0.8rem;
@@ -297,7 +297,7 @@
 }
 
 .hero-nav-dot.active::before {
-  animation: fillDot 5s linear forwards;
+  animation: fillDot 7.5s linear forwards;
 }
 
 @keyframes fillDot {
@@ -325,7 +325,7 @@
   }
 
   .hero-carousel {
-    height: 500px;
+    height: 450px;
     min-height: 0;
     width: 100vw;
     max-width: 100vw;
@@ -375,7 +375,7 @@
   }
 
   .hero-info .hero-series-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-right: 3rem;
     margin-bottom: 0.8rem;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* On peut remettre une ombre légère si besoin */
@@ -408,8 +408,8 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 65%;
-    height: 80%;
+    width: 60%;
+    height: 70%;
     align-items: flex-end;
     justify-content: flex-end;
     z-index: 2;
@@ -459,13 +459,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 0.7rem;
+    gap: 10px;
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: 1.2rem;
+    bottom: 1.4rem;
     z-index: 4;
-    padding: 0 15px;
+    padding: 0 10px;
     box-sizing: border-box;
   }
   .hero-info .hero-mobile-actions .hero-cta-button,
@@ -488,6 +488,7 @@
     flex-basis: 100%;
     width: 100%;
     max-width: 100%;
+    padding: .6em .2em;
   }
   /* Deux boutons = sur une ligne, prennent chacun la moitié */
   .hero-info .hero-mobile-actions .hero-cta-button,
@@ -503,21 +504,45 @@
 
   .hero-carousel-arrow {
     width: 36px;
-    height: 36px;
+    height: 100%;
+    margin: 0;
+    height: unset;
+    width: unset;
+    background: unset;
+    /* margin: .5em; */
+    position: unset;
+    transform: unset;
+    padding: .5em 1em;
+  }
+  .hero-carousel-arrow:hover {
+    background: unset;
+    opacity: .7;
   }
   .hero-carousel-arrow.prev {
-    left: 10px;
   }
   .hero-carousel-arrow.next {
-    right: 10px;
+    right: 25px;
   }
   .hero-carousel-nav {
-    bottom: 15px;
+    /* bottom: 15px; */
+    position: unset;
+    transform: unset;
   }
   .hero-nav-dot {
     width: 10px;
     height: 10px;
   }
+
+  .hero-carousel-nav-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0 10px;
+    height: 42px;
+}
 }
 
 .mobile-only {

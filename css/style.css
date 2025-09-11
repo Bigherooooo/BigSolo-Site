@@ -53,7 +53,6 @@
   --clr-accent-invert: var(--iclr-accent-dark);
   --clr-accent-invert-rgb: 255, 127, 127;
   --clr-bg-invert-rgb-val: 21, 23, 26;
-
   --series-fixed-cover-width-desktop: 180px;
   --series-fixed-cover-width-mobile: 120px;
   --mobile-carousel-card-aspect-ratio: 1.8;
@@ -125,8 +124,6 @@ body {
 }
 
 /* --- AJOUT POUR LE LECTEUR --- */
-body#readerpage {
-}
 
 img {
   display: block;

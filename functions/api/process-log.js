@@ -2,10 +2,17 @@
 
 // La fonction peut maintenant être déclenchée par un cron OU par une requête GET/POST manuelle
 export async function onRequest(context) {
-  const { env } = context;
+  const { env, request } = context;
   console.log(
     "CRON/MANUAL: Démarrage du traitement des logs d'interactions..."
   );
+
+  // vérification token
+  const authorization = request.headers.get("Authorization");
+  if (authorization !== "Bearer " + env.ADMIN_TOKEN) {
+    console.error("[PROCESS LOG] Token invalide.");
+    return new Response("Non autorisé", { status: 403 });
+  }
 
   try {
     const list = await env.INTERACTIONS_LOG.list({ prefix: "log:" });

@@ -10,8 +10,16 @@
   height: calc(100vh - 60px);
   position: relative; /* Le cadre de référence pour ses enfants */
   background-color: var(--clr-bg-reader);
-  overflow: hidden;
 }
+
+@media screen and (min-width: 768px) {
+  #manga-reader-root {
+    overflow: hidden;
+  }
+
+  body#readerpage {height: 100vh;overflow: hidden;}
+}
+
 
 /* --- Contrôles Globaux (en haut à gauche) --- */
 #global-reader-controls {
@@ -1193,6 +1201,7 @@ body.dark .reader-viewer-container {
     border-radius: 8px;
     padding: 8px;
     margin-bottom: 1.5rem;
+    /* font-size: 1rem; */
   }
 
   #comments-mobile-section textarea {
@@ -1203,6 +1212,7 @@ body.dark .reader-viewer-container {
     outline: none;
     caret-color: var(--clr-text);
     padding: 10px;
+    /* font-size: 1rem; */
   }
 
   /* Style pour le texte indicatif (placeholder) */
@@ -1236,6 +1246,11 @@ body.dark .reader-viewer-container {
   #comments-mobile-section .send-btn:hover {
     filter: brightness(0.9);
   }
+
+  #comments-mobile-section * {
+    font-size: 1rem;
+  }
+  
   #interactions-share {
     display: none; /* Caché par défaut */
     padding: 1rem 1rem 0 1rem;

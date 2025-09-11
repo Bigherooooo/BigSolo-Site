@@ -2,61 +2,6 @@
 <html lang="en">
 
     <head>
-        <style>
-            :root {
-                --bg: #15171a;
-                --text: #ffffff;
-                --accent: #0095AD;
-            }
-
-            html {
-                scroll-behavior: smooth;
-            }
-
-            * {
-                box-sizing: border-box;
-            }
-
-            body {
-                margin: 0;
-                padding: .5rem;
-                background-color: var(--bg);
-                color: var(--text);
-                font-size: 18px;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-                min-height: 100vh;
-                min-height: 100dvh;
-                font-family: "Urbanist", system-ui, sans-serif;
-                text-align: center;
-            }
-
-            h1 {
-                margin: 0;
-            }
-
-            img {
-                height: 1em;
-                vertical-align: text-top;
-            }
-
-            a {
-                background: var(--accent);
-                color: var(--text);
-                text-decoration: none;
-                padding: .7rem 1.5rem;
-                border-radius: 8px;
-                font-weight: 600;
-                transition: opacity 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            a:hover {
-                opacity: 0.8;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
-        </style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="refresh" content="5; url=/">
@@ -64,25 +9,80 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
         <link rel="icon" type="image/png" href="/img/icon.png" />
-        <title>Erreur 404 - BigSolo</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <title>Erreur 404 – BigSolo</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+        
+            body {
+                margin: 0;
+                padding: .5rem;
+                font-size: 18px;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                min-height: 100vh;
+                min-height: 100dvh;
+                text-align: center;
+            }
+        
+            h1 {
+                margin: 0;
+                margin-bottom: .5rem;
+            }
+        
+            img {
+                height: 1em;
+                vertical-align: text-top;
+                display: inline-block;
+            }
+
+            p {
+                margin-bottom: 1rem;
+            }
+        
+            .detail-action-btn {
+                padding: 0 1rem;
+                border-radius: 4px;
+                font-size: 1rem;
+                font-weight: 600;
+                text-decoration: none;
+                color: var(--clr-text);
+                background-color: var(--clr-bg-card);
+                transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5em;
+                border: 1.5px solid var(--clr-bg-card-invert);
+                min-height: 48px;
+            }
+        
+            .detail-action-btn:hover {
+                background-color: var(--clr-bg-card-invert);
+                color: var(--clr-text-invert);
+            }
+        </style>
+        <script src="/js/theme-init.js"></script>
     </head>
 
     <body>
         <h1>Erreur 404 <img src="/img/emojis/shrug.png" alt=""></h1>
         <p>La page que vous recherchez n'est pas ou plus disponible. Vous allez être redirigé vers la page d'accueil dans <span id="sec">5</span> secondes.</p>
-        <a href="/">Si vous n'êtes pas redirigé, appuyez ici.</a>
+        <a href="/" class="detail-action-btn">Si vous n'êtes pas redirigé, appuyez ici.</a>
         <script>
-          // Compte à rebours dynamique pour la redirection
-          let sec = 5;
-          const secSpan = document.getElementById('sec');
-          const interval = setInterval(() => {
-            sec--;
-            if (secSpan) secSpan.textContent = sec;
-            if (sec <= 0) {
-              clearInterval(interval);
-              window.location.href = "/";
-            }
-          }, 1000);
+            // Compte à rebours dynamique pour la redirection
+            let sec = 5;
+            const secSpan = document.getElementById('sec');
+            const interval = setInterval(() => {
+                sec--;
+                if (secSpan) secSpan.textContent = sec;
+                if (sec <= 0) {
+                    clearInterval(interval);
+                }
+            }, 1000);
         </script>
     </body>
 
