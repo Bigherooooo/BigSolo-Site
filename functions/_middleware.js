@@ -207,6 +207,10 @@ export async function onRequest(context) {
           description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title} ${seriesData.alternative_titles?.join(", ")} en VF. ${seriesData.description}`,
           image: ogImageUrl,
         };
+        
+        if (seriesData.os) {
+          metaData.title = `${seriesData.chapters[chapterNumber].title} VF | ${seriesData.title} – BigSolo`
+        }
 
         const assetUrl = new URL("/templates/MangaReader.html", url.origin);
         let html = await env.ASSETS.fetch(assetUrl).then((res) => res.text());

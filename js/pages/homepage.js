@@ -68,7 +68,7 @@ function renderHeroSlide(series) {
   else if (latestChapter && latestChapter.chapter > 0) {
     latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
   } else if (latestChapter && latestChapter.chapter == 0) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}" class="hero-cta-button">Lire le One-shot</a>`;
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/0" class="hero-cta-button">Lire le One-shot</a>`;
   }
 
   // Statut + pastille (desktop)
@@ -231,10 +231,6 @@ async function initHeroCarousel() {
       autoPlayInterval = setInterval(next, 7500);
     }
 
-    function stopAutoPlay() {
-      clearInterval(autoPlayInterval);
-    }
-
     nextBtn.addEventListener("click", () => {
       next();
       stopAutoPlay();
@@ -254,9 +250,6 @@ async function initHeroCarousel() {
         startAutoPlay();
       }
     });
-
-    qs(".hero-carousel").addEventListener("mouseenter", stopAutoPlay);
-    qs(".hero-carousel").addEventListener("mouseleave", startAutoPlay);
 
     goToSlide(0);
     startAutoPlay();
@@ -321,7 +314,7 @@ function renderSeriesCard(series) {
       <a href="${lastChapterUrl}" class="series-action-btn">Ch. ${lastChapterNum}</a>
       <a href="${lastEpisodeUrl}" class="series-action-btn">Ép. ${lastEpisodeNum}</a>
     </div>`;
-  } else if (lastChapterNum > 0) {
+  } else if (lastChapterNum > 0 && !series.os) {
     actionsHtml = `<div class="series-actions">
       <a href="${lastChapterUrl}" class="series-action-btn">Dernier chapitre (Ch. ${lastChapterNum})</a>
     </div>`;
@@ -331,7 +324,11 @@ function renderSeriesCard(series) {
     </div>`;
   } else if (lastChapterNum == 0) {
     actionsHtml = `<div class="series-actions">
-      <a href="/${seriesSlug}" class="series-action-btn">Lire le One-shot</a>
+      <a href="${lastChapterUrl}" class="series-action-btn">Lire le One-shot</a>
+    </div>`;
+  } else if (lastChapterNum > 0 && series.os) {
+    actionsHtml = `<div class="series-actions">
+      <a href="/${seriesSlug}" class="series-action-btn">Voir les One-shot</a>
     </div>`;
   }
 
