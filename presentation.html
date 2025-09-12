@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <script>
-      (function () {
-        try {
-          var theme = localStorage.getItem("mv-theme");
-          var prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-          ).matches;
-          var htmlEl = document.documentElement;
-          if (theme === "dark" || (!theme && prefersDark)) {
-            htmlEl.classList.add("dark");
-            htmlEl.style.backgroundColor = "#15171a";
-            htmlEl.style.color = "#eceff4";
-          } else {
-            htmlEl.classList.remove("dark");
-            htmlEl.style.backgroundColor = "#f7f8fc";
-            htmlEl.style.color = "#222831";
-          }
-        } catch (e) {}
-      })();
-    </script>
     <meta charset="UTF-8" />
 
     <!-- ↓↓↓ SECTION GÉRÉE PAR LE MIDDLEWARE ↓↓↓ -->
@@ -72,7 +52,7 @@
           />
           <div class="page-header-text">
             <h1 class="page-main-title">
-              BigSolo : L'interview<span
+              BigSolo : l'interview<span
                 class="custom-emoji emoji-george"
               ></span>
             </h1>

@@ -1,17 +1,6 @@
 // functions/api/admin/purge-cache.js
-// LIGNE CORRIGÉE
-function slugify(text) {
-  if (!text) return "";
-  return text
-    .toString()
-    .normalize("NFD") // Sépare les caractères de leurs accents
-    .replace(/[\u0300-\u036f]/g, "") // Supprime les accents (le '3000' est devenu '0300')
-    .toLowerCase()
-    .trim()
-    .replace(/[\s\u3000]+/g, "_") // Remplace les espaces par un underscore
-    .replace(/[^\w-]+/g, "") // Supprime les caractères non autorisés
-    .replace(/--+/g, "_"); // Nettoie les tirets multiples
-}
+
+import { slugify } from "../../../js/utils/domUtils.js";
 
 export async function onRequest(context) {
   const { request, env } = context;

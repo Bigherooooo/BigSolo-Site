@@ -11,7 +11,7 @@
   top: -70px;
   margin-left: -50vw;
   margin-right: -50vw;
-  margin-bottom: -25px;
+  margin-bottom: -30px;
 }
 
 .hero-carousel {
@@ -21,7 +21,7 @@
   height: 470px;
   border-radius: 0; /* Suppression des coins arrondis */
   overflow: hidden;
-  background-color: var(--clr-bg-card);
+  background-color: var(--iclr-bg-card-dark);
   margin: 0;
 }
 
@@ -62,26 +62,8 @@
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-  filter: blur(12px) brightness(0.4);
+  filter: blur(8px) brightness(0.4);
   z-index: -1;
-}
-
-.hero-slide::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 75%;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85) 20%,
-    rgba(0, 0, 0, 0.5) 60%,
-    transparent 100%
-  );
-  z-index: 2;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .hero-slide-content {
@@ -94,6 +76,12 @@
   padding: 0 5% 0 16.5rem;
   position: relative;
   z-index: 3;
+}
+
+@media screen and (max-width: 1400px) {
+  .hero-slide-content {
+  padding: 0 5% 0 7.5rem;
+}
 }
 
 .hero-info {
@@ -114,7 +102,7 @@
 }
 
 .hero-info .hero-series-title {
-  font-size: 3.3rem;
+  font-size: 3rem;
   font-weight: 800;
   line-height: 1em;
   margin-bottom: 0.8rem;
@@ -127,11 +115,6 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 0.6rem;
-}
-.hero-info .hero-tags .tag {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-info .hero-description {
@@ -220,20 +203,7 @@
   min-width: 0;
 }
 
-.hero-info .hero-latest-info .status-dot {
-  display: inline-block;
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  margin-right: 0.18em;
-  vertical-align: middle;
-  background-color: #4caf50; /* par défaut vert */
-  flex-shrink: 0;
-}
 
-.hero-info .hero-latest-info .status-dot.finished {
-  background-color: #e53935; /* rouge si fini */
-}
 
 .hero-image {
   position: absolute;
@@ -260,7 +230,7 @@
 /* Navigation */
 .hero-carousel-arrow {
   position: absolute;
-  top: calc(60px + 50%);
+  top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.3);
   border: none;
@@ -270,6 +240,7 @@
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
+  margin-top: 35px;
 }
 .hero-carousel-arrow:hover {
   background-color: rgba(0, 0, 0, 0.6);
@@ -319,7 +290,7 @@
 }
 
 .hero-nav-dot.active::before {
-  animation: fillDot 5s linear forwards;
+  animation: fillDot 7.5s linear forwards;
 }
 
 @keyframes fillDot {
@@ -341,13 +312,13 @@
 }
 
 /* --- SECTION RESPONSIVE MOBILE --- */
-@media (max-width: 992px) {
+@media (max-width: 846px) {
   #hero-section {
     margin-bottom: -60px;
   }
 
   .hero-carousel {
-    height: 500px;
+    height: 450px;
     min-height: 0;
     width: 100vw;
     max-width: 100vw;
@@ -379,7 +350,7 @@
     width: 100%;
     height: 100%;
     z-index: 3;
-    padding: calc(15px + 60px) 15px 15px 15px;
+    padding: 15px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -397,7 +368,7 @@
   }
 
   .hero-info .hero-series-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-right: 3rem;
     margin-bottom: 0.8rem;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* On peut remettre une ombre légère si besoin */
@@ -430,8 +401,8 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 65%;
-    height: 80%;
+    width: 60%;
+    max-height: 70%;
     align-items: flex-end;
     justify-content: flex-end;
     z-index: 2;
@@ -481,13 +452,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 0.7rem;
+    gap: 10px;
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: 1.2rem;
+    bottom: 1.4rem;
     z-index: 4;
-    padding: 0 15px;
+    padding: 0 10px;
     box-sizing: border-box;
   }
   .hero-info .hero-mobile-actions .hero-cta-button,
@@ -510,6 +481,7 @@
     flex-basis: 100%;
     width: 100%;
     max-width: 100%;
+    padding: .6em .2em;
   }
   /* Deux boutons = sur une ligne, prennent chacun la moitié */
   .hero-info .hero-mobile-actions .hero-cta-button,
@@ -525,21 +497,45 @@
 
   .hero-carousel-arrow {
     width: 36px;
-    height: 36px;
+    height: 100%;
+    margin: 0;
+    height: unset;
+    width: unset;
+    background: unset;
+    /* margin: .5em; */
+    position: unset;
+    transform: unset;
+    padding: .5em 1em;
+  }
+  .hero-carousel-arrow:hover {
+    background: unset;
+    opacity: .7;
   }
   .hero-carousel-arrow.prev {
-    left: 10px;
   }
   .hero-carousel-arrow.next {
-    right: 10px;
+    right: 25px;
   }
   .hero-carousel-nav {
-    bottom: 15px;
+    /* bottom: 15px; */
+    position: unset;
+    transform: unset;
   }
   .hero-nav-dot {
     width: 10px;
     height: 10px;
   }
+
+  .hero-carousel-nav-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0 10px;
+    height: 42px;
+}
 }
 
 .mobile-only {

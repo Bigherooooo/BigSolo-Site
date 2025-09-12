@@ -12,7 +12,6 @@ import { renderActionButtons } from "./shared/actionButtons.js";
 import { initListControls } from "./shared/listControls.js";
 import { fetchStats } from "./shared/statsManager.js";
 import { initMainScrollObserver } from "../../components/observer.js";
-import { initCoverGallery } from "./shared/coverGallery.js";
 
 let currentSeriesData = null;
 let currentSeriesStats = null;
@@ -152,7 +151,6 @@ export async function render(mainContainer, seriesData) {
 
   // Appel de la fonction de réorganisation responsive
   setupResponsiveLayout(viewContainer);
-  initCoverGallery(viewContainer, currentSeriesData);
 }
 
 function handleFilterOrSortChange(controls) {
@@ -171,11 +169,11 @@ function displayEpisodeList({ search }) {
   );
 
   if (search.trim()) {
-    const searchTerm = search.trim().toLowerCase();
+    const searchTerm = search.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     episodes = episodes.filter(
       (ep) =>
         String(ep.indice_ep).toLowerCase().includes(searchTerm) ||
-        (ep.title_ep && ep.title_ep.toLowerCase().includes(searchTerm))
+        (ep.title_ep && ep.title_ep.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(searchTerm))
     );
   }
 

@@ -101,14 +101,22 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
       (viewType === "anime"
         ? animeData?.status_an
         : seriesData.release_status) || "?";
-    const isFinished = statusText.toLowerCase().includes("fini");
+    let statusClass = "";
+    const statusLower = statusText.toLowerCase();
+    if (statusLower.includes("fini")) {
+      statusClass = "finished";
+    } else if (statusLower.includes("pause")) {
+      statusClass = "paused";
+    } else if (statusLower.includes("annulé")) {
+      statusClass = "cancelled";
+    } else {
+      statusClass = "ongoing";
+    }
     let dateText =
       (viewType === "anime"
         ? animeData?.date_start_an
         : seriesData.release_year) || "";
-    statusElem.innerHTML = `<span class="status-dot${
-      isFinished ? " finished" : ""
-    }"></span>${statusText} ${dateText ? `- ${dateText}` : ""}`;
+    statusElem.innerHTML = `<span class="status-dot ${statusClass}"></span>${statusText} ${dateText ? `- ${dateText}` : ""}`;
   }
 
   const yearElem = qs(".release-year", container);
@@ -281,12 +289,19 @@ function setupRatingComponentLogic(
       totalVotes++;
       totalScore += currentUserRating;
     }
-    const displayAvg = totalVotes > 0 ? totalScore / totalVotes : 0;
-    avgSpan.textContent = (Math.round(displayAvg * 10) / 10).toLocaleString(
-      "fr-FR",
-      { minimumFractionDigits: 1, maximumFractionDigits: 1 }
-    );
-    tooltip.textContent = `${totalVotes} vote${totalVotes > 1 ? "s" : ""}`;
+
+    if (totalVotes === 0) {
+      avgSpan.textContent = "—";
+      tooltip.textContent = "Aucun vote";
+    } else {
+      const displayAvg = totalScore / totalVotes;
+      avgSpan.textContent = (Math.round(displayAvg * 10) / 10).toLocaleString(
+        "fr-FR",
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 }
+      );
+      tooltip.textContent = `${totalVotes} vote${totalVotes > 1 ? "s" : ""}`;
+    }
+
     btn.classList.toggle("accent", currentUserRating !== null);
   }
   btn.addEventListener("mouseenter", (e) => {

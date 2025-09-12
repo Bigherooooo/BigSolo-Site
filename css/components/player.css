@@ -141,7 +141,7 @@
 /* --- Section Responsive --- */
 @media (max-width: 768px) {
   .player-main-content {
-    padding: 1rem;
+    padding: 0;
     gap: 1rem;
     /* On retire le padding-top qui est géré par la structure globale */
   }
@@ -206,7 +206,7 @@
     color: var(--clr-text);
   }
   .mrc-chapter-title {
-    font-size: 0.85rem;
+    font-size: 1em;
     color: var(--clr-text-fifth);
     overflow: hidden;
     text-overflow: ellipsis;

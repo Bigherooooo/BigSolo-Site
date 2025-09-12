@@ -214,17 +214,8 @@
 }
 
 .series-card .series-tags .tag {
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 0.25em 1em;
-  border-radius: 999px;
-  letter-spacing: 0.01em;
-  border: none;
-  margin: 0;
-  line-height: 1.2;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  font-size: 0.7rem;
+  padding: 0.25em .7em;
 }
 
 .series-card .series-actions {

@@ -37,46 +37,37 @@ function setLocalUserIdentity(key, identity) {
   }
 }
 
-/**
- * Attribue une identité (pseudo + avatar) à un utilisateur pour un chapitre spécifique.
- * Si une identité existe déjà dans le localStorage pour cette clé, elle est retournée.
- * Sinon, une nouvelle identité est créée, sauvegardée et retournée.
- * @param {string} interactionKey - La clé unique pour le chapitre (ex: "interactions_serie_chapitre").
- * @returns {Promise<{username: string, avatarUrl: string}>} L'identité de l'utilisateur.
- */
+// fonction exportée pour functions/api/log-action.js
+export function generateIdentityFromAvatar(avatarFilename) {
+  const username = avatarFilename
+    .replace(".jpg", "")
+    .replace(".png", "")
+    .replace(/_/g, " ");
+  const avatarUrl = `/img/profilpicture/${avatarFilename}`;
+
+  return { username, avatarUrl };
+}
+
 export async function assignUserIdentityForChapter(interactionKey) {
   const identityKey = `identity_${interactionKey}`;
 
-  // 1. Vérifier si une identité existe déjà
   const existingIdentity = getLocalUserIdentity(identityKey);
   if (existingIdentity) {
     return existingIdentity;
   }
 
-  // 2. Si non, en créer une nouvelle
   const avatars = await getAvatars();
   if (avatars.length === 0) {
-    // Solution de repli si les avatars ne peuvent pas être chargés
     return {
       username: "Visiteur Anonyme",
       avatarUrl: "/img/profil.png",
     };
   }
 
-  // 3. Choisir un avatar au hasard
   const randomAvatarFilename =
     avatars[Math.floor(Math.random() * avatars.length)];
 
-  // 4. Créer le pseudo et l'URL de l'image
-  const username = randomAvatarFilename
-    .replace(".jpg", "")
-    .replace(".png", "")
-    .replace(/_/g, " ");
-  const avatarUrl = `/img/profilpicture/${randomAvatarFilename}`;
-
-  const newIdentity = { username, avatarUrl };
-
-  // 5. Sauvegarder la nouvelle identité dans le localStorage
+  const newIdentity = generateIdentityFromAvatar(randomAvatarFilename);
   setLocalUserIdentity(identityKey, newIdentity);
 
   return newIdentity;

@@ -12,6 +12,15 @@
   background-color: var(--clr-bg-reader);
 }
 
+@media screen and (min-width: 768px) {
+  #manga-reader-root {
+    overflow: hidden;
+  }
+
+  body#readerpage {height: 100vh;overflow: hidden;}
+}
+
+
 /* --- Contrôles Globaux (en haut à gauche) --- */
 #global-reader-controls {
   position: absolute;
@@ -94,6 +103,7 @@
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
   z-index: 2;
+  background-color: var(--clr-bg);
 }
 
 #info-sidebar {
@@ -151,6 +161,24 @@
 }
 body.dark .reader-viewer-container {
   background-color: #111;
+}
+
+.reader-viewer-container:has(.licensed-notice) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.licensed-notice>a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+  border-bottom: 2px solid;
+  border-color: transparent;
+}
+
+.licensed-notice>a:hover {
+  border-color: inherit;
 }
 
 .reader-viewer {
@@ -226,6 +254,10 @@ body.dark .reader-viewer-container {
 }
 .reader-viewer.double-mode.rtl-mode img:last-child {
   justify-self: end; /* La 2ème (logique) se colle à droite */
+}
+.reader-viewer.double-mode.rtl-mode.last-page img {
+  justify-self: start;
+  grid-column: 2;
 }
 
 /* --- NOUVELLE LOGIQUE POUR LA PAGE UNIQUE (PORTRAIT) --- */
@@ -657,6 +689,7 @@ body.dark .reader-viewer-container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .comment-header {
@@ -715,7 +748,7 @@ body.dark .reader-viewer-container {
 }
 
 .comment-like-action:hover {
-  color: #f5356e;
+  color: var(--clr-accent-invert);
 }
 
 .comment-like-action .fas.fa-heart {
@@ -731,7 +764,8 @@ body.dark .reader-viewer-container {
 }
 
 /* --- Bouton global like dans la barre de contrôle --- */
-#global-reader-controls #toggle-chapters-like {
+#global-reader-controls #toggle-chapters-like,
+#global-reader-controls #toggle-episode-like {
   background: transparent;
   color: var(--clr-bg-reader-invert);
   border: 1.5px solid var(--clr-bg-reader-invert);
@@ -746,22 +780,26 @@ body.dark .reader-viewer-container {
   transition: all 0.2s;
 }
 
-#global-reader-controls #toggle-chapters-like.liked {
+#global-reader-controls #toggle-chapters-like.liked,
+#global-reader-controls #toggle-episode-like.liked {
   background: var(--clr-accent);
   color: var(--clr-bg-reader);
   border-color: var(--clr-accent);
 }
 
-#global-reader-controls #toggle-chapters-like.liked i.fas.fa-heart {
+#global-reader-controls #toggle-chapters-like.liked i.fas.fa-heart,
+#global-reader-controls #toggle-episode-like.liked i.fas.fa-heart {
   color: var(--clr-bg-reader);
 }
 
-#global-reader-controls #toggle-chapters-like:hover {
+#global-reader-controls #toggle-chapters-like:hover,
+#global-reader-controls #toggle-episode-like:hover {
   background: var(--clr-bg-reader-invert);
   color: var(--clr-text-invert);
 }
 
-#global-reader-controls #toggle-chapters-like.liked:hover {
+#global-reader-controls #toggle-chapters-like.liked:hover,
+#global-reader-controls #toggle-episode-like.liked:hover {
   background: var(--clr-accent);
   color: var(--clr-text-invert);
 }
@@ -1187,6 +1225,7 @@ body.dark .reader-viewer-container {
     border-radius: 8px;
     padding: 8px;
     margin-bottom: 1.5rem;
+    /* font-size: 1rem; */
   }
 
   #comments-mobile-section textarea {
@@ -1197,6 +1236,7 @@ body.dark .reader-viewer-container {
     outline: none;
     caret-color: var(--clr-text);
     padding: 10px;
+    /* font-size: 1rem; */
   }
 
   /* Style pour le texte indicatif (placeholder) */
@@ -1230,6 +1270,11 @@ body.dark .reader-viewer-container {
   #comments-mobile-section .send-btn:hover {
     filter: brightness(0.9);
   }
+
+  #comments-mobile-section * {
+    font-size: 1rem;
+  }
+  
   #interactions-share {
     display: none; /* Caché par défaut */
     padding: 1rem 1rem 0 1rem;
@@ -1290,4 +1335,10 @@ body.dark .reader-viewer-container {
     transform: translateX(-50%) translateY(100%);
     transition-delay: 0s; /* S'assure qu'elle disparaît immédiatement */
   }
+}
+
+
+.reader-viewer.single-mode {
+    display: flex;
+    justify-content: center;
 }

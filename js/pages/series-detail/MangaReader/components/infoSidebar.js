@@ -126,7 +126,7 @@ export function updateChapterList() {
     .join("");
   const activeLink = qs("a.active", dom.chapterList);
   if (activeLink) {
-    activeLink.scrollIntoView({ behavior: "smooth", block: "center" });
+    activeLink.scrollIntoView({ behavior: "instant", block: "center" });
   }
 }
 
@@ -148,7 +148,6 @@ async function handleCommentSubmit(event) {
     avatarUrl: userIdentity.avatarUrl,
     comment: commentText,
     timestamp: Date.now(),
-    likes: 0,
   };
   addPendingComment(interactionKey, newComment);
   state.chapterStats.comments.unshift(newComment);

@@ -143,6 +143,17 @@ export async function fetchAndLoadPages(initialPageNumber = 1) {
   const loadingMsgElement = qs("#reader-loading-msg");
 
   try {
+    // check si le chapitre est sorti officiellement
+    if (!state.currentChapter.groups.Big_herooooo &&
+      state.currentChapter.volume &&
+      state.currentChapter.licencied) {
+      const message = `Ce chapitre est sorti officiellement dans le volume ${state.currentChapter.volume}. Pour le lire, <a href="${state.currentChapter.licencied[0]}" target="_blank" rel="noopener">achetez le volume</a>.`;
+      if (loadingMsgContainer) {
+        loadingMsgContainer.innerHTML = `<p class="licensed-notice">${message}</p>`;
+      }
+      return;
+    }
+
     // 1. Récupérer la liste des URLs des pages
     const CONFIG = await loadGlobalConfig();
     const chapterId = state.currentChapter.groups.Big_herooooo.split("/").pop();

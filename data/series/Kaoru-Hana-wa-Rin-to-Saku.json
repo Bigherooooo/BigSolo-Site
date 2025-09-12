@@ -3,7 +3,7 @@
   "description": "Deux lycées que tout oppose se font face : Chidori, le repaire des garçons cancres, et Kikyô, l'établissement prestigieux des filles d'élite. Rintarô, élève de Chidori, sympathise avec Kaoruko, une cliente de la pâtisserie familiale. Alors qu'un lien se tisse entre eux, il découvre qu'elle étudie à Kikyô... et qu'ils sont censés se détester. Leur relation naissante pourra-t-elle survivre à la haine qui oppose leurs écoles ?",
   "artist": "Saka Mikami",
   "author": "Saka Mikami",
-  "cover": "https://meo.comick.pictures/O8kJK5.jpg",
+  "cover": "https://meo.comick.pictures/GXm0op.jpg",
   "manga_type": "Shonen",
   "magazine": "Pocket Magazine",
   "release_year": 2021,
@@ -12,6 +12,11 @@
   "alternative_titles": ["The Fragrant Flower Blooms with Dignity", "Bloom"],
   "release_status": "En cours",
   "covers_gallery": [
+    {
+      "url_hq": "https://meo.comick.pictures/GXm0op.jpg",
+      "url_lq": "https://meo.comick.pictures/GXm0op-s.jpg",
+      "volume": "19"
+    },
     {
       "url_hq": "https://meo.comick.pictures/O8kJK5.jpg",
       "url_lq": "https://meo.comick.pictures/O8kJK5-s.jpg",
@@ -106,7 +111,7 @@
   "episodes": [
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5954978",
       "saison_ep": 1,
       "indice_ep": 1,
       "date_ep": "1720137600",
@@ -114,7 +119,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5963238",
       "saison_ep": 1,
       "indice_ep": 2,
       "date_ep": "1752429600",
@@ -130,7 +135,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5976752",
       "saison_ep": 1,
       "indice_ep": 4,
       "date_ep": "1753650000",
@@ -138,7 +143,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5981911",
       "saison_ep": 1,
       "indice_ep": 5,
       "date_ep": "1754244000",
@@ -146,7 +151,7 @@
     },
     {
       "type": "sibnet",
-      "id": "5970235",
+      "id": "5990112",
       "saison_ep": 1,
       "indice_ep": 6,
       "date_ep": "1755104400",
@@ -162,9 +167,9 @@
     },
     {
       "type": "sibnet",
-      "id": "6002054",
-      "saison_ep": 2,
-      "indice_ep": 1,
+      "id": "5997593",
+      "saison_ep": 1,
+      "indice_ep": 8,
       "date_ep": "1756065600",
       "title_ep": "La nature des sentiments"
     }
@@ -2000,6 +2005,14 @@
       "last_updated": "1709164800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9ozyd"
+      }
+    },
+    "162.5": {
+      "title": "L'artiste Kaoruko",
+      "volume": "19",
+      "last_updated": "1757343600",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/o24ajmw924l"
       }
     }
   }

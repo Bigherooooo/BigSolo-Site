@@ -1,14 +1,3 @@
-html {
-  background-color: #e9ecef !important;
-  color: #222831 !important;
-}
-
-html.dark {
-  background-color: #111 !important;
-  color: #eceff4 !important;
-  color-scheme: dark;
-}
-
 :root {
   --iclr-bg-light: #e9ecef;
   --iclr-bg-dark: #111111;
@@ -22,10 +11,20 @@ html.dark {
   --iclr-text-fifth-dark: #807f7f;
   --iclr-background-reader-light: #e9ecef;
   --iclr-background-reader-dark: #111111;
-  --iclr-primary-light: #0095ad;
-  --iclr-primary-dark: #1ab6b9;
   --iclr-accent-light: #ff6b6b;
   --iclr-accent-dark: #ff7f7f;
+  
+  /* couleurs status (internal) */
+  --iclr-success-light: #4caf50;
+  --iclr-success-dark: #43a047;
+  --iclr-warning-light: #ff9800;
+  --iclr-warning-dark: #fb8c00;
+  --iclr-disabled-light: #9e9e9e;
+  --iclr-disabled-dark: #757575;
+  --iclr-error-light: #e53935;
+  --iclr-error-dark: #d32f2f;
+  --iclr-primary-light: #0095ad;
+  --iclr-primary-dark: #1ab6b9;
 
   /* Main Light */
   --clr-bg: var(--iclr-bg-light);
@@ -40,12 +39,18 @@ html.dark {
   --clr-text-fifth-rgb: 128, 127, 127;
   --clr-bg-reader: var(--iclr-background-reader-light);
   --clr-bg-reader-rgb: 247, 248, 252;
-  --clr-primary: var(--iclr-primary-light);
-  --clr-primary-rgb: 0, 149, 173;
   --clr-accent: var(--iclr-accent-light);
   --clr-accent-rgb: 255, 107, 107;
   --clr-bg-rgb-val: 247, 248, 252;
-
+  
+  /* Status Colors Light */
+  --clr-success: var(--iclr-success-light);
+  --clr-warning: var(--iclr-warning-light);
+  --clr-disabled: var(--iclr-disabled-light);
+  --clr-error: var(--iclr-error-light);
+  --clr-primary: var(--iclr-primary-light);
+  --clr-primary-rgb: 0, 149, 173;
+  
   /* Invert Light */
   --clr-bg-invert: var(--iclr-bg-dark);
   --clr-bg-invert-rgb: 17, 17, 17;
@@ -64,7 +69,6 @@ html.dark {
   --clr-accent-invert: var(--iclr-accent-dark);
   --clr-accent-invert-rgb: 255, 127, 127;
   --clr-bg-invert-rgb-val: 21, 23, 26;
-
   --series-fixed-cover-width-desktop: 180px;
   --series-fixed-cover-width-mobile: 120px;
   --mobile-carousel-card-aspect-ratio: 1.8;
@@ -86,12 +90,18 @@ body.dark {
   --clr-text-fifth-rgb: 128, 127, 127;
   --clr-bg-reader: var(--iclr-background-reader-dark);
   --clr-bg-reader-rgb: 17, 17, 17;
-  --clr-primary: var(--iclr-primary-dark);
-  --clr-primary-rgb: 26, 182, 185;
   --clr-accent: var(--iclr-accent-dark);
   --clr-accent-rgb: 255, 127, 127;
   --clr-bg-rgb-val: 21, 23, 26;
-
+  
+  /* Status Colors Dark */
+  --clr-success: var(--iclr-success-dark);
+  --clr-warning: var(--iclr-warning-dark);
+  --clr-disabled: var(--iclr-disabled-dark);
+  --clr-error: var(--iclr-error-dark);
+  --clr-primary: var(--iclr-primary-dark);
+  --clr-primary-rgb: 26, 182, 185;
+  
   /* Invert Dark */
   --clr-bg-invert: var(--iclr-bg-light);
   --clr-bg-invert-rgb: 247, 248, 252;
@@ -119,10 +129,12 @@ body.dark {
   box-sizing: border-box;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
     transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%; 
 }
 
 body {
@@ -134,8 +146,6 @@ body {
 }
 
 /* --- AJOUT POUR LE LECTEUR --- */
-body#readerpage {
-}
 
 img {
   display: block;
@@ -153,7 +163,7 @@ img {
 .colo-card,
 .chapter-card-list-item {
   transform: translateY(20px);
-  opacity: 0;
+  opacity: .5;
 }
 
 img.lazy-load-gallery[src*="placeholder_preview.png"] {

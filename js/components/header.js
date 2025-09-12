@@ -3,7 +3,7 @@ import { qs, qsa, slugify } from "../utils/domUtils.js";
 const mainNavLinksConfig = [
   { text: "Accueil", href: "/", icon: "fas fa-home", id: "home" },
   {
-    text: "Fan-Arts",
+    text: "Colorisations",
     href: "/galerie",
     icon: "fa-solid fa-palette",
     id: "gallery",
@@ -13,15 +13,15 @@ const mainNavLinksConfig = [
 
 const subNavTitlesConfig = {
   homepage: "Sur cette page",
-  seriesdetailpage: "Navigation Série",
-  seriescoverspage: "Navigation Série",
+  seriesdetailpage: "Navigation série",
+  seriescoverspage: "Navigation série",
 };
 
 const subNavLinksConfig = {
   homepage: [
     { text: "À la une", href: "#hero-section", id: "hero" },
     { text: "Séries", href: "#on-going-section", id: "series" },
-    { text: "One-Shot", href: "#one-shot-section", id: "oneshots" },
+    { text: "One-shot", href: "#one-shot-section", id: "oneshots" },
   ],
   galeriepage: [],
   presentationpage: [],
@@ -83,53 +83,37 @@ function renderNavLinks(container, links, isMobile = false) {
 function getSubNavLinksForPage(pageId) {
   let baseLinks = [...(subNavLinksConfig[pageId] || [])];
 
-  if (pageId === "seriesdetailpage" || pageId === "seriescoverspage") {
+  if (pageId === "seriesdetailpage") {
     const seriesSlug = getCurrentSeriesSlugFromPath();
     if (seriesSlug) {
-      const coversLink = {
-        text: "Galerie des Couvertures",
-        href: `/${seriesSlug}/cover`,
-        id: "series-covers-gallery",
-      };
+      const currentView = getCurrentSeriesViewFromPath();
 
-      if (pageId === "seriescoverspage") {
+      if (currentView === "anime") {
         baseLinks = [
           {
-            text: "Retour à la Série",
-            href: `/${seriesSlug}`,
-            id: "back-to-series",
+            text: "Informations",
+            href: `#series-detail-section`,
+            id: "series-info",
+          },
+          {
+            text: "Épisodes",
+            href: `#chapters-list-section`,
+            id: "series-episodes",
           },
         ];
-      } else if (pageId === "seriesdetailpage") {
-        const currentView = getCurrentSeriesViewFromPath();
-
-        if (currentView === "anime") {
-          baseLinks = [
-            {
-              text: "Informations",
-              href: `#series-detail-section`,
-              id: "series-info",
-            },
-            {
-              text: "Épisodes",
-              href: `#chapters-list-section`,
-              id: "series-episodes",
-            },
-          ];
-        } else {
-          baseLinks = [
-            {
-              text: "Informations",
-              href: `#series-detail-section`,
-              id: "series-info",
-            },
-            {
-              text: "Chapitres",
-              href: `#chapters-list-section`,
-              id: "series-chapters",
-            },
-          ];
-        }
+      } else {
+        baseLinks = [
+          {
+            text: "Informations",
+            href: `#series-detail-section`,
+            id: "series-info",
+          },
+          {
+            text: "Chapitres",
+            href: `#chapters-list-section`,
+            id: "series-chapters",
+          },
+        ];
       }
     }
   }

@@ -3,22 +3,6 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <script>
-      (function () {
-        try {
-          var theme = localStorage.getItem("mv-theme");
-          var prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-          ).matches;
-          var htmlEl = document.documentElement;
-          if (theme === "dark" || (!theme && prefersDark)) {
-            htmlEl.classList.add("dark");
-          } else {
-            htmlEl.classList.remove("dark");
-          }
-        } catch (e) {}
-      })();
-    </script>
     <meta charset="UTF-8" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />

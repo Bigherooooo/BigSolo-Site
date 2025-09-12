@@ -16,9 +16,10 @@
   content: "";
   position: absolute;
   top: -60px;
-  left: 0;
-  right: 0;
+  left: -10px;
+  right: -10px; /* -10px pour éviter le contour moche du blur */
   height: 750px;
+  background-color: var(--clr-text-sub-invert);
   background-image: var(--random-banner-image);
   background-size: cover;
   background-position: center;
@@ -37,7 +38,7 @@
 
 .page-title {
   margin: 0;
-  padding: 2rem 0 0 0;
+  padding: 4rem 0 0 0;
   color: var(--iclr-text-dark);
   font-size: 2.4rem;
   font-weight: 700;
@@ -50,11 +51,9 @@
   margin-left: 0.5rem;
 }
 
-main::before {
+body::before {
   content: "";
-  /* --- DEBUT MODIFICATION --- */
-  position: absolute; /* LA MODIFICATION CLÉ : de 'fixed' à 'absolute' */
-  /* --- FIN MODIFICATION --- */
+  position: absolute;
   inset: 0; /* Prend 100% de la largeur ET HAUTEUR de <main> */
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 9998; /* Juste en dessous du contenu de la lightbox */
@@ -65,12 +64,12 @@ main::before {
   transition: opacity 0.3s ease;
 }
 
-body.dark main::before {
+body.dark::before {
   background-color: rgba(10, 10, 12, 0.92);
 }
 
 /* Quand le body a cette classe, le fond apparaît */
-body.lightbox-is-open main::before {
+body.lightbox-is-open::before {
   opacity: 1;
   pointer-events: auto; /* Permet de cliquer dessus pour fermer */
 }
@@ -82,7 +81,7 @@ body.lightbox-is-open main::before {
 .gallery-controls {
   position: relative;
   z-index: 10;
-  padding: 0.5rem 0 4rem 0;
+  padding: 0.5rem 0 1rem 0;
 }
 
 .gallery-sort-filter {
@@ -248,8 +247,8 @@ body.lightbox-is-open main::before {
 }
 
 .custom-dropdown-option .artist-pfp {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 0.8rem;
@@ -262,6 +261,7 @@ body.lightbox-is-open main::before {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1.1rem;
 }
 
 .custom-dropdown-option .artist-count {
@@ -319,7 +319,7 @@ body.lightbox-is-open main::before {
   transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
   width: calc(14.2% - 8px);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(20px) !important;
 }
 
 .colo-card:hover {
@@ -449,7 +449,7 @@ body.lightbox-is-open main::before {
 .lightbox-info-panel {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: .5rem;
   padding: 1.5rem;
   background-color: var(--clr-bg-card);
   border-radius: 8px;
@@ -499,19 +499,18 @@ body.lightbox-is-open main::before {
 .info-colo-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: .5rem;
 }
 
 .colo-details {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.2rem;
 }
 
 .detail-line {
   display: flex;
   align-items: baseline;
-  gap: 0.6rem;
 }
 
 .detail-label {
@@ -642,6 +641,11 @@ body.dark .info-separator {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+  }
+
+  .info-colo-section {
+    flex-direction: column;
+    align-items: start;
   }
 
   .artist-header {
@@ -776,4 +780,9 @@ body.dark .info-separator {
     right: 15px;
     font-size: 28px;
   }
+}
+
+
+h3:has(+.source-links) {
+    margin-bottom: 0;
 }

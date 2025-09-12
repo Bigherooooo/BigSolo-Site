@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-og": "node generate-og-images.js"
+    "generate-og": "node generate-og-images.js",
+    "dev": "wrangler pages dev ."
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,8 @@
     "satori": "^0.10.13",
     "satori-html": "^0.3.2",
     "workers-og": "^0.0.27"
+  },
+  "devDependencies": {
+    "wrangler": "^4.33.1"
   }
 }

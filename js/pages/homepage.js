@@ -2,7 +2,6 @@
 import { fetchData, fetchAllSeriesData } from "../utils/fetchUtils.js";
 import { slugify, qs, qsa, limitVisibleTags } from "../utils/domUtils.js";
 import { parseDateToTimestamp, timeAgo } from "../utils/dateUtils.js";
-import { initSeriesCardTooltips } from "../components/seriesCardTooltip.js";
 
 /**
  * Convertit une couleur HEX en une chaîne de valeurs R, G, B.
@@ -53,32 +52,41 @@ function renderHeroSlide(series) {
   const latestChapter = chaptersArray.length > 0 ? chaptersArray[0] : null;
 
   // Boutons
-  let latestChapterButtonHtml = "";
-  if (latestChapter) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(
-      latestChapter.chapter
-    )}" class="hero-cta-button">Dernier chapitre (Ch. ${
-      latestChapter.chapter
-    })</a>`;
-  }
   let latestEpisodeButtonHtml = "";
   if (seriesData.episodes && seriesData.episodes.length > 0) {
     const latestEpisode = [...seriesData.episodes].sort(
       (a, b) => b.indice_ep - a.indice_ep
     )[0];
     if (latestEpisode) {
-      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Dernier épisode (Ep. ${latestEpisode.indice_ep})</a>`;
+      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Épisode ${latestEpisode.indice_ep}</a>`;
     }
+  }
+  let latestChapterButtonHtml = "";
+  if (latestEpisodeButtonHtml) {
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Chapitre ${latestChapter.chapter}</a>`;
+  }
+  else if (latestChapter && latestChapter.chapter > 0) {
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
+  } else if (latestChapter && latestChapter.chapter == 0) {
+    latestChapterButtonHtml = `<a href="/${seriesSlug}/0" class="hero-cta-button">Lire le One-shot</a>`;
   }
 
   // Statut + pastille (desktop)
   let statusText = seriesData.release_status || "En cours";
-  let statusDotClass = statusText.toLowerCase().includes("fini")
-    ? "status-dot finished"
-    : "status-dot";
+  let statusClass = "";
+  const statusLower = statusText.toLowerCase();
+  if (statusLower.includes("fini")) {
+    statusClass = "finished";
+  } else if (statusLower.includes("pause")) {
+    statusClass = "paused";
+  } else if (statusLower.includes("annulé")) {
+    statusClass = "cancelled";
+  } else {
+    statusClass = "ongoing";
+  }
   let statusHtml = `
     <span class="status">
-      <span class="${statusDotClass}"></span>
+      <span class="status-dot ${statusClass}"></span>
       ${statusText}
     </span>
   `;
@@ -99,7 +107,7 @@ function renderHeroSlide(series) {
   let mobileStatusHtml = `
     <div class="hero-mobile-status">
       <span class="status">
-        <span class="${statusDotClass}"></span>
+        <span class="${statusClass}"></span>
         ${statusText}
       </span>
     </div>
@@ -121,8 +129,8 @@ function renderHeroSlide(series) {
     : "Aucune description.";
 
   const typeTag = seriesData.os
-    ? `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${heroColor};">One-Shot</span>`
-    : `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${heroColor};">Série</span>`;
+    ? `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${heroColor};">One-shot</span>`
+    : "";
 
   return `
     <div class="hero-slide" style="--bg-image: url('${backgroundImageUrl}'); --hero-color: ${heroColor}; --hero-color-rgb: ${heroColorRgb};">
@@ -220,11 +228,7 @@ async function initHeroCarousel() {
 
     function startAutoPlay() {
       if (autoPlayInterval) clearInterval(autoPlayInterval);
-      autoPlayInterval = setInterval(next, 5000);
-    }
-
-    function stopAutoPlay() {
-      clearInterval(autoPlayInterval);
+      autoPlayInterval = setInterval(next, 7500);
     }
 
     nextBtn.addEventListener("click", () => {
@@ -246,9 +250,6 @@ async function initHeroCarousel() {
         startAutoPlay();
       }
     });
-
-    qs(".hero-carousel").addEventListener("mouseenter", stopAutoPlay);
-    qs(".hero-carousel").addEventListener("mouseleave", startAutoPlay);
 
     goToSlide(0);
     startAutoPlay();
@@ -311,15 +312,23 @@ function renderSeriesCard(series) {
   if (lastChapterNum && lastEpisodeNum) {
     actionsHtml = `<div class="series-actions">
       <a href="${lastChapterUrl}" class="series-action-btn">Ch. ${lastChapterNum}</a>
-      <a href="${lastEpisodeUrl}" class="series-action-btn">Ep. ${lastEpisodeNum}</a>
+      <a href="${lastEpisodeUrl}" class="series-action-btn">Ép. ${lastEpisodeNum}</a>
     </div>`;
-  } else if (lastChapterNum) {
+  } else if (lastChapterNum > 0 && !series.os) {
     actionsHtml = `<div class="series-actions">
       <a href="${lastChapterUrl}" class="series-action-btn">Dernier chapitre (Ch. ${lastChapterNum})</a>
     </div>`;
   } else if (lastEpisodeNum) {
     actionsHtml = `<div class="series-actions">
-      <a href="${lastEpisodeUrl}" class="series-action-btn">Dernier épisode (Ep. ${lastEpisodeNum})</a>
+      <a href="${lastEpisodeUrl}" class="series-action-btn">Dernier épisode (Ép. ${lastEpisodeNum})</a>
+    </div>`;
+  } else if (lastChapterNum == 0) {
+    actionsHtml = `<div class="series-actions">
+      <a href="${lastChapterUrl}" class="series-action-btn">Lire le One-shot</a>
+    </div>`;
+  } else if (lastChapterNum > 0 && series.os) {
+    actionsHtml = `<div class="series-actions">
+      <a href="/${seriesSlug}" class="series-action-btn">Voir les One-shot</a>
     </div>`;
   }
 
@@ -471,7 +480,7 @@ export async function initHomepage() {
       if (seriesGridOngoing)
         seriesGridOngoing.innerHTML = "<p>Aucune série en cours.</p>";
       if (seriesGridOneShot)
-        seriesGridOneShot.innerHTML = "<p>Aucun one-shot.</p>";
+        seriesGridOneShot.innerHTML = "<p>Aucun One-shot.</p>";
       return;
     }
 
@@ -488,7 +497,7 @@ export async function initHomepage() {
       seriesGridOneShot.innerHTML =
         oneShots.length > 0
           ? oneShots.map(renderSeriesCard).join("")
-          : "<p>Aucun one-shot.</p>";
+          : "<p>Aucun One-shot.</p>";
     }
 
     makeSeriesCardsClickable();
@@ -501,6 +510,6 @@ export async function initHomepage() {
     if (seriesGridOngoing)
       seriesGridOngoing.innerHTML = "<p>Erreur chargement séries.</p>";
     if (seriesGridOneShot)
-      seriesGridOneShot.innerHTML = "<p>Erreur chargement one-shots.</p>";
+      seriesGridOneShot.innerHTML = "<p>Erreur chargement One-shots.</p>";
   }
 }

@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <script>
-      (function () {
-        try {
-          var theme = localStorage.getItem("mv-theme");
-          var prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-          ).matches;
-          var htmlEl = document.documentElement;
-          if (theme === "dark" || (!theme && prefersDark)) {
-            htmlEl.classList.add("dark");
-            htmlEl.style.backgroundColor = "#15171a";
-            htmlEl.style.color = "#eceff4";
-          } else {
-            htmlEl.classList.remove("dark");
-            htmlEl.style.backgroundColor = "#f7f8fc";
-            htmlEl.style.color = "#222831";
-          }
-        } catch (e) {}
-      })();
-    </script>
     <meta charset="UTF-8" />
 
     <!-- ↓↓↓ SECTION GÉRÉE PAR LE MIDDLEWARE ↓↓↓ -->
@@ -67,15 +47,17 @@
           <div class="hero-carousel-track">
             <!-- Les slides seront injectées ici par le JS -->
           </div>
-          <div class="hero-carousel-nav">
-            <!-- Les points de navigation seront injectés ici -->
+          <div class="hero-carousel-nav-btns">
+            <button class="hero-carousel-arrow prev" aria-label="Précédent">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="hero-carousel-nav">
+              <!-- Les points de navigation seront injectés ici -->
+            </div>
+            <button class="hero-carousel-arrow next" aria-label="Suivant">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
-          <button class="hero-carousel-arrow prev" aria-label="Précédent">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="hero-carousel-arrow next" aria-label="Suivant">
-            <i class="fas fa-chevron-right"></i>
-          </button>
         </div>
       </section>
 
