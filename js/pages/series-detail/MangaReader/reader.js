@@ -393,24 +393,24 @@ function initializeGlobalEvents() {
 }
 
 function initializeDesktopEvents() {
+  // charge les boutons déjà activés
+  dom.toggleInfoBtn.classList.toggle("active", state.settings.infoSidebarOpen);
+  dom.toggleSettingsBtn.classList.toggle("active", state.settings.settingsSidebarOpen);
+
   dom.toggleInfoBtn.addEventListener("click", () => {
     state.settings.infoSidebarOpen = !state.settings.infoSidebarOpen;
-    dom.toggleInfoBtn.classList.toggle(
-      "active",
-      state.settings.infoSidebarOpen
-    );
+    dom.toggleInfoBtn.classList.toggle("active", state.settings.infoSidebarOpen);
     saveSettings();
     updateLayout();
   });
+
   dom.toggleSettingsBtn.addEventListener("click", () => {
     state.settings.settingsSidebarOpen = !state.settings.settingsSidebarOpen;
-    dom.toggleSettingsBtn.classList.toggle(
-      "active",
-      state.settings.settingsSidebarOpen
-    );
+    dom.toggleSettingsBtn.classList.toggle("active", state.settings.settingsSidebarOpen);
     saveSettings();
     updateLayout();
   });
+
   dom.toggleLikeBtn.addEventListener("click", handleGlobalLike);
 }
 

@@ -73,12 +73,20 @@ function renderHeroSlide(series) {
 
   // Statut + pastille (desktop)
   let statusText = seriesData.release_status || "En cours";
-  let statusDotClass = statusText.toLowerCase().includes("fini")
-    ? "status-dot finished"
-    : "status-dot";
+  let statusClass = "";
+  const statusLower = statusText.toLowerCase();
+  if (statusLower.includes("fini")) {
+    statusClass = "finished";
+  } else if (statusLower.includes("pause")) {
+    statusClass = "paused";
+  } else if (statusLower.includes("annulé")) {
+    statusClass = "cancelled";
+  } else {
+    statusClass = "ongoing";
+  }
   let statusHtml = `
     <span class="status">
-      <span class="${statusDotClass}"></span>
+      <span class="status-dot ${statusClass}"></span>
       ${statusText}
     </span>
   `;
@@ -99,7 +107,7 @@ function renderHeroSlide(series) {
   let mobileStatusHtml = `
     <div class="hero-mobile-status">
       <span class="status">
-        <span class="${statusDotClass}"></span>
+        <span class="${statusClass}"></span>
         ${statusText}
       </span>
     </div>

@@ -101,14 +101,22 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
       (viewType === "anime"
         ? animeData?.status_an
         : seriesData.release_status) || "?";
-    const isFinished = statusText.toLowerCase().includes("fini");
+    let statusClass = "";
+    const statusLower = statusText.toLowerCase();
+    if (statusLower.includes("fini")) {
+      statusClass = "finished";
+    } else if (statusLower.includes("pause")) {
+      statusClass = "paused";
+    } else if (statusLower.includes("annulé")) {
+      statusClass = "cancelled";
+    } else {
+      statusClass = "ongoing";
+    }
     let dateText =
       (viewType === "anime"
         ? animeData?.date_start_an
         : seriesData.release_year) || "";
-    statusElem.innerHTML = `<span class="status-dot${
-      isFinished ? " finished" : ""
-    }"></span>${statusText} ${dateText ? `- ${dateText}` : ""}`;
+    statusElem.innerHTML = `<span class="status-dot ${statusClass}"></span>${statusText} ${dateText ? `- ${dateText}` : ""}`;
   }
 
   const yearElem = qs(".release-year", container);

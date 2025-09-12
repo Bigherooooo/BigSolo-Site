@@ -126,7 +126,7 @@ export function updateChapterList() {
     .join("");
   const activeLink = qs("a.active", dom.chapterList);
   if (activeLink) {
-    activeLink.scrollIntoView({ behavior: "smooth", block: "center" });
+    activeLink.scrollIntoView({ behavior: "instant", block: "center" });
   }
 }
 

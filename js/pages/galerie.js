@@ -127,15 +127,15 @@ function displayLightboxInfo(colo, author) {
     const coloDetailsHtml = `
       <div class="colo-details">
         <div class="detail-line">
-          <span class="detail-label">Ch.</span>
-          <span class="detail-value">${colo.chapitre || "N/A"}</span>
+          <span class="detail-label">Ch.</span>&nbsp;
+          <span class="detail-value">${colo.chapitre || "N/A"}</span>&nbsp;
           ${colo.page
-        ? `<span class="detail-label">Pg.</span><span class="detail-value">${colo.page}</span>`
+        ? `<span class="detail-label">Page</span>&nbsp;<span class="detail-value">${colo.page}</span>`
         : ""
       }
         </div>
         <div class="detail-line">
-          <span class="detail-label">Date:</span>
+          <span class="detail-label">Date :</span>&nbsp;
           <span class="detail-value">${formatDateForGallery(colo.date)}</span>
         </div>
       </div>
@@ -161,7 +161,7 @@ function displayLightboxInfo(colo, author) {
       <div class="info-colo-section">
         ${coloDetailsHtml}
         ${coloSocialsHtml
-        ? `<div class="source-links">${coloSocialsHtml}</div>`
+        ? `<h3>Retrouvez cette colo sur...</h3><div class="source-links">${coloSocialsHtml}</div>`
         : ""
       }
       </div>

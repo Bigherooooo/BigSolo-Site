@@ -11,10 +11,20 @@
   --iclr-text-fifth-dark: #807f7f;
   --iclr-background-reader-light: #e9ecef;
   --iclr-background-reader-dark: #111111;
-  --iclr-primary-light: #0095ad;
-  --iclr-primary-dark: #1ab6b9;
   --iclr-accent-light: #ff6b6b;
   --iclr-accent-dark: #ff7f7f;
+  
+  /* couleurs status (internal) */
+  --iclr-success-light: #4caf50;
+  --iclr-success-dark: #43a047;
+  --iclr-warning-light: #ff9800;
+  --iclr-warning-dark: #fb8c00;
+  --iclr-disabled-light: #9e9e9e;
+  --iclr-disabled-dark: #757575;
+  --iclr-error-light: #e53935;
+  --iclr-error-dark: #d32f2f;
+  --iclr-primary-light: #0095ad;
+  --iclr-primary-dark: #1ab6b9;
 
   /* Main Light */
   --clr-bg: var(--iclr-bg-light);
@@ -29,12 +39,18 @@
   --clr-text-fifth-rgb: 128, 127, 127;
   --clr-bg-reader: var(--iclr-background-reader-light);
   --clr-bg-reader-rgb: 247, 248, 252;
-  --clr-primary: var(--iclr-primary-light);
-  --clr-primary-rgb: 0, 149, 173;
   --clr-accent: var(--iclr-accent-light);
   --clr-accent-rgb: 255, 107, 107;
   --clr-bg-rgb-val: 247, 248, 252;
-
+  
+  /* Status Colors Light */
+  --clr-success: var(--iclr-success-light);
+  --clr-warning: var(--iclr-warning-light);
+  --clr-disabled: var(--iclr-disabled-light);
+  --clr-error: var(--iclr-error-light);
+  --clr-primary: var(--iclr-primary-light);
+  --clr-primary-rgb: 0, 149, 173;
+  
   /* Invert Light */
   --clr-bg-invert: var(--iclr-bg-dark);
   --clr-bg-invert-rgb: 17, 17, 17;
@@ -74,12 +90,18 @@ body.dark {
   --clr-text-fifth-rgb: 128, 127, 127;
   --clr-bg-reader: var(--iclr-background-reader-dark);
   --clr-bg-reader-rgb: 17, 17, 17;
-  --clr-primary: var(--iclr-primary-dark);
-  --clr-primary-rgb: 26, 182, 185;
   --clr-accent: var(--iclr-accent-dark);
   --clr-accent-rgb: 255, 127, 127;
   --clr-bg-rgb-val: 21, 23, 26;
-
+  
+  /* Status Colors Dark */
+  --clr-success: var(--iclr-success-dark);
+  --clr-warning: var(--iclr-warning-dark);
+  --clr-disabled: var(--iclr-disabled-dark);
+  --clr-error: var(--iclr-error-dark);
+  --clr-primary: var(--iclr-primary-dark);
+  --clr-primary-rgb: 26, 182, 185;
+  
   /* Invert Dark */
   --clr-bg-invert: var(--iclr-bg-light);
   --clr-bg-invert-rgb: 247, 248, 252;

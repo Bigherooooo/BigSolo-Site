@@ -88,3 +88,35 @@
     font-size: 1.1rem;
   }
 }
+
+/* Styles communs pour les status dots */
+.status-dot {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  margin-right: 0.18em;
+  vertical-align: middle;
+  flex-shrink: 0;
+  background-color: var(--clr-success);
+}
+
+.status-dot.ongoing,
+.ongoing .status-dot {
+  background-color: var(--clr-success);
+}
+
+.status-dot.paused,
+.paused .status-dot {
+  background-color: var(--clr-warning);
+}
+
+.status-dot.cancelled,
+.cancelled .status-dot {
+  background-color: var(--clr-disabled);
+}
+
+.status-dot.finished,
+.finished .status-dot {
+  background-color: var(--clr-primary);
+}

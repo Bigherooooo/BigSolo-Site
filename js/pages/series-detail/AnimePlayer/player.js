@@ -187,6 +187,9 @@ function initializeDesktopEvents() {
     toggleInfoBtn: qs("#toggle-info-sidebar-btn"),
     toggleLikeBtn: qs("#toggle-episode-like"),
   });
+
+  dom.toggleInfoBtn.classList.toggle("active", state.infoSidebarOpen);
+
   dom.toggleInfoBtn.addEventListener("click", () => {
     state.infoSidebarOpen = !state.infoSidebarOpen;
     dom.toggleInfoBtn.classList.toggle("active", state.infoSidebarOpen);
@@ -216,7 +219,7 @@ function renderMobileControls() {
 
   container.innerHTML = `
       <button id="mobile-toggle-sidebar-btn" title="Liste des épisodes">
-          <i class="fas fa-cog"></i>
+          <i class="fas fa-list-ul"></i>
       </button>
       <div class="mrc-info-wrapper">
           <div class="mrc-top-row">
@@ -255,7 +258,7 @@ function updateMobileControlsUI() {
   qs(".mrc-page-counter").textContent = `Saison ${
     state.currentEpisode.saison_ep || 1
   }`;
-  qs(".mrc-chapter-number").textContent = state.currentEpisode.indice_ep;
+  qs(".mrc-chapter-number").textContent = state.currentEpisode.indice_ep.toString().padStart(2, "0");
   qs(".mrc-chapter-title").textContent = state.currentEpisode.title_ep;
 }
 

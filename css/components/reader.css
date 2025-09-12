@@ -163,6 +163,24 @@ body.dark .reader-viewer-container {
   background-color: #111;
 }
 
+.reader-viewer-container:has(.licensed-notice) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.licensed-notice>a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+  border-bottom: 2px solid;
+  border-color: transparent;
+}
+
+.licensed-notice>a:hover {
+  border-color: inherit;
+}
+
 .reader-viewer {
   display: flex;
   height: 100%; /* On s'assure qu'il utilise toute la hauteur du parent */
@@ -671,6 +689,7 @@ body.dark .reader-viewer-container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .comment-header {
@@ -729,7 +748,7 @@ body.dark .reader-viewer-container {
 }
 
 .comment-like-action:hover {
-  color: #f5356e;
+  color: var(--clr-accent-invert);
 }
 
 .comment-like-action .fas.fa-heart {
@@ -745,7 +764,8 @@ body.dark .reader-viewer-container {
 }
 
 /* --- Bouton global like dans la barre de contrôle --- */
-#global-reader-controls #toggle-chapters-like {
+#global-reader-controls #toggle-chapters-like,
+#global-reader-controls #toggle-episode-like {
   background: transparent;
   color: var(--clr-bg-reader-invert);
   border: 1.5px solid var(--clr-bg-reader-invert);
@@ -760,22 +780,26 @@ body.dark .reader-viewer-container {
   transition: all 0.2s;
 }
 
-#global-reader-controls #toggle-chapters-like.liked {
+#global-reader-controls #toggle-chapters-like.liked,
+#global-reader-controls #toggle-episode-like.liked {
   background: var(--clr-accent);
   color: var(--clr-bg-reader);
   border-color: var(--clr-accent);
 }
 
-#global-reader-controls #toggle-chapters-like.liked i.fas.fa-heart {
+#global-reader-controls #toggle-chapters-like.liked i.fas.fa-heart,
+#global-reader-controls #toggle-episode-like.liked i.fas.fa-heart {
   color: var(--clr-bg-reader);
 }
 
-#global-reader-controls #toggle-chapters-like:hover {
+#global-reader-controls #toggle-chapters-like:hover,
+#global-reader-controls #toggle-episode-like:hover {
   background: var(--clr-bg-reader-invert);
   color: var(--clr-text-invert);
 }
 
-#global-reader-controls #toggle-chapters-like.liked:hover {
+#global-reader-controls #toggle-chapters-like.liked:hover,
+#global-reader-controls #toggle-episode-like.liked:hover {
   background: var(--clr-accent);
   color: var(--clr-text-invert);
 }
@@ -1311,4 +1335,10 @@ body.dark .reader-viewer-container {
     transform: translateX(-50%) translateY(100%);
     transition-delay: 0s; /* S'assure qu'elle disparaît immédiatement */
   }
+}
+
+
+.reader-viewer.single-mode {
+    display: flex;
+    justify-content: center;
 }
