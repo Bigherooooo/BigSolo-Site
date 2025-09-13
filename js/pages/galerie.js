@@ -46,8 +46,9 @@ function renderColoCard(colo, author) {
            alt="Colorisation Chap. ${colo.chapitre || "N/A"} par ${authorName}" 
            data-src="${previewUrl}"> 
       <div class="colo-card-overlay">
-        <p>Chap. ${colo.chapitre || "N/A"}${colo.page ? `, Page ${colo.page}` : ""
-    }</p>
+        <p>Chap. ${colo.chapitre || "N/A"}${
+          colo.page ? `, Page ${colo.page}` : ""
+        }</p>
         <p>Par ${authorName}</p>
       </div>
     </div>`;
@@ -78,8 +79,8 @@ function renderSocialLinks(links, type) {
 
   const socialPlatforms = {
     twitter: { icon: "fab fa-twitter", name: "Twitter" },
-    instagram: { icon: "fab fa-instagram", name: "Instagram" },
     tiktok: { icon: "fab fa-tiktok", name: "TikTok" },
+    instagram: { icon: "fab fa-instagram", name: "Instagram" },
     reddit: { icon: "fab fa-reddit", name: "Reddit" },
   };
 
@@ -112,15 +113,15 @@ function displayLightboxInfo(colo, author) {
     ).length;
     const artistLinks = {
       twitter: author.twitter,
-      instagram: author.instagram,
       tiktok: author.tiktok,
+      instagram: author.instagram,
       reddit: author.reddit,
     };
     const artistSocialsHtml = renderSocialLinks(artistLinks, "artist");
     const coloLinks = {
       twitter: colo.twitter,
-      instagram: colo.instagram,
       tiktok: colo.tiktok,
+      instagram: colo.instagram,
       reddit: colo.reddit,
     };
     const coloSocialsHtml = renderSocialLinks(coloLinks, "colo");
@@ -129,10 +130,11 @@ function displayLightboxInfo(colo, author) {
         <div class="detail-line">
           <span class="detail-label">Ch.</span>&nbsp;
           <span class="detail-value">${colo.chapitre || "N/A"}</span>&nbsp;
-          ${colo.page
-        ? `<span class="detail-label">Page</span>&nbsp;<span class="detail-value">${colo.page}</span>`
-        : ""
-      }
+          ${
+            colo.page
+              ? `<span class="detail-label">Page</span>&nbsp;<span class="detail-value">${colo.page}</span>`
+              : ""
+          }
         </div>
         <div class="detail-line">
           <span class="detail-label">Date :</span>&nbsp;
@@ -144,26 +146,30 @@ function displayLightboxInfo(colo, author) {
     panelContent = `
       <div class="info-artist-section">
         <div class="artist-header">
-          <img class="artist-pfp" src="${author.profile_img || "/img/profil.png"
-      }" alt="Profil de ${author.username}" loading="lazy">
+          <img class="artist-pfp" src="${
+            author.profile_img || "/img/profil.png"
+          }" alt="Profil de ${author.username}" loading="lazy">
           <div class="artist-details">
             <h3 class="artist-name">${author.username}</h3>
-            <p class="artist-colo-count">${occurrenceCount} colo${occurrenceCount > 1 ? "s" : ""
-      } sur le site</p>
+            <p class="artist-colo-count">${occurrenceCount} colo${
+              occurrenceCount > 1 ? "s" : ""
+            } sur le site</p>
           </div>
         </div>
-        ${artistSocialsHtml
-        ? `<div class="artist-socials">${artistSocialsHtml}</div>`
-        : ""
-      }
+        ${
+          artistSocialsHtml
+            ? `<div class="artist-socials">${artistSocialsHtml}</div>`
+            : ""
+        }
       </div>
       <hr class="info-separator">
       <div class="info-colo-section">
         ${coloDetailsHtml}
-        ${coloSocialsHtml
-        ? `<h3>Retrouvez cette colo sur...</h3><div class="source-links">${coloSocialsHtml}</div>`
-        : ""
-      }
+        ${
+          coloSocialsHtml
+            ? `<div class="source-links">${coloSocialsHtml}</div>`
+            : ""
+        }
       </div>
     `;
   }
@@ -232,9 +238,11 @@ function populateCustomArtistFilter() {
       <div class="custom-dropdown-option" role="option">
         <input type="checkbox" value="${id}" id="artist-filter-${id}">
         <label for="artist-filter-${id}">
-          <img src="${author.profile_img || "/img/profil.png"
-        }" class="artist-pfp" alt="Profil de ${author.username
-        }" loading="lazy">
+          <img src="${
+            author.profile_img || "/img/profil.png"
+          }" class="artist-pfp" alt="Profil de ${
+            author.username
+          }" loading="lazy">
           <span class="artist-name">${author.username}</span>
           <span class="artist-count">${count}</span>
         </label>

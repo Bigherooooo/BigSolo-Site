@@ -23,10 +23,14 @@
   background-image: var(--random-banner-image);
   background-size: cover;
   background-position: center;
-  filter: blur(4px) brightness(0.3);
+  filter: blur(4px) brightness(0.7);
   mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
   transition: background-image 0.4s ease-in-out; /* Ajoute une transition douce */
   z-index: -1;
+}
+
+.dark .gallery-section::before {
+  filter: blur(4px) brightness(0.3);
 }
 
 .gallery-header {
@@ -57,8 +61,7 @@ body::before {
   inset: 0; /* Prend 100% de la largeur ET HAUTEUR de <main> */
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 9998; /* Juste en dessous du contenu de la lightbox */
-
-  /* Le reste ne change pas */
+  height: 100000%;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -120,7 +123,9 @@ body.lightbox-is-open::before {
   font-weight: 500;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .custom-dropdown-toggle:hover {
@@ -164,7 +169,10 @@ body.lightbox-is-open::before {
   opacity: 0;
   transform: translateY(-10px);
   visibility: hidden;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
   scrollbar-width: thin;
   scrollbar-color: var(--clr-text-sub) transparent;
 }
@@ -316,7 +324,10 @@ body.lightbox-is-open::before {
   background-color: var(--clr-bg-card);
   box-shadow: 0 4px 8px rgba(var(--clr-text-rgb), 0.05);
   position: relative;
-  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.3s ease;
   width: calc(14.2% - 8px);
   opacity: 0;
   transform: translateY(20px) !important;
@@ -348,7 +359,9 @@ body.lightbox-is-open::before {
   font-size: 0.7rem;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
   text-align: left;
 }
 
@@ -449,7 +462,7 @@ body.lightbox-is-open::before {
 .lightbox-info-panel {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
   padding: 1.5rem;
   background-color: var(--clr-bg-card);
   border-radius: 8px;
@@ -499,7 +512,7 @@ body.lightbox-is-open::before {
 .info-colo-section {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .colo-details {
@@ -555,7 +568,10 @@ body.dark .info-separator {
   font-weight: 500;
   text-decoration: none;
   border: 1px solid transparent;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 
 .social-link:hover {
@@ -578,7 +594,7 @@ body.dark .info-separator {
 /* --- SECTION 5 : RESPONSIVE (MOBILES & TABLETTES) --- */
 /* ========================================================== */
 
-@media (max-width: 1300px) {
+@media (max-width: 1920px) {
   .colo-card {
     width: calc(20% - 8px);
   }
@@ -600,7 +616,7 @@ body.dark .info-separator {
     display: none;
   }
   .colo-card {
-    width: calc(50% - 8px);
+    width: calc(33.3% - 8px);
   }
 
   .lightbox-content-wrapper {
@@ -644,8 +660,13 @@ body.dark .info-separator {
   }
 
   .info-colo-section {
-    flex-direction: column;
+    flex-direction: initial;
     align-items: start;
+  }
+
+  .artist-socials,
+  .source-links {
+    justify-content: flex-end;
   }
 
   .artist-header {
@@ -663,6 +684,7 @@ body.dark .info-separator {
   }
   .colo-details {
     gap: 0.3rem;
+    min-width: 115px;
   }
   .detail-label {
     font-size: 0.85rem;
@@ -671,8 +693,9 @@ body.dark .info-separator {
     font-size: 0.9rem;
   }
   .social-link {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
+    min-height: 34px;
+    padding: 0rem 0.75rem;
+    font-size: 0.75rem;
   }
   .artist-socials .social-link {
     width: 34px;
@@ -685,6 +708,10 @@ body.dark .info-separator {
 
 /* --- Styles spécifiques pour Mobiles (768px et moins) --- */
 @media (max-width: 768px) {
+  .colo-card {
+    width: calc(50% - 8px);
+  }
+
   .lightbox-modal {
     padding: 1rem 1rem;
   }
@@ -782,7 +809,6 @@ body.dark .info-separator {
   }
 }
 
-
-h3:has(+.source-links) {
-    margin-bottom: 0;
+h3:has(+ .source-links) {
+  margin-bottom: 0;
 }

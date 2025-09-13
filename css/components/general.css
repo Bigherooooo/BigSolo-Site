@@ -17,7 +17,7 @@
 
 .tag,
 .detail-tag {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
   color: #fff;
   padding: 0.2rem 0.6rem;
   border-radius: 4px;
@@ -25,36 +25,6 @@
   font-weight: 500;
   white-space: nowrap;
 }
-
-.tag.tag-more {
-  background: rgba(var(--clr-primary-rgb), 0.07);
-}
-
-.sort-button {
-  background: rgba(var(--clr-primary-rgb), 0.2);
-  color: var(--clr-primary);
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background .3s ease, transform .3s ease;
-}
-
-.sort-button:hover {
-  background: rgba(var(--clr-primary-rgb), 0.5);
-  color: var(--clr-text);
-  transform: translateY(-2px);
-}
-
-.sort-button i {
-  transition: transform 0.3s ease;
-}
-
 
 /* --- Media Queries --- */
 @media (max-width: 768px) {
@@ -75,17 +45,8 @@
 
   .tag,
   .detail-tag {
-    font-size: .65rem;
-    padding: .15rem .4rem;
-  }
-
-  .sort-button {
-    padding: .5rem .8rem;
-    font-size: .75rem;
-  }
-
-  .sort-button i {
-    font-size: 1.1rem;
+    font-size: 0.7rem;
+    padding: 0.14rem 0.5rem;
   }
 }
 
@@ -103,20 +64,20 @@
 
 .status-dot.ongoing,
 .ongoing .status-dot {
-  background-color: var(--clr-success);
+  background-color: var(--iclr-success-light);
 }
 
 .status-dot.paused,
 .paused .status-dot {
-  background-color: var(--clr-warning);
+  background-color: var(--iclr-warning-light);
 }
 
 .status-dot.cancelled,
 .cancelled .status-dot {
-  background-color: var(--clr-disabled);
+  background-color: var(--iclr-disabled-light);
 }
 
 .status-dot.finished,
 .finished .status-dot {
-  background-color: var(--clr-primary);
+  background-color: var(--iclr-error-light);
 }

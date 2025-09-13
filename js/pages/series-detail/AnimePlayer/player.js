@@ -219,7 +219,7 @@ function renderMobileControls() {
 
   container.innerHTML = `
       <button id="mobile-toggle-sidebar-btn" title="Liste des épisodes">
-          <i class="fas fa-list-ul"></i>
+          <i class="fa-solid fa-info"></i>
       </button>
       <div class="mrc-info-wrapper">
           <div class="mrc-top-row">
@@ -258,7 +258,9 @@ function updateMobileControlsUI() {
   qs(".mrc-page-counter").textContent = `Saison ${
     state.currentEpisode.saison_ep || 1
   }`;
-  qs(".mrc-chapter-number").textContent = state.currentEpisode.indice_ep.toString().padStart(2, "0");
+  qs(".mrc-chapter-number").textContent = state.currentEpisode.indice_ep
+    .toString()
+    .padStart(2, "0");
   qs(".mrc-chapter-title").textContent = state.currentEpisode.title_ep;
 }
 

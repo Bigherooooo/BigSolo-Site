@@ -5,7 +5,7 @@
   --iclr-bg-card-dark: #1b1c1e;
   --iclr-text-light: #222329;
   --iclr-text-dark: #eff2f6;
-  --iclr-text-sub-light: #4d4c52;
+  --iclr-text-sub-light: #3c3b41;
   --iclr-text-sub-dark: #d2d6db;
   --iclr-text-fifth-light: #7f7f80;
   --iclr-text-fifth-dark: #807f7f;
@@ -13,7 +13,7 @@
   --iclr-background-reader-dark: #111111;
   --iclr-accent-light: #ff6b6b;
   --iclr-accent-dark: #ff7f7f;
-  
+
   /* couleurs status (internal) */
   --iclr-success-light: #4caf50;
   --iclr-success-dark: #43a047;
@@ -42,15 +42,16 @@
   --clr-accent: var(--iclr-accent-light);
   --clr-accent-rgb: 255, 107, 107;
   --clr-bg-rgb-val: 247, 248, 252;
-  
+
   /* Status Colors Light */
   --clr-success: var(--iclr-success-light);
   --clr-warning: var(--iclr-warning-light);
   --clr-disabled: var(--iclr-disabled-light);
   --clr-error: var(--iclr-error-light);
+  --clr-error-rgb: 229, 57, 53;
   --clr-primary: var(--iclr-primary-light);
   --clr-primary-rgb: 0, 149, 173;
-  
+
   /* Invert Light */
   --clr-bg-invert: var(--iclr-bg-dark);
   --clr-bg-invert-rgb: 17, 17, 17;
@@ -93,7 +94,7 @@ body.dark {
   --clr-accent: var(--iclr-accent-dark);
   --clr-accent-rgb: 255, 127, 127;
   --clr-bg-rgb-val: 21, 23, 26;
-  
+
   /* Status Colors Dark */
   --clr-success: var(--iclr-success-dark);
   --clr-warning: var(--iclr-warning-dark);
@@ -101,7 +102,7 @@ body.dark {
   --clr-error: var(--iclr-error-dark);
   --clr-primary: var(--iclr-primary-dark);
   --clr-primary-rgb: 26, 182, 185;
-  
+
   /* Invert Dark */
   --clr-bg-invert: var(--iclr-bg-light);
   --clr-bg-invert-rgb: 247, 248, 252;
@@ -127,14 +128,19 @@ body.dark {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
-    transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    filter 0.3s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%; 
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -163,7 +169,7 @@ img {
 .colo-card,
 .chapter-card-list-item {
   transform: translateY(20px);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 img.lazy-load-gallery[src*="placeholder_preview.png"] {

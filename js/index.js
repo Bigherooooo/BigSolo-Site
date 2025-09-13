@@ -220,6 +220,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bodyId = document.body.id;
   console.log("[Index] DOMContentLoaded event fired.");
 
+  if ("scrollRestoration" in history) {
+    if (bodyId !== "readerpage") {
+      history.scrollRestoration = "manual";
+      // On force la position en haut de la page au cas où le navigateur
+      // aurait déjà tenté de restaurer le scroll avant l'exécution de ce script.
+      window.scrollTo(0, 0);
+      console.log(
+        "[Scroll] Restauration du scroll désactivée pour cette page."
+      );
+    } else {
+      // Pour le lecteur, on laisse le navigateur gérer (ou on le force en 'auto')
+      history.scrollRestoration = "auto";
+      console.log("[Scroll] Restauration du scroll activée pour le lecteur.");
+    }
+  }
+
   const isAdminPage = bodyId === "admin-page";
 
   try {

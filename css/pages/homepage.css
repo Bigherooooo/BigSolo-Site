@@ -42,7 +42,9 @@
   display: flex;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    visibility 0.6s ease;
   z-index: 1;
 }
 
@@ -62,8 +64,13 @@
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-  filter: blur(8px) brightness(0.4);
+  filter: blur(8px) brightness(0.6);
   z-index: -1;
+}
+
+.dark .hero-slide::before {
+  transition: 0.3s;
+  filter: blur(8px) brightness(0.4);
 }
 
 .hero-slide-content {
@@ -80,8 +87,8 @@
 
 @media screen and (max-width: 1400px) {
   .hero-slide-content {
-  padding: 0 5% 0 7.5rem;
-}
+    padding: 0 5% 0 7.5rem;
+  }
 }
 
 .hero-info {
@@ -107,7 +114,9 @@
   line-height: 1em;
   margin-bottom: 0.8rem;
   color: var(--hero-color, #fff);
-  transition: color 0.3s ease, filter 0.3s ease;
+  transition:
+    color 0.3s ease,
+    filter 0.3s ease;
 }
 
 .hero-info .hero-tags {
@@ -142,32 +151,35 @@
   padding: 0.7rem 1.8rem;
   border-radius: 8px;
   font-weight: 700;
-  transition: transform 0.2s ease, box-shadow 0.2s ease,
-    background-color 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .hero-info .hero-cta-button-anime {
-  background: var(--hero-color, var(--clr-primary));
+  background: var(--hero-color);
   color: #fff;
   border: 2px solid transparent;
   text-decoration: none;
   padding: 0.7rem 1.8rem;
   border-radius: 8px;
   font-weight: 700;
-  transition: transform 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
     background-color 0.3s ease;
 }
 
 .hero-info .hero-cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   background-color: var(--hero-color, #fff);
   color: #fff;
 }
 
 .hero-info .hero-cta-button-anime:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   filter: brightness(1.1);
 }
 
@@ -202,8 +214,6 @@
   flex-shrink: 0; /* Empêche la déformation */
   min-width: 0;
 }
-
-
 
 .hero-image {
   position: absolute;
@@ -269,7 +279,10 @@
   border-radius: 5em;
   background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, width 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
+    width 0.3s ease;
   overflow: hidden;
 }
 
@@ -368,7 +381,6 @@
   }
 
   .hero-info .hero-series-title {
-    font-size: 2.5rem;
     margin-right: 3rem;
     margin-bottom: 0.8rem;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* On peut remettre une ombre légère si besoin */
@@ -481,7 +493,7 @@
     flex-basis: 100%;
     width: 100%;
     max-width: 100%;
-    padding: .6em .2em;
+    padding: 0.6em 0.2em;
   }
   /* Deux boutons = sur une ligne, prennent chacun la moitié */
   .hero-info .hero-mobile-actions .hero-cta-button,
@@ -505,11 +517,11 @@
     /* margin: .5em; */
     position: unset;
     transform: unset;
-    padding: .5em 1em;
+    padding: 0.5em 1em;
   }
   .hero-carousel-arrow:hover {
     background: unset;
-    opacity: .7;
+    opacity: 0.7;
   }
   .hero-carousel-arrow.prev {
   }
@@ -535,7 +547,7 @@
     width: 100%;
     padding: 0 10px;
     height: 42px;
-}
+  }
 }
 
 .mobile-only {

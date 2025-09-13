@@ -43,30 +43,24 @@ section {
   margin-bottom: 2.5rem;
 }
 
-main>section {
+main > section {
   padding: 0 16rem;
 }
 
 @media screen and (max-width: 1440px) {
-  main>section {
-    padding: 0 8rem;
-  }
-}
-
-@media screen and (max-width: 1260px) {
-  main>section {
-    padding: 0 4rem;
+  main > section {
+    padding: 0 4.5rem;
   }
 }
 
 @media screen and (max-width: 1024px) {
-  main>section {
-    padding: 0 2rem;
+  main > section {
+    padding: 0 4rem;
   }
 }
 
 @media screen and (max-width: 768px) {
-  main>section {
+  main > section {
     padding: 0;
   }
 }

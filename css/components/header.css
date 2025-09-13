@@ -61,7 +61,10 @@ header#main-header.is-hidden {
   font-size: 2.2rem;
   position: relative;
   line-height: 1;
-  transition: color 0.3s ease, font-weight 0.3s ease, letter-spacing 0.3s ease;
+  transition:
+    color 0.3s ease,
+    font-weight 0.3s ease,
+    letter-spacing 0.3s ease;
   letter-spacing: -0.5px;
   /* Initial spacing */
   display: block;
@@ -170,7 +173,9 @@ header#main-header.is-hidden {
 .desktop-social-icons a {
   color: var(--clr-bg-invert);
   font-size: 1.25rem;
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .desktop-social-icons a:hover {
@@ -197,7 +202,7 @@ header#main-header.is-hidden {
 }
 
 /* --- Media Queries --- */
-@media (max-width: 1150px) {
+@media (max-width: 1024px) {
   .hamburger-menu-btn {
     display: block;
   }

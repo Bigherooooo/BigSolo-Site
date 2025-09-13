@@ -38,9 +38,11 @@ function renderHeroSlide(series) {
   const jsonFilename = series.filename;
   const heroColor = series.color;
   const heroColorRgb = hexToRgb(heroColor);
-
   const seriesSlug = slugify(seriesData.title);
 
+  // --- LOGIQUE DE GÉNÉRATION DES BOUTONS ---
+
+  let latestChapter = null;
   const chaptersArray = Object.entries(seriesData.chapters)
     .map(([chapNum, chapData]) => ({ chapter: chapNum, ...chapData }))
     .filter((chap) => chap.groups && chap.groups.Big_herooooo)
@@ -49,29 +51,50 @@ function renderHeroSlide(series) {
         parseFloat(String(b.chapter).replace(",", ".")) -
         parseFloat(String(a.chapter).replace(",", "."))
     );
-  const latestChapter = chaptersArray.length > 0 ? chaptersArray[0] : null;
+  if (chaptersArray.length > 0) {
+    latestChapter = chaptersArray[0];
+  }
 
-  // Boutons
-  let latestEpisodeButtonHtml = "";
+  let latestEpisode = null;
   if (seriesData.episodes && seriesData.episodes.length > 0) {
-    const latestEpisode = [...seriesData.episodes].sort(
+    latestEpisode = [...seriesData.episodes].sort(
       (a, b) => b.indice_ep - a.indice_ep
     )[0];
-    if (latestEpisode) {
-      latestEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Épisode ${latestEpisode.indice_ep}</a>`;
-    }
-  }
-  let latestChapterButtonHtml = "";
-  if (latestEpisodeButtonHtml) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Chapitre ${latestChapter.chapter}</a>`;
-  }
-  else if (latestChapter && latestChapter.chapter > 0) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/${String(latestChapter.chapter)}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
-  } else if (latestChapter && latestChapter.chapter == 0) {
-    latestChapterButtonHtml = `<a href="/${seriesSlug}/0" class="hero-cta-button">Lire le One-shot</a>`;
   }
 
-  // Statut + pastille (desktop)
+  const hasBothButtons = latestChapter && latestEpisode;
+
+  // Création des boutons pour le DESKTOP (texte long)
+  let desktopChapterButtonHtml = "";
+  if (latestChapter) {
+    if (latestChapter.chapter == 0) {
+      desktopChapterButtonHtml = `<a href="/${seriesSlug}/0" class="hero-cta-button">Lire le One-shot</a>`;
+    } else {
+      desktopChapterButtonHtml = `<a href="/${seriesSlug}/${String(
+        latestChapter.chapter
+      )}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
+    }
+  }
+  let desktopEpisodeButtonHtml = "";
+  if (latestEpisode) {
+    desktopEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Dernier épisode (Ép. ${latestEpisode.indice_ep})</a>`;
+  }
+
+  // Création des boutons pour le MOBILE
+  let mobileChapterButtonHtml = desktopChapterButtonHtml; // Par défaut, on utilise le texte long
+  let mobileEpisodeButtonHtml = desktopEpisodeButtonHtml;
+
+  // Si les DEUX boutons existent, on utilise le texte court pour le mobile
+  if (hasBothButtons) {
+    mobileChapterButtonHtml = `<a href="/${seriesSlug}/${String(
+      latestChapter.chapter
+    )}" class="hero-cta-button">Chapitre ${latestChapter.chapter}</a>`;
+
+    mobileEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Épisode ${latestEpisode.indice_ep}</a>`;
+  }
+
+  // --- FIN DE LA LOGIQUE DES BOUTONS ---
+
   let statusText = seriesData.release_status || "En cours";
   let statusClass = "";
   const statusLower = statusText.toLowerCase();
@@ -84,46 +107,17 @@ function renderHeroSlide(series) {
   } else {
     statusClass = "ongoing";
   }
-  let statusHtml = `
-    <span class="status">
-      <span class="status-dot ${statusClass}"></span>
-      ${statusText}
-    </span>
-  `;
+  let statusHtml = `<span class="status"><span class="status-dot ${statusClass}"></span>${statusText}</span>`;
 
-  // Bloc info desktop
-  let latestInfoHtml = "";
-  if (latestChapterButtonHtml || latestEpisodeButtonHtml) {
-    latestInfoHtml = `
-      <div class="hero-latest-info">
-        ${latestChapterButtonHtml}
-        ${latestEpisodeButtonHtml}
-        ${statusHtml}
-      </div>
-    `;
-  }
+  // Utilisation des boutons DESKTOP pour la vue desktop
+  let latestInfoHtml = `<div class="hero-latest-info">${desktopChapterButtonHtml}${desktopEpisodeButtonHtml}${statusHtml}</div>`;
 
-  // Bloc info mobile (statut sous tags, boutons en bas)
-  let mobileStatusHtml = `
-    <div class="hero-mobile-status">
-      <span class="status">
-        <span class="${statusClass}"></span>
-        ${statusText}
-      </span>
-    </div>
-  `;
-  let mobileActionsHtml = `
-    <div class="hero-mobile-actions">
-      ${latestChapterButtonHtml}
-      ${latestEpisodeButtonHtml}
-    </div>
-  `;
+  // Utilisation des boutons MOBILE pour la vue mobile
+  let mobileStatusHtml = `<div class="hero-mobile-status">${statusHtml}</div>`;
+  let mobileActionsHtml = `<div class="hero-mobile-actions">${mobileChapterButtonHtml}${mobileEpisodeButtonHtml}</div>`;
 
   const backgroundImageUrl = seriesData.cover || "/img/placeholder_preview.png";
-  const characterImageUrl = `/img/reco/${jsonFilename.replace(
-    ".json",
-    ".png"
-  )}`;
+  const characterImageUrl = `/img/reco/${jsonFilename.replace(".json", ".png")}`;
   const description = seriesData.description
     ? seriesData.description.replace(/"/g, "&quot;")
     : "Aucune description.";
@@ -161,9 +155,7 @@ function renderHeroSlide(series) {
           </div>
         </div>
         <div class="hero-image">
-          <img src="${characterImageUrl}" alt="${
-    seriesData.title
-  }" onerror="this.style.display='none'">
+          <img src="${characterImageUrl}" alt="${seriesData.title}" onerror="this.style.display='none'">
         </div>
       </div>
     </div>
@@ -334,9 +326,9 @@ function renderSeriesCard(series) {
 
   return `
     <div class="series-card" style="background-image: url('${imageUrl}');" data-url="/${seriesSlug}" data-description="${description.replace(
-    /"/g,
-    "&quot;"
-  )}">
+      /"/g,
+      "&quot;"
+    )}">
       <div class="series-content">
         <h3 class="series-title">${series.title}</h3>
         <div class="series-extra">

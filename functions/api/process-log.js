@@ -1,34 +1,52 @@
-// functions/api/process-log.js
+// --- File: functions/api/process-log.js ---
 
-// La fonction peut maintenant être déclenchée par un cron OU par une requête GET/POST manuelle
 export async function onRequest(context) {
-  const { env, request } = context;
-  console.log(
-    "CRON/MANUAL: Démarrage du traitement des logs d'interactions..."
-  );
+  const { request, env } = context;
 
-  // vérification token
-  const authorization = request.headers.get("Authorization");
-  if (authorization !== "Bearer " + env.ADMIN_TOKEN) {
-    console.error("[PROCESS LOG] Token invalide.");
-    return new Response("Non autorisé", { status: 403 });
+  const isCron = request.headers.get("cf-cron") === "true";
+
+  if (!isCron) {
+    const authorization = request.headers.get("Authorization");
+    const expectedToken = `Bearer ${env.ADMIN_TOKEN}`;
+    if (authorization !== expectedToken) {
+      console.error(
+        "[API process-log] [BLOCKED] Tentative de déclenchement manuel avec un token invalide."
+      );
+      return new Response("Accès non autorisé.", { status: 401 });
+    }
+    console.log(
+      "[API process-log] [MANUAL TRIGGER] Déclenchement manuel autorisé."
+    );
+  } else {
+    console.log(
+      "[API process-log] [CRON TRIGGER] Déclenchement par cron détecté."
+    );
   }
 
   try {
     const list = await env.INTERACTIONS_LOG.list({ prefix: "log:" });
     if (list.keys.length === 0) {
-      console.log("CRON/MANUAL: Aucun log à traiter. Terminé.");
+      console.log("[API process-log] Aucun log à traiter. Terminé.");
       return new Response("Aucun log à traiter.", { status: 200 });
     }
+    console.log(
+      `[API process-log] ${list.keys.length} fichier(s) de log à traiter.`
+    );
 
     const logsBySeries = {};
+    const ipsToUnlock = new Set();
+
     for (const key of list.keys) {
       const parts = key.name.split(":");
-      if (parts.length >= 2) {
+      if (parts.length >= 4) {
         const seriesSlug = parts[1];
-        if (!logsBySeries[seriesSlug]) {
-          logsBySeries[seriesSlug] = [];
+        const clientIp = parts[2];
+
+        if (clientIp && clientIp !== "unknown") {
+          ipsToUnlock.add(clientIp);
         }
+
+        if (!logsBySeries[seriesSlug]) logsBySeries[seriesSlug] = [];
         logsBySeries[seriesSlug].push(key.name);
       }
     }
@@ -47,121 +65,105 @@ export async function onRequest(context) {
 
           for (const action of logActions) {
             const { chapter, type, payload } = action;
-
-            // ↓↓↓ LA MODIFICATION EST ICI ↓↓↓
-            // On vérifie si l'identifiant est pour un épisode (commence par "ep-")
             const isEpisode = String(chapter).startsWith("ep-");
 
-            // Initialiser l'objet si nécessaire, avec la bonne structure
             if (!seriesInteractions[chapter]) {
-              if (isEpisode) {
-                seriesInteractions[chapter] = { likes: 0 }; // Pas de commentaires pour les épisodes
-              } else {
-                seriesInteractions[chapter] = { likes: 0, comments: [] };
-              }
+              seriesInteractions[chapter] = isEpisode
+                ? { likes: 0 }
+                : { likes: 0, comments: [] };
             }
 
-            // Appliquer les actions
-            if (type === "like") {
-              seriesInteractions[chapter].likes =
-                (seriesInteractions[chapter].likes || 0) + 1;
-            } else if (type === "unlike") {
-              seriesInteractions[chapter].likes = Math.max(
-                0,
-                (seriesInteractions[chapter].likes || 0) - 1
-              );
-            }
-            // Gestion des notes (ratings) au niveau de la série (pas par chapitre)
-            else if (type === "rate") {
-              if (!seriesInteractions.stats) seriesInteractions.stats = {};
-              if (!Array.isArray(seriesInteractions.stats.ratings)) {
-                seriesInteractions.stats.ratings = [];
-              }
-              // On stocke la note dans un tableau temporaire (sera agrégé à la fin)
-              seriesInteractions.stats.ratings.push(
-                payload && payload.value !== undefined
-                  ? payload.value
-                  : action.value
-              );
-            }
-            // Les actions de commentaires ne seront traitées que si ce n'est pas un épisode
-            else if (!isEpisode) {
-              if (type === "add_comment") {
+            switch (type) {
+              case "like":
+                seriesInteractions[chapter].likes =
+                  (seriesInteractions[chapter].likes || 0) + 1;
+                break;
+              case "unlike":
+                seriesInteractions[chapter].likes = Math.max(
+                  0,
+                  (seriesInteractions[chapter].likes || 0) - 1
+                );
+                break;
+              case "rate":
+                if (!seriesInteractions.stats) seriesInteractions.stats = {};
+                if (!seriesInteractions.stats.ratings)
+                  seriesInteractions.stats.ratings = { count: 0, total: 0 };
+
+                seriesInteractions.stats.ratings.total =
+                  (seriesInteractions.stats.ratings.total || 0) + payload.value;
+                seriesInteractions.stats.ratings.count =
+                  (seriesInteractions.stats.ratings.count || 0) + 1;
+                break;
+              case "add_comment":
                 if (
+                  !isEpisode &&
                   !seriesInteractions[chapter].comments.some(
                     (c) => c.id === payload.id
                   )
                 ) {
                   seriesInteractions[chapter].comments.push(payload);
                 }
-              } else if (type === "like_comment" || type === "unlike_comment") {
-                // Correction: vérifier que payload et payload.commentId existent
-                if (payload && payload.commentId) {
+                break;
+              case "like_comment":
+              case "unlike_comment":
+                if (!isEpisode && payload?.commentId) {
                   const comment = seriesInteractions[chapter].comments.find(
                     (c) => c.id === payload.commentId
                   );
                   if (comment) {
-                    if (type === "like_comment") {
-                      comment.likes = (comment.likes || 0) + 1;
-                    } else if (type === "unlike_comment") {
-                      comment.likes = Math.max(0, (comment.likes || 0) - 1);
-                    }
+                    comment.likes =
+                      (comment.likes || 0) + (type === "like_comment" ? 1 : -1);
+                    if (comment.likes < 0) comment.likes = 0;
                   }
                 }
-                // Sinon, on ignore silencieusement l'action malformée
-              }
+                break;
             }
-            // ↑↑↑ FIN DE LA MODIFICATION ↑↑↑
           }
           totalActionsProcessed += logActions.length;
         }
         await env.INTERACTIONS_LOG.delete(logKey);
       }
 
-      // Agrégation finale des notes (ratings) pour stats globales
-      if (
-        seriesInteractions.stats &&
-        Array.isArray(seriesInteractions.stats.ratings)
-      ) {
-        const ratingsArr = seriesInteractions.stats.ratings.filter(
-          (v) => typeof v === "number" && !isNaN(v)
-        );
-        const ratingsCount = ratingsArr.length;
-        const avgRating =
-          ratingsCount > 0
-            ? ratingsArr.reduce((a, b) => a + b, 0) / ratingsCount
-            : null;
-        seriesInteractions.stats.ratings = {
-          count: ratingsCount,
-          average:
-            avgRating !== null ? Math.round(avgRating * 100) / 100 : null,
-        };
+      if (seriesInteractions.stats?.ratings?.total) {
+        const { total, count } = seriesInteractions.stats.ratings;
+        if (count > 0) {
+          seriesInteractions.stats.ratings.average =
+            Math.round((total / count) * 100) / 100;
+        }
+        delete seriesInteractions.stats.ratings.total;
       }
-      if (cacheKey) await env.INTERACTIONS_CACHE.put(
+
+      await env.INTERACTIONS_CACHE.put(
         cacheKey,
         JSON.stringify(seriesInteractions)
       );
       console.log(
-        `CRON/MANUAL: Traité ${logsBySeries[seriesSlug].length} fichiers de log pour la série "${seriesSlug}".`
+        `[API process-log] Traité ${logsBySeries[seriesSlug].length} log(s) pour la série "${seriesSlug}".`
       );
     }
 
-    console.log(
-      `CRON/MANUAL: Traitement terminé. ${totalActionsProcessed} actions au total.`
-    );
-    return new Response(
-      `Traitement terminé. ${totalActionsProcessed} actions traitées.`,
-      { status: 200 }
-    );
+    if (ipsToUnlock.size > 0) {
+      console.log(
+        `[API process-log] Suppression de ${ipsToUnlock.size} verrou(s) IP...`
+      );
+      const deletePromises = [];
+      for (const ip of ipsToUnlock) {
+        deletePromises.push(env.INTERACTIONS_LOG.delete(`lock:${ip}`));
+      }
+      await Promise.all(deletePromises);
+      console.log(`[API process-log] Verrous IP supprimés.`);
+    }
+
+    const successMessage = `Traitement terminé. ${totalActionsProcessed} action(s) traitée(s) sur ${list.keys.length} fichier(s).`;
+    console.log(`[API process-log] [SUCCESS] ${successMessage}`);
+    return new Response(successMessage, { status: 200 });
   } catch (error) {
     console.error(
-      "CRON/MANUAL: Erreur critique lors du traitement des logs:",
-      error && error.stack ? error.stack : error
+      "[API process-log] [FATAL] Erreur critique lors du traitement des logs:",
+      error.stack || error
     );
-    // Ajout : retourne l'erreur détaillée dans la réponse pour debug local
     return new Response(
-      "Erreur lors du traitement : " +
-      (error && error.stack ? error.stack : error),
+      "Erreur interne du serveur lors du traitement: " + error.message,
       { status: 500 }
     );
   }
