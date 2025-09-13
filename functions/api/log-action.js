@@ -1,8 +1,25 @@
-// --- File: functions/api/log-action.js ---
-import { slugify } from "../../js/utils/domUtils.js";
-import { generateIdentityFromAvatar } from "../../js/utils/usernameGenerator.js";
+function slugify(text) {
+  if (!text) return "";
+  return text
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[\s_]+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-");
+}
 
-// Durée du verrouillage en secondes. Un utilisateur ne pourra soumettre qu'une fois toutes les X secondes.
+function generateIdentityFromAvatar(avatarFilename) {
+  const username = avatarFilename
+    .replace(".jpg", "")
+    .replace(".png", "")
+    .replace(/_/g, " ");
+  const avatarUrl = `/img/profilpicture/${avatarFilename}`;
+  return { username, avatarUrl };
+}
+
 // 300 secondes = 5 minutes. C'est une bonne valeur de départ.
 const LOCK_DURATION_SECONDS = 300;
 

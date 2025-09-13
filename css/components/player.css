@@ -122,7 +122,7 @@
   .chapter-stats-details
   .detail-chapter-likes.liked
   .likes-count {
-  color: var(--clr-accent);
+  color: var(--clr-accent) !important;
 }
 #playerpage #info-sidebar .chapter-list a.active {
   background: var(--clr-bg-reader-invert);

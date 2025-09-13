@@ -1,6 +1,16 @@
 // functions/api/admin/purge-cache.js
-
-import { slugify } from "../../../js/utils/domUtils.js";
+function slugify(text) {
+  if (!text) return "";
+  return text
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[\s_]+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-");
+}
 
 export async function onRequest(context) {
   const { request, env } = context;
