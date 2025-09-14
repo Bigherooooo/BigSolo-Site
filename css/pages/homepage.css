@@ -85,9 +85,15 @@
   z-index: 3;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1440px) {
   .hero-slide-content {
-    padding: 0 5% 0 7.5rem;
+    padding: 0 3% 0 4.9rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .hero-slide-content {
+    padding: 0 2% 0 4.4rem;
   }
 }
 
@@ -325,7 +331,7 @@
 }
 
 /* --- SECTION RESPONSIVE MOBILE --- */
-@media (max-width: 846px) {
+@media (max-width: 768px) {
   #hero-section {
     margin-bottom: -60px;
   }

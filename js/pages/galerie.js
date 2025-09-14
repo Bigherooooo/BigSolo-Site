@@ -146,16 +146,16 @@ function displayLightboxInfo(colo, author) {
     ).length;
     const artistLinks = {
       twitter: author.twitter,
-      instagram: author.instagram,
       tiktok: author.tiktok,
       reddit: author.reddit,
+      instagram: author.instagram,
     };
     const artistSocialsHtml = renderSocialLinks(artistLinks, "artist");
     const coloLinks = {
       twitter: colo.twitter,
-      instagram: colo.instagram,
       tiktok: colo.tiktok,
       reddit: colo.reddit,
+      instagram: colo.instagram,
     };
     const coloSocialsHtml = renderSocialLinks(coloLinks, "colo");
     const coloDetailsHtml = `
@@ -200,7 +200,7 @@ function displayLightboxInfo(colo, author) {
         ${coloDetailsHtml}
         ${
           coloSocialsHtml
-            ? `<h3>Retrouvez cette colo sur...</h3><div class="source-links">${coloSocialsHtml}</div>`
+            ? `<div class="source-links">${coloSocialsHtml}</div>`
             : ""
         }
       </div>
@@ -411,6 +411,7 @@ export async function initGaleriePage() {
     authorsInfoData = authors;
     setRandomBannerImage(allColosData);
     if (totalCountSpan) totalCountSpan.textContent = `(${allColosData.length})`;
+
     const sortFilter = qs("#custom-sort-filter");
     const sortToggleBtn = sortFilter
       ? qs(".custom-dropdown-toggle", sortFilter)
@@ -418,6 +419,7 @@ export async function initGaleriePage() {
     const sortMenu = sortFilter
       ? qs(".custom-dropdown-menu", sortFilter)
       : null;
+
     if (sortToggleBtn && sortMenu) {
       sortToggleBtn.addEventListener("click", () => {
         const isExpanded =
@@ -439,8 +441,10 @@ export async function initGaleriePage() {
         }
       });
     }
+
     updateSortMode(currentSortMode);
     populateCustomArtistFilter();
+
     if (filterToggleBtn && filterMenu) {
       filterToggleBtn.addEventListener("click", () => {
         const isExpanded =
@@ -455,21 +459,37 @@ export async function initGaleriePage() {
         }
       });
     }
+
     if (lightboxModal && lightboxCloseBtn) {
+      // Écouteur sur le bouton X, toujours utile
       lightboxCloseBtn.addEventListener("click", closeLightbox);
+
+      // - Debut modification (Logique de fermeture de la lightbox réécrite et fiabilisée)
       lightboxModal.addEventListener("click", (e) => {
-        if (e.target === lightboxModal) {
+        // On vérifie si l'élément cliqué (e.target) n'est PAS l'un des éléments de contenu "protégés"
+        // ou un enfant de ces éléments.
+        const clickedOnContent = e.target.closest(
+          ".lightbox-image-container, .lightbox-info-panel"
+        );
+
+        // Si clickedOnContent est null, cela signifie que le clic a eu lieu
+        // en dehors des zones protégées (sur le fond ou dans les espaces vides).
+        if (!clickedOnContent) {
           closeLightbox();
         }
       });
+      // - Fin modification
     }
+
     window.addEventListener("popstate", () => {
       const path = window.location.pathname;
       const galleryPathMatch = path.match(/^\/galerie\/(\d+)\/?$/);
       if (galleryPathMatch) openLightboxForId(galleryPathMatch[1]);
       else closeLightbox();
     });
+
     displayColos();
+
     const galleryPathMatch = window.location.pathname.match(
       /^\/galerie\/(\d+)\/?$/
     );

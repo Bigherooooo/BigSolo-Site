@@ -12,7 +12,9 @@
   width: 300px;
   aspect-ratio: 2717 / 4063;
   scroll-snap-align: start;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   /* Styles pour la balise <a> */
   display: block;
   color: inherit;
@@ -109,30 +111,31 @@
 
 /* --- Correction du layout grid pour éviter les gros vides --- */
 .series-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 2rem;
-  align-items: flex-start;
+  align-items: stretch; /* S'assure que les cartes dans une même ligne ont la même hauteur si le contenu varie */
 }
 
 .series-card {
-  flex: 1 1 240px;
-  max-width: 240px;
-  min-width: 220px;
+  max-width: 330px;
+  justify-self: center;
+  aspect-ratio: 2 / 3;
   margin: 0;
   position: relative;
-  width: 240px;
-  height: 350px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #222;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.4, 1, 0.3, 1),
-    box-shadow 0.3s cubic-bezier(0.4, 1, 0.3, 1), opacity 0.3s ease-out;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #222;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 1, 0.3, 1),
+    opacity 0.3s ease-out;
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -178,7 +181,7 @@
 }
 
 .series-card .series-title {
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: #fff;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
@@ -192,7 +195,8 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: opacity 0.6s cubic-bezier(0.4, 1, 0.3, 1),
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 1, 0.3, 1),
     max-height 0.6s cubic-bezier(0.4, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
@@ -215,7 +219,7 @@
 
 .series-card .series-tags .tag {
   font-size: 0.7rem;
-  padding: 0.25em .7em;
+  padding: 0.25em 0.7em;
 }
 
 .series-card .series-actions {
@@ -236,11 +240,14 @@
   color: #fff;
   border: 1.5px solid rgba(255, 255, 255, 0.22);
   border-radius: 7px;
-  padding: 0.4em 1.2em;
+  padding: 0.4em 0;
   font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
-  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    border-color 0.18s;
   cursor: pointer;
   outline: none;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);

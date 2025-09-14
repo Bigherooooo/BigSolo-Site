@@ -19,7 +19,7 @@ const subNavTitlesConfig = {
 
 const subNavLinksConfig = {
   homepage: [
-    { text: "Recommandations", href: "#hero-section", id: "hero" },
+    { text: "À la une", href: "#hero-section", id: "hero" },
     { text: "Séries", href: "#on-going-section", id: "series" },
     { text: "One-shot", href: "#one-shot-section", id: "oneshots" },
   ],
