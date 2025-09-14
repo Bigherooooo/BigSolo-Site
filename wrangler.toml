@@ -1,5 +1,7 @@
 name = "bigsolo-functions"
-compatibility_date = "2025-07-13"
+compatibility_date = "2025-09-14"
+pages_build_output_dir = "." # Indique à Wrangler que c'est un projet Pages et où se trouvent les fichiers statiques (à la racine)
+
 
 [[kv_namespaces]]
 binding = "IMG_CHEST_CACHE"
