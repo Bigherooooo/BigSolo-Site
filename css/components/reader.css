@@ -17,9 +17,11 @@
     overflow: hidden;
   }
 
-  body#readerpage {height: 100vh;overflow: hidden;}
+  body#readerpage {
+    height: 100vh;
+    overflow: hidden;
+  }
 }
-
 
 /* --- Contrôles Globaux (en haut à gauche) --- */
 #global-reader-controls {
@@ -131,7 +133,7 @@
 
 .reader-container {
   top: -4.5rem;
-  padding: 1rem 0 1rem 1rem;
+  padding: 1rem;
   flex-grow: 1;
   min-width: 0;
   -webkit-user-select: none;
@@ -159,9 +161,6 @@
   user-select: none;
   -webkit-user-drag: none;
 }
-body.dark .reader-viewer-container {
-  background-color: #111;
-}
 
 .reader-viewer-container:has(.licensed-notice) {
   display: flex;
@@ -169,7 +168,7 @@ body.dark .reader-viewer-container {
   align-items: center;
 }
 
-.licensed-notice>a {
+.licensed-notice > a {
   text-decoration: none;
   color: inherit;
   font-weight: 600;
@@ -177,7 +176,7 @@ body.dark .reader-viewer-container {
   border-color: transparent;
 }
 
-.licensed-notice>a:hover {
+.licensed-notice > a:hover {
   border-color: inherit;
 }
 
@@ -190,8 +189,9 @@ body.dark .reader-viewer-container {
 .reader-viewer img {
   max-width: 100%;
   height: auto;
-  margin-top: auto;
+  margin: 0;
 }
+
 .reader-viewer.stretch img {
   width: 100%;
   height: 100%;
@@ -570,7 +570,9 @@ body.dark .reader-viewer-container {
 .slider-body {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.3s ease-out, padding-top 0.3s ease-out;
+  transition:
+    max-height 0.3s ease-out,
+    padding-top 0.3s ease-out;
   padding-top: 0;
 }
 
@@ -1151,7 +1153,9 @@ body.dark .reader-viewer-container {
     /* Animation et état initial */
     opacity: 1;
     pointer-events: none; /* Non cliquable */
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition:
+      opacity 0.3s ease-in-out,
+      transform 0.3s ease-in-out;
     z-index: 1001; /* Au-dessus du lecteur, mais sous les sidebars */
   }
 
@@ -1274,7 +1278,7 @@ body.dark .reader-viewer-container {
   #comments-mobile-section * {
     font-size: 1rem;
   }
-  
+
   #interactions-share {
     display: none; /* Caché par défaut */
     padding: 1rem 1rem 0 1rem;
@@ -1306,7 +1310,10 @@ body.dark .reader-viewer-container {
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s;
   }
 
   .interaction-btn:first-child {
@@ -1337,8 +1344,7 @@ body.dark .reader-viewer-container {
   }
 }
 
-
 .reader-viewer.single-mode {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }

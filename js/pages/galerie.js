@@ -15,6 +15,7 @@ let allColosData = [];
 let authorsInfoData = {};
 let selectedArtistIds = new Set();
 let currentSortMode = "date-desc";
+let masonryInstance = null; // On stocke l'instance de Masonry
 
 // --- SÉLECTEURS DOM ---
 const galleryGridContainer = qs("#gallery-grid-container");
@@ -46,9 +47,7 @@ function renderColoCard(colo, author) {
            alt="Colorisation Chap. ${colo.chapitre || "N/A"} par ${authorName}" 
            data-src="${previewUrl}"> 
       <div class="colo-card-overlay">
-        <p>Chap. ${colo.chapitre || "N/A"}${
-          colo.page ? `, Page ${colo.page}` : ""
-        }</p>
+        <p>Chap. ${colo.chapitre || "N/A"}${colo.page ? `, Page ${colo.page}` : ""}</p>
         <p>Par ${authorName}</p>
       </div>
     </div>`;
@@ -72,6 +71,40 @@ function setRandomBannerImage(colos) {
   }
 }
 
+/**
+ * Met à jour la hauteur de l'overlay de fond pour qu'il corresponde à la hauteur de la grille.
+ */
+function updateBodyBeforeHeight() {
+  const gridContainer = qs("#gallery-grid-container");
+  const bodyBefore = document.body; // En JS, on cible le body pour manipuler son pseudo-élément
+
+  if (gridContainer && bodyBefore) {
+    // On ajoute la position du haut de la grille à sa hauteur pour obtenir la hauteur totale
+    const totalHeight =
+      gridContainer.offsetTop + gridContainer.offsetHeight + 260;
+
+    // On crée ou met à jour une balise <style> dans le <head> pour appliquer la hauteur
+    let styleTag = document.getElementById("dynamic-body-before-style");
+    if (!styleTag) {
+      styleTag = document.createElement("style");
+      styleTag.id = "dynamic-body-before-style";
+      document.head.appendChild(styleTag);
+    }
+
+    // On s'assure que la hauteur est au moins celle de la fenêtre visible
+    const finalHeight = Math.max(totalHeight, window.innerHeight);
+
+    styleTag.textContent = `
+      body.lightbox-is-open::before {
+        height: ${finalHeight}px !important;
+      }
+    `;
+    console.log(
+      `[Galerie] Hauteur de l'overlay mise à jour à ${finalHeight}px.`
+    );
+  }
+}
+
 // --- LOGIQUE LIGHTBOX ---
 
 function renderSocialLinks(links, type) {
@@ -79,8 +112,8 @@ function renderSocialLinks(links, type) {
 
   const socialPlatforms = {
     twitter: { icon: "fab fa-twitter", name: "Twitter" },
-    tiktok: { icon: "fab fa-tiktok", name: "TikTok" },
     instagram: { icon: "fab fa-instagram", name: "Instagram" },
+    tiktok: { icon: "fab fa-tiktok", name: "TikTok" },
     reddit: { icon: "fab fa-reddit", name: "Reddit" },
   };
 
@@ -113,15 +146,15 @@ function displayLightboxInfo(colo, author) {
     ).length;
     const artistLinks = {
       twitter: author.twitter,
-      tiktok: author.tiktok,
       instagram: author.instagram,
+      tiktok: author.tiktok,
       reddit: author.reddit,
     };
     const artistSocialsHtml = renderSocialLinks(artistLinks, "artist");
     const coloLinks = {
       twitter: colo.twitter,
-      tiktok: colo.tiktok,
       instagram: colo.instagram,
+      tiktok: colo.tiktok,
       reddit: colo.reddit,
     };
     const coloSocialsHtml = renderSocialLinks(coloLinks, "colo");
@@ -167,7 +200,7 @@ function displayLightboxInfo(colo, author) {
         ${coloDetailsHtml}
         ${
           coloSocialsHtml
-            ? `<div class="source-links">${coloSocialsHtml}</div>`
+            ? `<h3>Retrouvez cette colo sur...</h3><div class="source-links">${coloSocialsHtml}</div>`
             : ""
         }
       </div>
@@ -187,8 +220,10 @@ function openLightboxForId(coloId) {
     const author = authorsInfoData[selectedColo.author_id];
     displayLightboxInfo(selectedColo, author);
     lightboxModal.style.display = "flex";
-    document.body.style.overflow = "hidden";
-    document.body.classList.add("lightbox-is-open"); // Active le fond opaque
+
+    updateBodyBeforeHeight();
+    document.body.classList.add("lightbox-is-open");
+
     history.replaceState({ coloId: coloId }, "", `/galerie/${coloId}`);
   }
 }
@@ -196,8 +231,7 @@ function openLightboxForId(coloId) {
 function closeLightbox() {
   if (lightboxModal) lightboxModal.style.display = "none";
   if (lightboxImg) lightboxImg.src = "";
-  document.body.style.overflow = "auto";
-  document.body.classList.remove("lightbox-is-open"); // Désactive le fond opaque
+  document.body.classList.remove("lightbox-is-open");
   if (
     window.location.pathname !== "/galerie" &&
     window.location.pathname !== "/galerie/"
@@ -313,14 +347,22 @@ function displayColos() {
       card.dataset.lightboxListenerAttached = "true";
     }
   });
-  const masonry = new Masonry(galleryGridContainer, {
+
+  masonryInstance = new Masonry(galleryGridContainer, {
     itemSelector: ".colo-card",
     columnWidth: ".colo-card",
     percentPosition: true,
     gutter: 8,
     transitionDuration: 0,
   });
-  initLazyLoadObserver("img.lazy-load-gallery", masonry);
+
+  imagesLoaded(galleryGridContainer).on("always", () => {
+    masonryInstance.layout();
+    updateBodyBeforeHeight();
+  });
+
+  initLazyLoadObserver("img.lazy-load-gallery", masonryInstance);
+
   setTimeout(() => {
     galleryGridContainer.classList.add("is-ready");
   }, 100);
@@ -415,7 +457,6 @@ export async function initGaleriePage() {
     }
     if (lightboxModal && lightboxCloseBtn) {
       lightboxCloseBtn.addEventListener("click", closeLightbox);
-      // On attache l'événement de fermeture au clic sur le modal lui-même (qui est maintenant le fond transparent)
       lightboxModal.addEventListener("click", (e) => {
         if (e.target === lightboxModal) {
           closeLightbox();
@@ -435,6 +476,8 @@ export async function initGaleriePage() {
     if (galleryPathMatch) {
       setTimeout(() => openLightboxForId(galleryPathMatch[1]), 100);
     }
+
+    window.addEventListener("resize", updateBodyBeforeHeight);
   } catch (error) {
     console.error("Erreur d'initialisation de la galerie:", error);
     if (galleryGridContainer) {

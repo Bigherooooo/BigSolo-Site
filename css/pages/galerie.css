@@ -16,8 +16,8 @@
   content: "";
   position: absolute;
   top: -60px;
-  left: -10px;
-  right: -10px; /* -10px pour éviter le contour moche du blur */
+  left: 0px;
+  right: 0px;
   height: 750px;
   background-color: var(--clr-text-sub-invert);
   background-image: var(--random-banner-image);
@@ -57,11 +57,16 @@
 
 body::before {
   content: "";
+  /* On le positionne par rapport à la page entière */
   position: absolute;
-  inset: 0; /* Prend 100% de la largeur ET HAUTEUR de <main> */
+  top: 0;
+  left: 0;
+  right: 0;
+  /* La hauteur sera définie dynamiquement par le JS */
+  height: 0;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 9998; /* Juste en dessous du contenu de la lightbox */
-  height: 100000%;
+  z-index: 9998;
+
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -75,6 +80,10 @@ body.dark::before {
 body.lightbox-is-open::before {
   opacity: 1;
   pointer-events: auto; /* Permet de cliquer dessus pour fermer */
+}
+
+body.lightbox-is-open {
+  overflow: hidden;
 }
 
 /* ============================================= */

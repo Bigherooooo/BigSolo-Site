@@ -11,13 +11,15 @@ export let state = {
   currentSpreadIndex: 0,
   chapterStats: { likes: 0, comments: [] },
   settings: {
+    // --- NOUVEAUX PARAMÈTRES PAR DÉFAUT POUR DESKTOP ---
+
     // État des options principales
-    mode: "double", // 'single', 'double', 'webtoon'
-    fit: "width", // 'height', 'width', 'custom'
+    mode: "single", // 'single', 'double', 'webtoon'
+    fit: "height", // 'height', 'width', 'custom'
 
     // État des options secondaires
-    doublePageOffset: true,
-    direction: "rtl", // 'ltr', 'rtl'
+    doublePageOffset: true, // Gardé pour si l'utilisateur change en mode double
+    direction: "ltr", // 'ltr', 'rtl'
     stretch: false,
     limitWidth: true,
     limitHeight: false,
@@ -26,7 +28,7 @@ export let state = {
     customMaxWidth: 1200,
     customMaxHeight: 1080,
 
-    // État de l'UI
+    // État de l'UI (pour desktop)
     infoSidebarOpen: true,
     settingsSidebarOpen: false,
   },

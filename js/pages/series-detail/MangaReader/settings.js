@@ -30,13 +30,41 @@ export const settingsConfig = {
  * Charge les paramètres de l'utilisateur depuis le localStorage.
  */
 export function loadSettings() {
-  const saved = localStorage.getItem("bigsolo_reader_settings_v6");
-  if (saved) {
+  const savedSettings = localStorage.getItem("bigsolo_reader_settings_v6");
+
+  if (savedSettings) {
+    // Cas 1 : L'utilisateur a déjà des préférences sauvegardées. On les charge.
     try {
-      Object.assign(state.settings, JSON.parse(saved));
-      console.log("Paramètres du lecteur chargés :", state.settings);
+      Object.assign(state.settings, JSON.parse(savedSettings));
+      console.log(
+        "Paramètres du lecteur chargés depuis le localStorage :",
+        state.settings
+      );
     } catch (e) {
-      console.error("Impossible de charger les paramètres du lecteur.", e);
+      console.error(
+        "Impossible de parser les paramètres sauvegardés. Utilisation des défauts.",
+        e
+      );
+      // En cas d'erreur de parsing, on ne fait rien, les défauts de state.js seront utilisés.
+    }
+  } else {
+    // Cas 2 : Nouvel utilisateur, aucun paramètre sauvegardé.
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      // On applique les valeurs par défaut spécifiques au mobile.
+      console.log(
+        "Nouvel utilisateur sur mobile : application des paramètres par défaut pour mobile."
+      );
+      state.settings.mode = "webtoon";
+      state.settings.fit = "height"; // Comme demandé
+      // Les autres paramètres (direction, etc.) gardent leur valeur de state.js
+    } else {
+      // Pour le desktop, les valeurs par défaut sont déjà celles définies dans state.js.
+      // On peut ajouter un log pour la clarté.
+      console.log(
+        "Nouvel utilisateur sur desktop : les paramètres par défaut de state.js sont utilisés."
+      );
     }
   }
 }
