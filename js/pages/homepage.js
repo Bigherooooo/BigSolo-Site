@@ -41,7 +41,6 @@ function renderHeroSlide(series) {
   const seriesSlug = slugify(seriesData.title);
 
   // --- LOGIQUE DE GÉNÉRATION DES BOUTONS ---
-
   let latestChapter = null;
   const chaptersArray = Object.entries(seriesData.chapters)
     .map(([chapNum, chapData]) => ({ chapter: chapNum, ...chapData }))
@@ -81,10 +80,9 @@ function renderHeroSlide(series) {
   }
 
   // Création des boutons pour le MOBILE
-  let mobileChapterButtonHtml = desktopChapterButtonHtml; // Par défaut, on utilise le texte long
+  let mobileChapterButtonHtml = desktopChapterButtonHtml;
   let mobileEpisodeButtonHtml = desktopEpisodeButtonHtml;
 
-  // Si les DEUX boutons existent, on utilise le texte court pour le mobile
   if (hasBothButtons) {
     mobileChapterButtonHtml = `<a href="/${seriesSlug}/${String(
       latestChapter.chapter
@@ -109,14 +107,11 @@ function renderHeroSlide(series) {
   }
   let statusHtml = `<span class="status"><span class="status-dot ${statusClass}"></span>${statusText}</span>`;
 
-  // Utilisation des boutons DESKTOP pour la vue desktop
   let latestInfoHtml = `<div class="hero-latest-info">${desktopChapterButtonHtml}${desktopEpisodeButtonHtml}${statusHtml}</div>`;
-
-  // Utilisation des boutons MOBILE pour la vue mobile
   let mobileStatusHtml = `<div class="hero-mobile-status">${statusHtml}</div>`;
   let mobileActionsHtml = `<div class="hero-mobile-actions">${mobileChapterButtonHtml}${mobileEpisodeButtonHtml}</div>`;
 
-  const backgroundImageUrl = seriesData.cover || "/img/placeholder_preview.png";
+  const backgroundImageUrl = seriesData.cover_hq || seriesData.cover_low;
   const characterImageUrl = `/img/reco/${jsonFilename.replace(".json", ".png")}`;
   const description = seriesData.description
     ? seriesData.description.replace(/"/g, "&quot;")
@@ -255,7 +250,7 @@ async function initHeroCarousel() {
 // --- LOGIQUE EXISTANTE POUR LES GRILLES DE SÉRIES ---
 
 function renderSeriesCard(series) {
-  if (!series || !series.chapters || !series.title || !series.cover) return "";
+  if (!series || !series.chapters || !series.title) return "";
 
   const seriesSlug = slugify(series.title);
 
@@ -297,7 +292,8 @@ function renderSeriesCard(series) {
           .join("")}</div>`
       : "";
 
-  const imageUrl = series.cover || "img/placeholder_preview.png";
+  const imageUrl =
+    series.cover_low || series.cover_hq || "img/placeholder_preview.png";
   const description = series.description || "Pas de description disponible.";
 
   let actionsHtml = "";

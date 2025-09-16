@@ -1,64 +1,73 @@
 {
-	"title": "Takaki Tsuyoshi - OS",
-	"description": "Compilation de plusieurs One-shot de l'auteur de Heart Gear & Black Torch.",
-	"artist": "Takaki Tsuyoshi",
-	"author": "Takaki Tsuyoshi",
-	"cover": "https://meo.comick.pictures/5YbrB.jpg",
-	"manga_type": "Shonen",
-    "magazine": "Twitter",
-	"release_year": 2018,
-	"tags": ["Action", "Fantaisie", "Démons", "Magie", "Drame", "Aliens", "Surnaturel"],
-	"alternative_titles": ["Takaki Tsuyoshi - OS"],
-	"release_status": "Finis",
-	"os": true,
-	"chapters": {
-		"1": {
-			"title": "Hardcore Santa and the Spirit's Wail",
-			"volume": "",
-			"last_updated": "1725832800",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/na7km3xzq48"
-			}
-		},
-		"2": {
-			"title": "A Tale of Two Loners",
-			"volume": "",
-			"last_updated": "1725832801",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxng9o42"
-			}
-		},
-		"3": {
-			"title": "A Certain Swordsman's Journey Through Life",
-			"volume": "",
-			"last_updated": "1725832802",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9prgeyp"
-			}
-		},
-		"4": {
-			"title": "The Reason Why I Won’t Quit Smoking",
-			"volume": "",
-			"last_updated": "1725832803",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/xny8vbpzo7b"
-			}
-		},
-		"5": {
-			"title": "Thoughts on Christmas",
-			"volume": "",
-			"last_updated": "1726524000",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/bp45pak82y5"
-			}
-		},
-		"6": {
-			"title": "Looks Don't Really Matter Much at the Job",
-			"volume": "",
-			"last_updated": "1726524004",
-			"groups": {
-				"Big_herooooo": "/proxy/api/imgchest/chapter/agyvqmz6948"
-			}
-		}
-	}
+  "title": "Takaki Tsuyoshi - OS",
+  "description": "Compilation de plusieurs One-shot de l'auteur de Heart Gear & Black Torch.",
+  "artist": "Takaki Tsuyoshi",
+  "author": "Takaki Tsuyoshi",
+  "cover_hq": "https://cdn.imgchest.com/files/e522b6fc5e9c.jpg",
+  "cover_low": "https://cdn.imgchest.com/files/30c3e41fd558.jpg",
+  "manga_type": "Shonen",
+  "magazine": "Twitter",
+  "release_year": 2018,
+  "tags": [
+    "Action",
+    "Fantaisie",
+    "Démons",
+    "Magie",
+    "Drame",
+    "Aliens",
+    "Surnaturel"
+  ],
+  "alternative_titles": ["Takaki Tsuyoshi - OS"],
+  "release_status": "Finis",
+  "os": true,
+  "chapters": {
+    "1": {
+      "title": "Hardcore Santa and the Spirit's Wail",
+      "volume": "",
+      "last_updated": "1725832800",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km3xzq48"
+      }
+    },
+    "2": {
+      "title": "A Tale of Two Loners",
+      "volume": "",
+      "last_updated": "1725832801",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxng9o42"
+      }
+    },
+    "3": {
+      "title": "A Certain Swordsman's Journey Through Life",
+      "volume": "",
+      "last_updated": "1725832802",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9prgeyp"
+      }
+    },
+    "4": {
+      "title": "The Reason Why I Won’t Quit Smoking",
+      "volume": "",
+      "last_updated": "1725832803",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vbpzo7b"
+      }
+    },
+    "5": {
+      "title": "Thoughts on Christmas",
+      "volume": "",
+      "last_updated": "1726524000",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/bp45pak82y5"
+      }
+    },
+    "6": {
+      "title": "Looks Don't Really Matter Much at the Job",
+      "volume": "",
+      "last_updated": "1726524004",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqmz6948"
+      }
+    }
+  }
 }

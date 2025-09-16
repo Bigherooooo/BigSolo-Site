@@ -3,7 +3,8 @@
   "description": "Une comédie romantique sur quatre sœurs qui vivent leur premier amour en même temps. Alors que l'aînée a le béguin pour le garçon de son travail à temps partiel, les trois autres font face à leurs premières expériences romantiques avec les garçons de leurs classes et clubs scolaires. Tous les soirs, les quatre sœurs ont des discussions entre filles, à cœur ouvert, sur leurs premiers amours respectifs",
   "artist": "Ogata Akane",
   "author": "Ogata Akane",
-  "cover": "https://meo.comick.pictures/Q8z7Lp.png",
+  "cover_hq": "https://cdn.imgchest.com/files/f879f3af2340.png",
+  "cover_low": "https://cdn.imgchest.com/files/5acf33ce1176.jpg",
   "manga_type": "Shonen",
   "magazine": "Sunday Webry",
   "release_year": 2024,
@@ -13,13 +14,13 @@
   "release_status": "En cours",
   "covers_gallery": [
     {
-      "url_hq": "https://meo.comick.pictures/Q8z7Lp.jpg",
-      "url_lq": "https://meo.comick.pictures/Q8z7Lp-s.jpg",
+      "url_hq": "https://cdn.imgchest.com/files/f879f3af2340.png",
+      "url_lq": "https://cdn.imgchest.com/files/5acf33ce1176.jpg",
       "volume": "2"
     },
     {
-      "url_hq": "https://meo.comick.pictures/2NRx7L.jpg",
-      "url_lq": "https://meo.comick.pictures/2NRx7L-s.jpg",
+      "url_hq": "https://cdn.imgchest.com/files/56d581daf04c.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/e286d03a6644.jpg",
       "volume": "1"
     }
   ],

@@ -22,9 +22,9 @@ export function initCoverGallery(viewContainer, seriesData) {
   }
 
   trigger.classList.add("is-clickable");
+  trigger.title = "Afficher la galerie des couvertures";
 
   const closeBtn = qs(".cover-gallery-close", overlay);
-  const gridContainer = qs(".cover-gallery-grid-container", overlay); // Ciblons le conteneur
   const grid = qs(".cover-gallery-grid", overlay);
 
   const openLightbox = (imageUrl) => {
@@ -87,9 +87,7 @@ export function initCoverGallery(viewContainer, seriesData) {
   trigger.addEventListener("click", openGallery);
   closeBtn.addEventListener("click", closeGallery);
 
-  // - Debut modification
   overlay.addEventListener("click", (e) => {
-    // On ferme si la cible du clic est l'overlay lui-même OU le conteneur de la grille
     if (
       e.target.classList.contains("cover-gallery-overlay") ||
       e.target.classList.contains("cover-gallery-grid-container")
@@ -97,7 +95,6 @@ export function initCoverGallery(viewContainer, seriesData) {
       closeGallery();
     }
   });
-  // - Fin modification
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {

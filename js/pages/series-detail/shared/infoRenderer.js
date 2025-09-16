@@ -43,7 +43,8 @@ function renderBannerAndCover(container, seriesData, viewType) {
   const coverImg = qs(".detail-cover", container);
   const seriesSlug = seriesData.slug;
 
-  const mangaCoverUrl = seriesData.cover;
+  const mangaCoverUrl = seriesData.cover_low || seriesData.cover_hq;
+
   let primaryCoverUrl;
 
   if (viewType === "anime") {
