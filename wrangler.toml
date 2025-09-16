@@ -14,8 +14,3 @@ id = "9bd6247311a141c58512bffb5e133311"
 [[kv_namespaces]]
 binding = "INTERACTIONS_CACHE"
 id = "0653d72f16bb45adb5155e2ea69e5031"
-
-[vars]
-ADMIN_USERNAME = ""
-ADMIN_PASSWORD = ""
-ADMIN_TOKEN = ""
