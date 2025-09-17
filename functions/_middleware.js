@@ -76,7 +76,7 @@ export async function onRequest(context) {
   if (seriesName.includes("_") && !knownPrefixes.includes(`/${seriesName}/`)) {
     const newSeriesName = slugify(seriesName);
     const pathname = originalPathname.replace(seriesName, newSeriesName);
-    const newUrl = new URL(newSeriesName, url.origin);
+    const newUrl = new URL(pathname, url.origin);
     newUrl.search = url.search;
     newUrl.hash = url.hash;
     console.log(
