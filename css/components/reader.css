@@ -1347,4 +1347,14 @@
 .reader-viewer.single-mode {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.reader-viewer.single-mode.fit-width img {
+  width: unset;
+}
+
+.reader-viewer.single-mode.fit-custom img {
+  width: 100%;
+  height: fit-content;
 }
