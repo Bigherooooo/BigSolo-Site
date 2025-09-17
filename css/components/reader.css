@@ -133,7 +133,7 @@
 
 .reader-container {
   top: -4.5rem;
-  padding: 1rem;
+  padding: 1rem 1rem 20px 1rem;
   flex-grow: 1;
   min-width: 0;
   -webkit-user-select: none;
@@ -144,6 +144,10 @@
   z-index: 1;
   height: calc(100% + 4.5rem);
   /* On retire le padding ici car il sera sur le viewer */
+}
+
+.reader-container.webtoon-mode-padding {
+  padding: 1rem;
 }
 
 .reader-viewer-container {
@@ -851,6 +855,61 @@
   font-size: 2rem;
   color: rgba(var(--clr-text-rgb), 0.2);
   margin: 0 auto;
+}
+
+#reader-progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: rgba(var(--clr-bg-reader-rgb), 0.5);
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  gap: 2px;
+  z-index: 1001;
+  transition:
+    transform 0.3s ease-in-out,
+    width 0.3s ease-in-out,
+    left 0.3s ease-in-out;
+  backdrop-filter: blur(8px);
+}
+
+body:not(.mobile-view) #reader-progress-bar.sidebar-open {
+  left: var(--sidebar-total-width, 0px);
+  width: calc(100% - var(--sidebar-total-width, 0px));
+}
+
+body.webtoon-mode-active #reader-progress-bar {
+  display: none;
+}
+
+#reader-progress-bar.rtl-mode {
+  flex-direction: row-reverse;
+}
+
+.progress-tick {
+  flex-grow: 1;
+  height: 7px;
+  background-color: rgba(var(--clr-text-rgb), 0.05);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.progress-tick:hover,
+.progress-tick.read:hover {
+  background-color: var(--clr-text-sub);
+}
+
+.progress-tick.read {
+  background-color: var(--clr-text-fifth);
+}
+
+.progress-tick.current {
+  background-color: var(--clr-text);
+  height: 10px;
 }
 
 .mobile-only {

@@ -7,6 +7,7 @@ import { calculateSpreads } from "../data.js";
 import { goToSpread } from "../navigation.js";
 // On importe statiquement renderViewer pour l'utiliser partout.
 import { render as renderViewer } from "./viewer.js";
+import { render as renderProgressBar } from "./progressBar.js";
 
 /**
  * Initialise le composant de la sidebar des paramètres.
@@ -91,6 +92,10 @@ function attachEventListeners() {
       state.settings[settingName] = newModeValue;
 
       if (settingName === "mode") {
+        document.body.classList.toggle(
+          "webtoon-mode-active",
+          newModeValue === "webtoon"
+        );
         console.log(
           `[Mode Change] Ancre: page ${
             anchorPageIndex + 1
@@ -131,6 +136,7 @@ function attachEventListeners() {
       if (subSetting === "direction") {
         state.settings.direction =
           state.settings.direction === "ltr" ? "rtl" : "ltr";
+        renderProgressBar();
       } else {
         state.settings[subSetting] = !state.settings[subSetting];
       }

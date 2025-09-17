@@ -25,6 +25,7 @@ export function render() {
     state.currentSpreadIndex
   );
 
+  const readerContainer = dom.viewerContainer?.parentElement;
   const viewer = document.createElement("div");
   const {
     mode,
@@ -36,6 +37,13 @@ export function render() {
     limitHeight,
     customMaxHeight,
   } = state.settings;
+
+  if (readerContainer) {
+    readerContainer.classList.toggle(
+      "webtoon-mode-padding",
+      mode === "webtoon"
+    );
+  }
 
   viewer.className = `reader-viewer ${mode}-mode fit-${fit} ${direction}-mode`;
   if (stretch) viewer.classList.add("stretch");

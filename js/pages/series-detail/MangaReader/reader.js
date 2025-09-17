@@ -8,6 +8,10 @@ import {
   updateUIOnPageChange,
   updateUrlForCurrentPage,
 } from "./navigation.js";
+import {
+  init as initProgressBar,
+  render as renderProgressBar,
+} from "./components/progressBar.js";
 import { loadSettings, saveSettings } from "./settings.js";
 import { fetchSeriesStats } from "../../../utils/interactions.js";
 
@@ -66,12 +70,17 @@ export async function initMangaReader() {
 
     saveReadingProgress();
     loadSettings();
+    document.body.classList.toggle(
+      "webtoon-mode-active",
+      state.settings.mode === "webtoon"
+    );
 
     isMobileView = window.innerWidth <= 768;
     setupBaseLayout();
     initInfoSidebar();
     initSettingsSidebar();
     initViewer();
+    initProgressBar();
 
     renderViewer();
 
@@ -168,6 +177,7 @@ function setupBaseLayout() {
     settingsSidebar: qs("#settings-sidebar"),
     viewerContainer: qs(".reader-viewer-container"),
     mobileSidebarOverlay: qs(".mobile-sidebar-overlay"),
+    progressBar: qs("#reader-progress-bar"),
   });
 
   if (isMobileView) {
@@ -339,6 +349,13 @@ function updateLayout() {
   if (readerContainer) {
     readerContainer.style.marginLeft = `${totalMargin}px`;
   }
+  if (dom.progressBar) {
+    document.documentElement.style.setProperty(
+      "--sidebar-total-width",
+      `${totalMargin}px`
+    );
+    dom.progressBar.classList.toggle("sidebar-open", totalMargin > 0);
+  }
 }
 
 function initializeGlobalEvents() {
@@ -395,18 +412,27 @@ function initializeGlobalEvents() {
 function initializeDesktopEvents() {
   // charge les boutons déjà activés
   dom.toggleInfoBtn.classList.toggle("active", state.settings.infoSidebarOpen);
-  dom.toggleSettingsBtn.classList.toggle("active", state.settings.settingsSidebarOpen);
+  dom.toggleSettingsBtn.classList.toggle(
+    "active",
+    state.settings.settingsSidebarOpen
+  );
 
   dom.toggleInfoBtn.addEventListener("click", () => {
     state.settings.infoSidebarOpen = !state.settings.infoSidebarOpen;
-    dom.toggleInfoBtn.classList.toggle("active", state.settings.infoSidebarOpen);
+    dom.toggleInfoBtn.classList.toggle(
+      "active",
+      state.settings.infoSidebarOpen
+    );
     saveSettings();
     updateLayout();
   });
 
   dom.toggleSettingsBtn.addEventListener("click", () => {
     state.settings.settingsSidebarOpen = !state.settings.settingsSidebarOpen;
-    dom.toggleSettingsBtn.classList.toggle("active", state.settings.settingsSidebarOpen);
+    dom.toggleSettingsBtn.classList.toggle(
+      "active",
+      state.settings.settingsSidebarOpen
+    );
     saveSettings();
     updateLayout();
   });

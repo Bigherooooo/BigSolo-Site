@@ -5,6 +5,7 @@ import { state, dom, domImages } from "./state.js";
 import { render as renderViewer } from "./components/viewer.js";
 // On importe calculateSpreads pour pouvoir recalculer la mise en page
 import { calculateSpreads } from "./data.js";
+import { render as renderProgressBar } from "./components/progressBar.js";
 
 let urlUpdateTimeout = null;
 
@@ -156,6 +157,7 @@ export function navigateToChapter(delta, goToLastPage = false) {
 }
 
 export function updateUIOnPageChange() {
+  renderProgressBar();
   const currentSpread = state.spreads[state.currentSpreadIndex] || [];
   const firstPage = currentSpread.length > 0 ? currentSpread[0] + 1 : 0;
   const pageCounterText = `Page ${firstPage} / ${state.pages.length}`;
