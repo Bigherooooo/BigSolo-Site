@@ -46,6 +46,7 @@ export function render() {
   }
 
   viewer.className = `reader-viewer ${mode}-mode fit-${fit} ${direction}-mode`;
+  viewer.classList.toggle("fit-height-mode", fit === "height");
   if (stretch) viewer.classList.add("stretch");
 
   let imagesToRenderIndices = [];

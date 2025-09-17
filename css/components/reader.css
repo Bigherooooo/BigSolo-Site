@@ -186,8 +186,11 @@
 
 .reader-viewer {
   display: flex;
-  height: 100%; /* On s'assure qu'il utilise toute la hauteur du parent */
   box-sizing: border-box;
+}
+
+.reader-viewer.fit-height-mode {
+  height: 100%;
 }
 
 .reader-viewer img {
@@ -295,7 +298,7 @@
 
 .reader-viewer-container:has(.reader-viewer.fit-custom) {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
