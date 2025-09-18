@@ -1,26 +1,7 @@
-function slugify(text) {
-  if (!text) return "";
-  return text
-    .toString()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[\s_]+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-");
-}
+// --- File: functions/api/log-action.js ---
+import { slugify } from "../../js/utils/domUtils.js";
+import { generateIdentityFromAvatar } from "../../js/utils/usernameGenerator.js";
 
-function generateIdentityFromAvatar(avatarFilename) {
-  const username = avatarFilename
-    .replace(".jpg", "")
-    .replace(".png", "")
-    .replace(/_/g, " ");
-  const avatarUrl = `/img/profilpicture/${avatarFilename}`;
-  return { username, avatarUrl };
-}
-
-// 300 secondes = 5 minutes. C'est une bonne valeur de départ.
 const LOCK_DURATION_SECONDS = 300;
 
 export async function onRequest(context) {
@@ -30,14 +11,10 @@ export async function onRequest(context) {
     return new Response("Méthode non autorisée", { status: 405 });
   }
 
-  // --- LOGIQUE DE VERROUILLAGE PAR IP (AVEC SIMULATION LOCALE) ---
   let clientIp = request.headers.get("CF-Connecting-IP");
-
-  // Si on est en développement local (détecté par la présence de .dev.vars), on simule une IP.
-  // env.ADMIN_USERNAME est juste un moyen pratique de détecter l'environnement local.
   const isDevelopment = env.ADMIN_USERNAME !== "";
   if (!clientIp && isDevelopment) {
-    clientIp = "127.0.0.1"; // On simule une IP locale
+    clientIp = "127.0.0.1";
     console.log(
       `[API log-action] [DEV_MODE] Simulation de l'adresse IP : ${clientIp}`
     );
@@ -63,7 +40,7 @@ export async function onRequest(context) {
           error:
             "Vous avez déjà soumis des actions récemment. Veuillez patienter.",
         }),
-        { status: 429 } // 429 Too Many Requests est le code approprié
+        { status: 429 }
       );
     }
     console.log(
@@ -74,12 +51,11 @@ export async function onRequest(context) {
       `[API log-action] [ERROR] Erreur lors de la lecture du KV pour la clé de verrouillage: ${lockKey}`,
       kvError
     );
-    // En cas d'erreur de lecture KV, on choisit de laisser passer pour ne pas bloquer un utilisateur légitime.
   }
 
   try {
     const interaction = await request.json();
-    const { actions } = interaction;
+    const { actions, sessionId } = interaction;
     const seriesSlug = slugify(interaction.seriesSlug);
 
     if (!seriesSlug || !Array.isArray(actions) || actions.length === 0) {
@@ -114,6 +90,8 @@ export async function onRequest(context) {
       filename: seriesFilename,
     };
 
+    // - Debut modification (LA CORRECTION EST ICI)
+    // On déclare la variable qui était manquante.
     let actionsSanitized = await Promise.all(
       actions.map((action) =>
         checkAndSanitizeStructure({
@@ -126,6 +104,7 @@ export async function onRequest(context) {
     actionsSanitized = actionsSanitized.filter(
       (action) => action !== undefined && action !== null
     );
+    // - Fin modification
 
     if (actionsSanitized.length === 0) {
       console.log(
@@ -141,16 +120,14 @@ export async function onRequest(context) {
     );
 
     if (clientIp) {
-      // "true" est une valeur légère. Le plus important est la durée d'expiration.
       await env.INTERACTIONS_LOG.put(lockKey, "true", {
         expirationTtl: LOCK_DURATION_SECONDS,
       });
       console.log(
-        `[API log-action] [LOCKED] Verrou créé pour l'IP ${clientIp} pour une durée de ${LOCK_DURATION_SECONDS} secondes.`
+        `[API log-action] [LOCKED] Verrou créé pour l'IP ${clientIp}...`
       );
     }
 
-    // On ajoute l'IP au nom de la clé de log pour la retrouver plus tard
     const uniqueId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const logKey = `log:${seriesSlug}:${clientIp || "unknown"}:${uniqueId}`;
 
@@ -158,6 +135,15 @@ export async function onRequest(context) {
     console.log(
       `[API log-action] [SUCCESS] Log écrit dans KV avec la clé : ${logKey}`
     );
+
+    if (sessionId) {
+      await env.INTERACTIONS_LOG.put(`cleaned:${sessionId}`, "true", {
+        expirationTtl: 600,
+      });
+      console.log(
+        `[API log-action] [CLEANUP] Marqueur de nettoyage posé pour la session ID: ${sessionId}`
+      );
+    }
 
     return new Response(
       JSON.stringify({ success: true, logged: actionsSanitized.length }),
@@ -253,24 +239,14 @@ async function checkAndSanitizeStructure({ interaction, context, series }) {
         }
 
         const [idTimestamp, identifier] = id.split("_");
+
         if (
           !idTimestamp ||
           !identifier ||
           idTimestamp.length !== 13 ||
-          identifier.length !== 7 ||
           parseInt(idTimestamp) !== timestamp
         ) {
           throw new Error("Format d'identifiant de commentaire invalide.");
-        }
-
-        const chapterTimestamp =
-          parseInt(series.data.chapters[interaction.chapter].last_updated) *
-          1000;
-        if (
-          timestamp < chapterTimestamp - 15 * 60 * 1000 ||
-          timestamp > Date.now() + 5 * 60 * 1000
-        ) {
-          throw new Error("Le commentaire a été posté à une date improbable.");
         }
 
         return {

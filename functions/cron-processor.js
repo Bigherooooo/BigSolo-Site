@@ -1,36 +1,21 @@
-// --- File: functions/api/process-log.js ---
+// --- File: functions/cron-processor.js ---
 
-export async function onRequest(context) {
-  const { request, env } = context;
-
-  const isCron = request.headers.get("cf-cron") === "true";
-
-  if (!isCron) {
-    const authorization = request.headers.get("Authorization");
-    const expectedToken = `Bearer ${env.ADMIN_TOKEN}`;
-    if (authorization !== expectedToken) {
-      console.error(
-        "[API process-log] [BLOCKED] Tentative de déclenchement manuel avec un token invalide."
-      );
-      return new Response("Accès non autorisé.", { status: 401 });
-    }
-    console.log(
-      "[API process-log] [MANUAL TRIGGER] Déclenchement manuel autorisé."
-    );
-  } else {
-    console.log(
-      "[API process-log] [CRON TRIGGER] Déclenchement par cron détecté."
-    );
-  }
-
+/**
+ * La logique principale de traitement des logs.
+ * Peut être appelée soit par le cron, soit manuellement.
+ * @param {object} env - L'environnement d'exécution contenant les bindings KV.
+ * @returns {Promise<string>} Un message de statut.
+ */
+async function processLogs(env) {
   try {
     const list = await env.INTERACTIONS_LOG.list({ prefix: "log:" });
     if (list.keys.length === 0) {
-      console.log("[API process-log] Aucun log à traiter. Terminé.");
-      return new Response("Aucun log à traiter.", { status: 200 });
+      const message = "Aucun log à traiter. Terminé.";
+      console.log(`[processLogs] ${message}`);
+      return message;
     }
     console.log(
-      `[API process-log] ${list.keys.length} fichier(s) de log à traiter.`
+      `[processLogs] ${list.keys.length} fichier(s) de log à traiter.`
     );
 
     const logsBySeries = {};
@@ -41,11 +26,9 @@ export async function onRequest(context) {
       if (parts.length >= 4) {
         const seriesSlug = parts[1];
         const clientIp = parts[2];
-
         if (clientIp && clientIp !== "unknown") {
           ipsToUnlock.add(clientIp);
         }
-
         if (!logsBySeries[seriesSlug]) logsBySeries[seriesSlug] = [];
         logsBySeries[seriesSlug].push(key.name);
       }
@@ -124,7 +107,7 @@ export async function onRequest(context) {
         await env.INTERACTIONS_LOG.delete(logKey);
       }
 
-      if (seriesInteractions.stats?.ratings?.total) {
+      if (seriesInteractions.stats?.ratings?.total !== undefined) {
         const { total, count } = seriesInteractions.stats.ratings;
         if (count > 0) {
           seriesInteractions.stats.ratings.average =
@@ -138,33 +121,64 @@ export async function onRequest(context) {
         JSON.stringify(seriesInteractions)
       );
       console.log(
-        `[API process-log] Traité ${logsBySeries[seriesSlug].length} log(s) pour la série "${seriesSlug}".`
+        `[processLogs] Traité ${logsBySeries[seriesSlug].length} log(s) pour la série "${seriesSlug}".`
       );
     }
 
     if (ipsToUnlock.size > 0) {
       console.log(
-        `[API process-log] Suppression de ${ipsToUnlock.size} verrou(s) IP...`
+        `[processLogs] Suppression de ${ipsToUnlock.size} verrou(s) IP...`
       );
       const deletePromises = [];
       for (const ip of ipsToUnlock) {
         deletePromises.push(env.INTERACTIONS_LOG.delete(`lock:${ip}`));
       }
       await Promise.all(deletePromises);
-      console.log(`[API process-log] Verrous IP supprimés.`);
+      console.log(`[processLogs] Verrous IP supprimés.`);
     }
 
     const successMessage = `Traitement terminé. ${totalActionsProcessed} action(s) traitée(s) sur ${list.keys.length} fichier(s).`;
-    console.log(`[API process-log] [SUCCESS] ${successMessage}`);
-    return new Response(successMessage, { status: 200 });
+    console.log(`[processLogs] [SUCCESS] ${successMessage}`);
+    return successMessage;
   } catch (error) {
     console.error(
-      "[API process-log] [FATAL] Erreur critique lors du traitement des logs:",
+      "[processLogs] [FATAL] Erreur critique lors du traitement des logs:",
       error.stack || error
     );
+    throw error;
+  }
+}
+
+// --- Handler pour le déclenchement MANUEL via HTTP ---
+export async function onRequest(context) {
+  const { request, env } = context;
+
+  const authToken = request.headers
+    .get("Authorization")
+    ?.replace("Bearer ", "");
+  if (authToken !== env.ADMIN_TOKEN) {
+    console.error(
+      "[MANUAL TRIGGER] Tentative de déclenchement manuel avec un token invalide."
+    );
+    return new Response("Accès non autorisé.", { status: 401 });
+  }
+  console.log("[MANUAL TRIGGER] Déclenchement manuel autorisé.");
+
+  try {
+    const resultMessage = await processLogs(env);
+    return new Response(resultMessage, { status: 200 });
+  } catch (error) {
     return new Response(
       "Erreur interne du serveur lors du traitement: " + error.message,
       { status: 500 }
     );
   }
 }
+
+// --- Handler pour le déclenchement AUTOMATIQUE via Cron ---
+export default {
+  async scheduled(controller, env, ctx) {
+    console.log("[CRON HANDLER] Déclenchement par cron détecté.");
+    ctx.waitUntil(processLogs(env));
+  },
+};

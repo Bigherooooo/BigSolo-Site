@@ -20,7 +20,6 @@ export function init() {
 function render() {
   if (!dom.infoSidebar) return;
   const seriesSlug = slugify(state.seriesData.title);
-  // - Debut modification (Restauration de la section commentaires pour le desktop)
   dom.infoSidebar.innerHTML = `
       <div class="sidebar-header mobile-only">
           <h4>Chapitres</h4>
@@ -36,7 +35,6 @@ function render() {
               <h4 class="group-title desktop-only">Chapitres</h4>
               <div class="chapter-list-wrapper"><div class="chapter-list"><p>Chargement...</p></div></div>
           </div>
-          <!-- Section commentaires desktop (restaurée) -->
           <div id="info-comments-group" class="control-group desktop-only">
               <h4 class="group-title">Commentaires</h4>
               <div class="add-comment-box">
@@ -49,12 +47,10 @@ function render() {
           </div>
       </div>`;
 
-  // On réassigne les sélecteurs DOM qui avaient été supprimés
   dom.chapterList = qs(".chapter-list", dom.infoSidebar);
   dom.commentsList = qs("#comments-list", dom.infoSidebar);
   dom.commentTextarea = qs("#comment-textarea", dom.infoSidebar);
   dom.commentSendBtn = qs("#comment-send-btn", dom.infoSidebar);
-  // - Fin modification
 }
 
 function attachEventListeners() {
@@ -74,7 +70,7 @@ function attachEventListeners() {
       }
     });
   }
-  // - Debut modification (Restauration des écouteurs pour les commentaires desktop)
+
   if (dom.commentSendBtn) {
     dom.commentSendBtn.addEventListener("click", handleCommentSubmit);
   }
@@ -88,7 +84,6 @@ function attachEventListeners() {
   if (dom.commentsList) {
     dom.commentsList.addEventListener("click", handleCommentLike);
   }
-  // - Fin modification
 
   const closeBtn = qs(".close-sidebar-btn", dom.infoSidebar);
   if (closeBtn) {
@@ -142,15 +137,18 @@ async function handleCommentSubmit(event) {
   const chapterNumber = state.currentChapter.number;
   const interactionKey = `interactions_${seriesSlug}_${chapterNumber}`;
   const userIdentity = await assignUserIdentityForChapter(interactionKey);
+
   const newComment = {
-    id: `${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+    id: `${Date.now()}_${Math.random().toString(36).substr(2, 7)}`,
     username: userIdentity.username,
     avatarUrl: userIdentity.avatarUrl,
     comment: commentText,
     timestamp: Date.now(),
+    likes: 0,
   };
+
   addPendingComment(interactionKey, newComment);
-  state.chapterStats.comments.unshift(newComment);
+
   queueAction(seriesSlug, {
     type: "add_comment",
     chapter: chapterNumber,
@@ -206,7 +204,9 @@ export function updateCommentsSection() {
   const localState = getLocalInteractionState(interactionKey);
   const likedComments = new Set(localState.likedComments || []);
   const pendingComments = localState.pendingComments || [];
-  const serverComments = state.chapterStats.comments || [];
+  const serverComments = Array.isArray(state.chapterStats.comments)
+    ? state.chapterStats.comments
+    : [];
   const serverCommentIds = new Set(serverComments.map((c) => c.id));
 
   const allComments = [
@@ -281,11 +281,18 @@ function renderChapterStats() {
   const isLiked = !!localState.liked;
   let baseLikes = state.chapterStats.likes || 0;
   let displayLikes = isLiked ? baseLikes + 1 : baseLikes;
+
   const serverCommentCount = Array.isArray(state.chapterStats.comments)
     ? state.chapterStats.comments.length
     : 0;
-  const pendingCommentCount = (localState.pendingComments || []).length;
+  const serverCommentIds = new Set(
+    serverCommentCount > 0 ? state.chapterStats.comments.map((c) => c.id) : []
+  );
+  const pendingCommentCount = (localState.pendingComments || []).filter(
+    (pc) => !serverCommentIds.has(pc.id)
+  ).length;
   const displayComments = serverCommentCount + pendingCommentCount;
+
   return `
         <div class="chapter-stats-details">
             <span title="J'aime ce chapitre"><i class="fas fa-heart${
@@ -342,10 +349,16 @@ export function updateMobileBarStats() {
   let baseLikes = state.chapterStats.likes || 0;
   let displayLikes = isLiked ? baseLikes + 1 : baseLikes;
   dom.mobileLikesCount.textContent = displayLikes;
+
   const serverCommentCount = Array.isArray(state.chapterStats.comments)
     ? state.chapterStats.comments.length
     : 0;
-  const pendingCommentCount = (localState.pendingComments || []).length;
+  const serverCommentIds = new Set(
+    serverCommentCount > 0 ? state.chapterStats.comments.map((c) => c.id) : []
+  );
+  const pendingCommentCount = (localState.pendingComments || []).filter(
+    (pc) => !serverCommentIds.has(pc.id)
+  ).length;
   const displayComments = serverCommentCount + pendingCommentCount;
   dom.mobileCommentsCount.textContent = displayComments;
 }

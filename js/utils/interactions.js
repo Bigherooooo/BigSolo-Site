@@ -3,9 +3,6 @@
 // --- Gestion des notes utilisateur (rating) ---
 const RATING_KEY_PREFIX = "series-rating-";
 
-/**
- * Récupère la note locale de l'utilisateur pour une série
- */
 export function getLocalSeriesRating(seriesSlug) {
   const key = RATING_KEY_PREFIX + seriesSlug;
   const val = localStorage.getItem(key);
@@ -14,10 +11,6 @@ export function getLocalSeriesRating(seriesSlug) {
   return isNaN(parsed) ? null : parsed;
 }
 
-/**
- * Définit/modifie la note locale de l'utilisateur pour une série
- * (et ajoute l'action à la file d'attente, en supprimant l'ancienne si besoin)
- */
 export function setLocalSeriesRating(seriesSlug, value) {
   const key = RATING_KEY_PREFIX + seriesSlug;
   const old = getLocalSeriesRating(seriesSlug);
@@ -28,30 +21,21 @@ export function setLocalSeriesRating(seriesSlug, value) {
     localStorage.setItem(key, value);
   }
 
-  // Ajoute à la file d'attente une action unique (remplace l'ancienne si présente)
   let queue = getActionQueue();
   if (!queue[seriesSlug]) queue[seriesSlug] = [];
-  // Supprime toute ancienne action de type 'rate'
   queue[seriesSlug] = queue[seriesSlug].filter((a) => a.type !== "rate");
-  // On ajoute la nouvelle action uniquement si une note est définie
   if (value !== null) {
     queue[seriesSlug].push({ type: "rate", payload: { value } });
   }
   saveActionQueue(queue);
-  console.log(
-    `[interactions.js] setLocalSeriesRating: ${seriesSlug} = ${value} (old: ${old})`
-  );
 }
 
-/**
- * Supprime la note locale (si besoin)
- */
 export function removeLocalSeriesRating(seriesSlug) {
   setLocalSeriesRating(seriesSlug, null);
-  console.log(`[interactions.js] removeLocalSeriesRating: ${seriesSlug}`);
 }
 
 const ACTION_QUEUE_KEY = "bigsolo_action_queue";
+const SESSION_ID_KEY = "bigsolo_session_id";
 
 function getActionQueue() {
   try {
@@ -66,10 +50,7 @@ function saveActionQueue(queue) {
   try {
     localStorage.setItem(ACTION_QUEUE_KEY, JSON.stringify(queue));
   } catch (e) {
-    console.error(
-      "Impossible de sauvegarder la file d'attente des actions.",
-      e
-    );
+    console.error("Impossible de sauvegarder la file d'attente.", e);
   }
 }
 
@@ -80,68 +61,91 @@ export function queueAction(seriesSlug, action) {
   }
   queue[seriesSlug].push(action);
   saveActionQueue(queue);
+  console.log("[Interactions] Action ajoutée à la file :", action);
 }
 
-function sendActionQueue() {
-  console.log("[DEBUG][interactions.js][sendActionQueue] Tentative d'envoi.");
+// --- LOGIQUE D'ENVOI ET DE NETTOYAGE ROBUSTE ---
 
+function getSessionId() {
+  let sessionId = sessionStorage.getItem(SESSION_ID_KEY);
+  if (!sessionId) {
+    sessionId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    sessionStorage.setItem(SESSION_ID_KEY, sessionId);
+    console.log("[Interactions] Nouvelle session ID générée :", sessionId);
+  }
+  return sessionId;
+}
+
+async function cleanupPreviousQueue() {
   const queue = getActionQueue();
-  const seriesSlugs = Object.keys(queue);
+  const sessionId = getSessionId();
 
-  if (seriesSlugs.length === 0) {
-    console.log(
-      "[DEBUG][interactions.js] File d'attente vide, rien à envoyer."
-    );
+  if (Object.keys(queue).length === 0) {
     return;
   }
 
-  // On traite chaque série de la file d'attente
-  for (const seriesSlug of seriesSlugs) {
-    const actions = queue[seriesSlug];
-    if (actions.length > 0) {
-      try {
-        const payload = { seriesSlug, actions };
-        const blob = new Blob([JSON.stringify(payload)], {
-          type: "application/json",
-        });
-
-        // On envoie les données via sendBeacon
-        const beaconSent = navigator.sendBeacon("/api/log-action", blob);
-
-        if (beaconSent) {
-          console.log(
-            `[DEBUG][interactions.js] Beacon envoyé avec succès pour ${seriesSlug}. Suppression de la file locale.`
-          );
-          // C'est un envoi "fire-and-forget", donc on est optimiste et on vide la file locale.
-          // Si le beacon est accepté par le navigateur, on considère que c'est bon.
-          const currentQueue = getActionQueue();
-          delete currentQueue[seriesSlug];
-          saveActionQueue(currentQueue);
-        } else {
-          // Ce cas est rare, il peut arriver si les données sont trop volumineuses.
-          console.warn(
-            `[DEBUG][interactions.js] Échec de l'envoi du beacon pour ${seriesSlug}. La file locale est conservée.`
-          );
-        }
-      } catch (error) {
-        console.error(
-          "[DEBUG][interactions.js] Erreur lors de la préparation de la file d'attente, la file est conservée:",
-          error
-        );
-      }
-    }
-  }
   console.log(
-    "[DEBUG][interactions.js] Traitement de la file d'attente terminé."
+    "[Interactions] File d'attente précédente trouvée. Vérification du statut de nettoyage..."
   );
+
+  try {
+    const response = await fetch(
+      `/api/check-cleanup-status?sessionId=${sessionId}`
+    );
+    const data = await response.json();
+
+    if (data.cleaned) {
+      console.log(
+        "[Interactions] Le serveur confirme que la session précédente a été traitée. Nettoyage du localStorage."
+      );
+      localStorage.removeItem(ACTION_QUEUE_KEY);
+    } else {
+      console.log(
+        "[Interactions] Le serveur n'a pas confirmé le nettoyage. La file est conservée."
+      );
+    }
+  } catch (error) {
+    console.error(
+      "[Interactions] Erreur lors de la vérification du statut de nettoyage. La file est conservée.",
+      error
+    );
+  }
 }
 
-// L'envoi se fait lors d'un vrai pagehide (fermeture/refresh)
-window.addEventListener("pagehide", sendActionQueue);
-// Par sécurité, on le met aussi sur beforeunload, même si pagehide est préféré.
-window.addEventListener("beforeunload", sendActionQueue);
+function sendActionQueueOnExit() {
+  const queue = getActionQueue();
+  if (Object.keys(queue).length === 0) return;
 
-// --- Gestion de l'état local de l'utilisateur ---
+  const sessionId = getSessionId();
+  console.log(
+    `[Interactions] Sortie du site. Envoi de la file avec la session ID: ${sessionId}`
+  );
+
+  Object.entries(queue).forEach(([seriesSlug, actions]) => {
+    if (actions.length > 0) {
+      const blob = new Blob(
+        [JSON.stringify({ seriesSlug, actions, sessionId })],
+        { type: "application/json" }
+      );
+      navigator.sendBeacon("/api/log-action", blob);
+    }
+  });
+}
+
+// S'exécute une seule fois au chargement du script
+(function initialize() {
+  getSessionId(); // S'assure qu'un ID de session existe
+  cleanupPreviousQueue(); // Tente de nettoyer la file de la session précédente
+
+  // L'événement pagehide est le plus fiable pour déclencher l'envoi
+  window.addEventListener("pagehide", (event) => {
+    if (!event.persisted) {
+      sendActionQueueOnExit();
+    }
+  });
+})();
+
+// --- AUTRES FONCTIONS UTILITAIRES (INCHANGÉES) ---
 
 export function getLocalInteractionState(key) {
   try {
@@ -169,10 +173,7 @@ export function addPendingComment(interactionKey, comment) {
   setLocalInteractionState(interactionKey, localState);
 }
 
-// --- Récupération des données ---
-
 let seriesStatsCache = new Map();
-
 export async function fetchSeriesStats(seriesSlug) {
   if (seriesStatsCache.has(seriesSlug)) {
     return seriesStatsCache.get(seriesSlug);
