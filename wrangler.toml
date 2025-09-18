@@ -14,3 +14,10 @@ id = "9bd6247311a141c58512bffb5e133311"
 [[kv_namespaces]]
 binding = "INTERACTIONS_CACHE"
 id = "0653d72f16bb45adb5155e2ea69e5031"
+
+[pages_functions]
+[[pages_functions.bindings]]
+# Le cron s'exécute toutes les 5 minutes.
+cron = "*/30 * * * *"
+# La fonction à exécuter est celle qui se trouve dans le fichier /functions/api/process-log.js
+functions = ["/functions/api/process-log.js"]
