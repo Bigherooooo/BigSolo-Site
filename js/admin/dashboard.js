@@ -4,22 +4,23 @@ import { fetchAllSeriesData } from "../utils/fetchUtils.js";
 
 let token = null;
 let deletionQueue = [];
-let allComments = []; // Stocke tous les commentaires en mémoire pour le tri
-let currentSortKey = "timestamp"; // Clé de tri par défaut
-let currentSortDirection = "desc"; // Direction de tri par défaut
+let allComments = [];
+let currentSortKey = "timestamp";
+let currentSortDirection = "desc";
 
 /**
- * Point d'entrée pour l'initialisation du tableau de bord.
- * @param {HTMLElement} container - L'élément #app-root.
- * @param {string} authToken - Le jeton d'authentification.
+ * Point d'entrée de l'application Dashboard.
  */
 export function initDashboard(container, authToken) {
   token = authToken;
   renderDashboardLayout(container);
-  setupDashboardListeners();
-  router();
+  setupStaticListeners(); // Écouteurs qui ne changent jamais
+  router(); // Gère le contenu dynamique
 }
 
+/**
+ * Rend la structure de base du tableau de bord (header, main, etc.).
+ */
 function renderDashboardLayout(container) {
   container.innerHTML = `
     <div class="container">
@@ -36,11 +37,14 @@ function renderDashboardLayout(container) {
       </header>
       <main id="admin-content"></main>
     </div>
-    <!-- NOUVEAU : Placeholder pour la modale KV -->
     <div id="kv-value-modal-overlay" class="kv-value-modal-overlay"></div>
   `;
 }
-function setupDashboardListeners() {
+
+/**
+ * Attache les écouteurs d'événements qui sont valables pour toute la durée de vie du dashboard.
+ */
+function setupStaticListeners() {
   qs("#logout-btn").addEventListener("click", () => {
     if (
       deletionQueue.length > 0 &&
@@ -69,10 +73,16 @@ function setupDashboardListeners() {
     );
   });
 
+  // Un seul écouteur pour tout le contenu dynamique, attaché une seule fois.
+  qs("#admin-content").addEventListener("click", handleDynamicContentClick);
+
   window.addEventListener("hashchange", router);
   window.addEventListener("pagehide", sendDeletionQueue);
 }
 
+/**
+ * Routeur principal qui affiche la vue appropriée.
+ */
 function router() {
   const view = window.location.hash.substring(1) || "moderation";
   qsa(".nav-btn").forEach((btn) =>
@@ -80,6 +90,13 @@ function router() {
   );
 
   const contentArea = qs("#admin-content");
+
+  if (contentArea.dataset.currentView === view) {
+    console.log(`[Router] Vue '${view}' déjà affichée. Pas de rechargement.`);
+    return;
+  }
+
+  contentArea.dataset.currentView = view; // On marque la vue actuelle
   contentArea.innerHTML = `<div class="loading-container"><div class="spinner"></div></div>`;
 
   switch (view) {
@@ -95,6 +112,37 @@ function router() {
     default:
       displayModerationView(contentArea);
       break;
+  }
+}
+
+/**
+ * Gestionnaire de clics centralisé pour le contenu dynamique.
+ */
+async function handleDynamicContentClick(e) {
+  // Clics de la vue Modération
+  if (e.target.closest("#comments-table")) {
+    handleModerationClick(e);
+    handleSortClick(e);
+  }
+  // Clics de la vue Cache
+  if (e.target.closest(".series-group")) {
+    handleCacheClick(e);
+  }
+  // Clics de la vue Dev Tools
+  if (e.target.closest(".kv-viewer-section")) {
+    const clearBtn = e.target.closest("#clear-logs-btn");
+    if (clearBtn) await handleClearLogs(clearBtn);
+
+    // - Debut modification
+    const deleteKeyBtn = e.target.closest(".delete-kv-key-btn");
+    if (deleteKeyBtn) {
+      // On s'assure d'appeler la fonction corrigée
+      await handleDeletKey(deleteKeyBtn);
+    }
+    // - Fin modification
+
+    const viewValueBtn = e.target.closest(".view-kv-value-btn");
+    if (viewValueBtn) handleViewKeyValue(viewValueBtn);
   }
 }
 
@@ -117,7 +165,6 @@ async function displayModerationView(container) {
       <tbody></tbody>
     </table>
   `;
-  container.querySelector("thead").addEventListener("click", handleSortClick);
 
   try {
     const response = await fetch("/api/admin/comments", {
@@ -130,9 +177,7 @@ async function displayModerationView(container) {
       container.innerHTML = `<p id="status-message">Aucun commentaire à modérer.</p>`;
       return;
     }
-
     sortAndRenderComments();
-    container.addEventListener("click", handleModerationClick);
   } catch (error) {
     container.innerHTML = `<p id="status-message">Erreur: ${error.message}</p>`;
   }
@@ -142,34 +187,30 @@ function sortAndRenderComments() {
   allComments.sort((a, b) => {
     let valA = a[currentSortKey];
     let valB = b[currentSortKey];
-
     if (currentSortKey === "chapterNumber") {
       valA = parseFloat(valA);
       valB = parseFloat(valB);
     }
-
     let comparison = 0;
     if (valA > valB) {
       comparison = 1;
     } else if (valA < valB) {
       comparison = -1;
     }
-
     return currentSortDirection === "desc" ? comparison * -1 : comparison;
   });
 
   const tbody = qs("#comments-table tbody");
   if (!tbody) return;
-
   tbody.innerHTML = allComments
     .map(
       (c) => `
       <tr data-comment-id="${c.id}" data-series-slug="${
         c.seriesSlug
       }" data-chapter-number="${c.chapterNumber}">
-        <td>${c.seriesSlug}</td>
-        <td>${c.chapterNumber}</td>
-        <td>${c.username}</td>
+        <td>${c.seriesSlug}</td><td>${c.chapterNumber}</td><td>${
+        c.username
+      }</td>
         <td>${new Date(c.timestamp).toLocaleString("fr-FR")}</td>
         <td class="comment-content">${c.comment}</td>
         <td><button class="action-btn delete-btn" title="Marquer pour suppression"><i class="fas fa-trash-alt"></i></button></td>
@@ -191,7 +232,6 @@ function sortAndRenderComments() {
 function handleSortClick(e) {
   const header = e.target.closest("th.sortable");
   if (!header) return;
-
   const sortKey = header.dataset.sortKey;
   if (currentSortKey === sortKey) {
     currentSortDirection = currentSortDirection === "asc" ? "desc" : "asc";
@@ -205,7 +245,6 @@ function handleSortClick(e) {
 function handleModerationClick(e) {
   const actionBtn = e.target.closest(".action-btn");
   if (!actionBtn) return;
-
   const row = actionBtn.closest("tr");
   const { commentId, seriesSlug, chapterNumber } = row.dataset;
 
@@ -232,7 +271,6 @@ function handleModerationClick(e) {
 
 function sendDeletionQueue() {
   if (deletionQueue.length === 0) return;
-  console.log("[Dashboard] Envoi de la file de suppression :", deletionQueue);
   try {
     fetch("/api/admin/batch-delete", {
       method: "POST",
@@ -245,7 +283,7 @@ function sendDeletionQueue() {
     });
     deletionQueue = [];
   } catch (e) {
-    console.error("Erreur lors de l'envoi de la file de suppression", e);
+    console.error("Erreur d'envoi de la file de suppression", e);
   }
 }
 
@@ -255,7 +293,6 @@ async function displayCacheView(container) {
   try {
     const allSeries = await fetchAllSeriesData();
     allSeries.sort((a, b) => a.title.localeCompare(b.title));
-
     let seriesHtml = allSeries
       .map((series) => {
         const chapters = Object.entries(series.chapters)
@@ -276,20 +313,15 @@ async function displayCacheView(container) {
                   data.title || ""
                 }</span></div>
                 <button class="purge-btn"><i class="fas fa-sync-alt"></i> Vider le cache</button>
-              </li>
-            `
+              </li>`
               )
               .join("")}
           </ul>
-        </div>
-      `;
+        </div>`;
       })
       .join("");
-
     container.innerHTML =
-      seriesHtml ||
-      `<p id="status-message">Aucune série avec des chapitres à purger.</p>`;
-    container.addEventListener("click", handleCacheClick);
+      seriesHtml || `<p id="status-message">Aucune série à purger.</p>`;
   } catch (error) {
     container.innerHTML = `<p id="status-message">Erreur: ${error.message}</p>`;
   }
@@ -298,17 +330,14 @@ async function displayCacheView(container) {
 async function handleCacheClick(e) {
   const purgeBtn = e.target.closest(".purge-btn");
   if (!purgeBtn) return;
-
   const item = purgeBtn.closest(".chapter-item");
   const { seriesSlug, chapterNumber } = item.dataset;
   if (
     !confirm(`Vider le cache pour "${seriesSlug}", chapitre ${chapterNumber} ?`)
   )
     return;
-
   purgeBtn.disabled = true;
   purgeBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Purge...`;
-
   try {
     const res = await fetch("/api/admin/purge-cache", {
       method: "POST",
@@ -320,7 +349,6 @@ async function handleCacheClick(e) {
     });
     if (!res.ok)
       throw new Error((await res.json()).message || "Erreur serveur.");
-
     purgeBtn.style.backgroundColor = "var(--admin-success)";
     purgeBtn.innerHTML = `<i class="fas fa-check"></i> Cache vidé !`;
   } catch (err) {
@@ -353,29 +381,16 @@ async function displayDevToolsView(container) {
       <div class="kv-content-wrapper"><div class="loading-container"><div class="spinner"></div></div></div>
     </section>
   `;
-
-  loadKvNamespaceData("INTERACTIONS_LOG");
-  loadKvNamespaceData("INTERACTIONS_CACHE");
-  loadKvNamespaceData("IMG_CHEST_CACHE");
-
-  container.addEventListener("click", async (e) => {
-    if (e.target.closest("#clear-logs-btn")) {
-      await handleClearLogs(e.target.closest("#clear-logs-btn"));
-    }
-    if (e.target.closest(".delete-kv-key-btn")) {
-      await handleDeletKey(e.target.closest(".delete-kv-key-btn"));
-    }
-    // NOUVEAU : Gérer le clic pour voir la valeur complète
-    if (e.target.closest(".view-kv-value-btn")) {
-      handleViewKeyValue(e.target.closest(".view-kv-value-btn"));
-    }
-  });
+  await Promise.all([
+    loadKvNamespaceData("INTERACTIONS_LOG"),
+    loadKvNamespaceData("INTERACTIONS_CACHE"),
+    loadKvNamespaceData("IMG_CHEST_CACHE"),
+  ]);
 }
 
 async function loadKvNamespaceData(namespaceName) {
   const section = qs(`.kv-viewer-section[data-namespace="${namespaceName}"]`);
   if (!section) return;
-
   let contentArea = section.querySelector(".kv-content-wrapper");
   if (!contentArea) {
     const spinnerContainer = section.querySelector(".loading-container");
@@ -393,18 +408,14 @@ async function loadKvNamespaceData(namespaceName) {
     );
     if (!response.ok) throw new Error(`Erreur ${response.status}`);
     const data = await response.json();
-
     section.querySelector(
       ".count"
     ).textContent = `(${data.count} entrées affichées)`;
-
     if (data.count === 0) {
       contentArea.innerHTML = `<p id="status-message">Ce namespace est vide.</p>`;
       return;
     }
-
     const isDeletable = namespaceName.toUpperCase() === "INTERACTIONS_LOG";
-
     const tableHtml = `
       <div class="kv-table-wrapper">
         <table>
@@ -412,7 +423,6 @@ async function loadKvNamespaceData(namespaceName) {
           <tbody>
             ${data.items
               .map((item) => {
-                // On stocke la valeur complète dans un attribut data
                 const fullValue =
                   typeof item.value === "string"
                     ? item.value
@@ -445,12 +455,11 @@ async function loadKvNamespaceData(namespaceName) {
     `;
     contentArea.innerHTML = tableHtml;
   } catch (error) {
-    contentArea.innerHTML = `<p id="status-message">Erreur: ${error.message}</p>`;
+    contentArea.innerHTML = `<p id="status-message">Erreur lors du chargement des données : ${error.message}</p>`;
   }
 }
 
 function truncateValue(value, maxLength = 100) {
-  // Raccourci pour encourager le clic
   let stringValue = typeof value === "string" ? value : JSON.stringify(value);
   if (stringValue.length > maxLength) {
     return stringValue.substring(0, maxLength) + "...";
@@ -462,16 +471,12 @@ function handleViewKeyValue(button) {
   const row = button.closest("tr");
   const key = row.dataset.key;
   const fullValue = decodeURIComponent(row.dataset.fullValue);
-
   let formattedValue = fullValue;
-  // Essayer de formater joliment si c'est du JSON
   try {
-    const jsonObj = JSON.parse(fullValue);
-    formattedValue = JSON.stringify(jsonObj, null, 2); // 2 espaces d'indentation
+    formattedValue = JSON.stringify(JSON.parse(fullValue), null, 2);
   } catch (e) {
-    // Ce n'est pas du JSON, on l'affiche tel quel
+    /* Ce n'est pas du JSON, on l'affiche tel quel */
   }
-
   const modalOverlay = qs("#kv-value-modal-overlay");
   modalOverlay.innerHTML = `
         <div class="kv-value-modal">
@@ -479,15 +484,10 @@ function handleViewKeyValue(button) {
                 <h3 class="kv-modal-title">${key}</h3>
                 <button class="kv-modal-close">&times;</button>
             </div>
-            <div class="kv-modal-content">
-                <pre>${formattedValue}</pre>
-            </div>
+            <div class="kv-modal-content"><pre>${formattedValue}</pre></div>
         </div>
     `;
-
   modalOverlay.classList.add("is-visible");
-
-  // Attacher les écouteurs pour la fermeture
   const closeModal = () => modalOverlay.classList.remove("is-visible");
   qs(".kv-modal-close", modalOverlay).addEventListener("click", closeModal);
   modalOverlay.addEventListener("click", (e) => {
@@ -508,7 +508,7 @@ async function handleDeletKey(button) {
 
   try {
     const response = await fetch("/api/admin/delete-kv-key", {
-      method: "POST",
+      method: "POST", // LA CORRECTION EST ICI
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -517,13 +517,12 @@ async function handleDeletKey(button) {
     });
 
     if (!response.ok) {
-      // CORRECTION: On gère les réponses non-JSON en cas d'erreur
       let errorMsg = `Erreur ${response.status}`;
       try {
         const result = await response.json();
         errorMsg = result.message || errorMsg;
       } catch (e) {
-        // La réponse n'était pas du JSON, on utilise le texte brut
+        // Si la réponse d'erreur n'est pas du JSON, on lit le texte.
         errorMsg = await response.text();
       }
       throw new Error(errorMsg);
@@ -546,10 +545,8 @@ async function handleClearLogs(btn) {
     )
   )
     return;
-
   btn.disabled = true;
   btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Vidage en cours...`;
-
   try {
     const response = await fetch("/api/admin/clear-logs", {
       method: "POST",
@@ -557,11 +554,9 @@ async function handleClearLogs(btn) {
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.message || "Erreur serveur");
-
     btn.style.backgroundColor = "var(--admin-success)";
     btn.innerHTML = `<i class="fas fa-check"></i> ${result.deletedCount} logs vidés !`;
     alert(result.message);
-
     loadKvNamespaceData("INTERACTIONS_LOG");
   } catch (error) {
     btn.innerHTML = `<i class="fas fa-times"></i> Erreur`;
