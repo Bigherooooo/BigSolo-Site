@@ -39,7 +39,7 @@ export function setLocalSeriesRating(seriesSlug, value) {
   }
   saveActionQueue(queue);
   console.log(
-    `[interactions.js] setLocalSeriesRating: ${seriesSlug} = ${value} (old: ${old})`,
+    `[interactions.js] setLocalSeriesRating: ${seriesSlug} = ${value} (old: ${old})`
   );
 }
 
@@ -68,7 +68,7 @@ function saveActionQueue(queue) {
   } catch (e) {
     console.error(
       "Impossible de sauvegarder la file d'attente des actions.",
-      e,
+      e
     );
   }
 }
@@ -82,7 +82,7 @@ export function queueAction(seriesSlug, action) {
   saveActionQueue(queue);
 }
 
-async function sendActionQueue() {
+function sendActionQueue() {
   console.log("[DEBUG][interactions.js][sendActionQueue] Tentative d'envoi.");
 
   const queue = getActionQueue();
@@ -90,46 +90,49 @@ async function sendActionQueue() {
 
   if (seriesSlugs.length === 0) {
     console.log(
-      "[DEBUG][interactions.js] File d'attente vide, rien à envoyer.",
+      "[DEBUG][interactions.js] File d'attente vide, rien à envoyer."
     );
     return;
   }
 
-  const promises = seriesSlugs.map(async (seriesSlug) => {
+  // On traite chaque série de la file d'attente
+  for (const seriesSlug of seriesSlugs) {
     const actions = queue[seriesSlug];
     if (actions.length > 0) {
       try {
-        const response = await fetch("/api/log-action", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ seriesSlug, actions }),
-          keepalive: true,
+        const payload = { seriesSlug, actions };
+        const blob = new Blob([JSON.stringify(payload)], {
+          type: "application/json",
         });
 
-        if (response.ok) {
+        // On envoie les données via sendBeacon
+        const beaconSent = navigator.sendBeacon("/api/log-action", blob);
+
+        if (beaconSent) {
           console.log(
-            `[DEBUG][interactions.js] Envoi réussi pour ${seriesSlug}. Suppression de la file locale.`,
+            `[DEBUG][interactions.js] Beacon envoyé avec succès pour ${seriesSlug}. Suppression de la file locale.`
           );
+          // C'est un envoi "fire-and-forget", donc on est optimiste et on vide la file locale.
+          // Si le beacon est accepté par le navigateur, on considère que c'est bon.
           const currentQueue = getActionQueue();
           delete currentQueue[seriesSlug];
           saveActionQueue(currentQueue);
         } else {
+          // Ce cas est rare, il peut arriver si les données sont trop volumineuses.
           console.warn(
-            `[DEBUG][interactions.js] Envoi refusé pour ${seriesSlug} (Status: ${response.status}). La file locale est conservée.`,
+            `[DEBUG][interactions.js] Échec de l'envoi du beacon pour ${seriesSlug}. La file locale est conservée.`
           );
         }
       } catch (error) {
         console.error(
-          "[DEBUG][interactions.js] Erreur réseau lors de l'envoi de la file d'attente, la file est conservée:",
-          error,
+          "[DEBUG][interactions.js] Erreur lors de la préparation de la file d'attente, la file est conservée:",
+          error
         );
       }
     }
-  });
-
-  await Promise.all(promises);
+  }
   console.log(
-    "[DEBUG][interactions.js] Traitement de la file d'attente terminé.",
+    "[DEBUG][interactions.js] Traitement de la file d'attente terminé."
   );
 }
 
@@ -176,7 +179,7 @@ export async function fetchSeriesStats(seriesSlug) {
   }
   try {
     const response = await fetch(
-      `/api/series-stats?slug=${seriesSlug}&t=${Date.now()}`,
+      `/api/series-stats?slug=${seriesSlug}&t=${Date.now()}`
     );
     if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
     const data = await response.json();
@@ -185,7 +188,7 @@ export async function fetchSeriesStats(seriesSlug) {
   } catch (error) {
     console.error(
       `Impossible de récupérer les stats pour ${seriesSlug}:`,
-      error,
+      error
     );
     return {};
   }
