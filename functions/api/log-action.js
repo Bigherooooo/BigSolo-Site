@@ -71,11 +71,23 @@ export async function onRequest(context) {
       new URL("/data/config.json", request.url)
     ).then((res) => res.json());
     const seriesFiles = config.LOCAL_SERIES_FILES || [];
-    const seriesFilename = seriesFiles.find(
-      (filename) => slugify(filename.replace(".json", "")) === seriesSlug
+
+    // On charge tous les fichiers de série pour pouvoir comparer les slugs basés sur les titres
+    const allSeriesDataPromises = seriesFiles.map((filename) =>
+      env.ASSETS.fetch(new URL(`/data/series/${filename}`, request.url))
+        .then((res) => res.json().then((data) => ({ data, filename })))
+        .catch(() => null)
+    );
+    const allSeriesResults = (await Promise.all(allSeriesDataPromises)).filter(
+      Boolean
     );
 
-    if (!seriesFilename) {
+    // On cherche la série en comparant le slug reçu avec le slug du TITRE de chaque série
+    const foundSeries = allSeriesResults.find(
+      (s) => s && s.data && slugify(s.data.title) === seriesSlug
+    );
+
+    if (!foundSeries) {
       console.log(
         `[API log-action] [REJECTED] La série avec le slug '${seriesSlug}' n'existe pas.`
       );
@@ -83,15 +95,8 @@ export async function onRequest(context) {
         status: 400,
       });
     }
-    const series = {
-      data: await env.ASSETS.fetch(
-        new URL(`/data/series/${seriesFilename}`, request.url)
-      ).then((res) => res.json()),
-      filename: seriesFilename,
-    };
+    const series = foundSeries;
 
-    // - Debut modification (LA CORRECTION EST ICI)
-    // On déclare la variable qui était manquante.
     let actionsSanitized = await Promise.all(
       actions.map((action) =>
         checkAndSanitizeStructure({
@@ -104,7 +109,6 @@ export async function onRequest(context) {
     actionsSanitized = actionsSanitized.filter(
       (action) => action !== undefined && action !== null
     );
-    // - Fin modification
 
     if (actionsSanitized.length === 0) {
       console.log(
@@ -159,20 +163,16 @@ export async function onRequest(context) {
 }
 
 async function checkAndSanitizeStructure({ interaction, context, series }) {
-  try {
-    const { chapter, type } = interaction;
-    const isEpisodeAction =
-      typeof chapter === "string" && chapter.startsWith("ep-");
+  const { chapter, type } = interaction;
+  const isEpisodeAction =
+    typeof chapter === "string" && chapter.startsWith("ep-");
 
-    // --- NOUVELLE LOGIQUE DE VALIDATION ---
+  try {
     if (isEpisodeAction) {
-      // C'est une action pour un épisode
       if (!series.data.episodes || !Array.isArray(series.data.episodes)) {
         throw new Error("Cette série n'a pas d'épisodes.");
       }
-      // On extrait "S1-10" de "ep-S1-10"
       const epIdentifier = chapter.substring(3);
-      // On vérifie qu'un épisode correspondant existe bien
       const episodeExists = series.data.episodes.some(
         (ep) => `S${ep.saison_ep || 1}-${ep.indice_ep}` === epIdentifier
       );
@@ -190,14 +190,12 @@ async function checkAndSanitizeStructure({ interaction, context, series }) {
         "unlike_comment",
       ].includes(type)
     ) {
-      // C'est une action pour un chapitre de manga
       if (!series.data.chapters || !series.data.chapters[chapter]) {
         throw new Error(
           `Le chapitre '${chapter}' n'existe pas pour cette série.`
         );
       }
     }
-    // --- FIN DE LA NOUVELLE LOGIQUE ---
 
     switch (type) {
       case "like":
@@ -208,9 +206,6 @@ async function checkAndSanitizeStructure({ interaction, context, series }) {
           );
         }
         return { chapter, type };
-
-      // ... le reste des cas (rate, like_comment, add_comment) reste identique ...
-      // Ils ne s'appliquent de toute façon qu'aux chapitres de manga.
 
       case "rate":
         if (
@@ -237,9 +232,39 @@ async function checkAndSanitizeStructure({ interaction, context, series }) {
         };
 
       case "add_comment":
-        // ... (toute la logique de validation du commentaire reste la même)
+        const { id, username, avatarUrl, comment, timestamp } =
+          interaction.payload;
+        if (!id || !username || !avatarUrl || !comment || !timestamp) {
+          throw new Error("Structure de commentaire invalide.");
+        }
+        const response = await context.env.ASSETS.fetch(
+          new URL("/data/avatars.json", context.request.url).toString()
+        );
+        const avatars = await response.json();
+        const isValidIdentity = avatars.some((avatar) => {
+          const identity = generateIdentityFromAvatar(avatar);
+          return (
+            identity.username === username && identity.avatarUrl === avatarUrl
+          );
+        });
+        if (!isValidIdentity) {
+          throw new Error(
+            "Identité d'utilisateur invalide pour le commentaire."
+          );
+        }
+        const [idTimestamp, identifier] = id.split("_");
+        if (
+          !idTimestamp ||
+          !identifier ||
+          idTimestamp.length !== 13 ||
+          parseInt(idTimestamp) !== timestamp
+        ) {
+          throw new Error("Format d'identifiant de commentaire invalide.");
+        }
         return {
-          /* ... */
+          chapter,
+          type,
+          payload: { id, username, avatarUrl, comment, timestamp, likes: 0 },
         };
 
       default:
