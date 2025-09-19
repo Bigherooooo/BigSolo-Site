@@ -81,6 +81,18 @@ function updatePlayerState(absoluteEpisodeIndex, isFirstLoad = false) {
 
   saveWatchingProgress();
 
+  const seasonText = state.currentEpisode.saison_ep
+    ? `S${state.currentEpisode.saison_ep}`
+    : "";
+  document.title = `${state.seriesData.title} - ${seasonText} ÉP.${state.currentEpisode.indice_ep} | BigSolo`;
+
+  // Mettre à jour l'URL dans la barre d'adresse (uniquement si ce n'est pas le premier chargement)
+  if (!isFirstLoad) {
+    const newUrl = `/${state.seriesData.slug}/episodes/${absoluteEpisodeIndex}`;
+    // On utilise replaceState pour ne pas créer d'entrées multiples dans l'historique pour le même état
+    history.replaceState({ episode: absoluteEpisodeIndex }, "", newUrl);
+  }
+
   if (isFirstLoad) {
     infoSidebar.updateEpisodeList();
   } else {
@@ -180,6 +192,42 @@ function initializeGlobalEvents() {
   } else {
     initializeDesktopEvents();
   }
+
+  // - Debut modification (Ajout du routeur de navigation interne)
+  // On attache un écouteur global à la sidebar pour gérer les clics
+  dom.infoSidebar.addEventListener("click", (e) => {
+    // Cas 1 : Clic sur le bouton "like"
+    const likeButton = e.target.closest(".detail-chapter-likes");
+    if (likeButton) {
+      e.preventDefault(); // Empêche la navigation
+      e.stopPropagation(); // Empêche d'autres écouteurs de se déclencher
+      handleGlobalLike();
+      return;
+    }
+
+    // Cas 2 : Clic sur un lien d'épisode
+    const episodeLink = e.target.closest("a[data-episode-id]");
+    if (episodeLink) {
+      e.preventDefault(); // Empêche le rechargement de la page
+      const newEpisodeIndex = episodeLink.dataset.episodeId;
+
+      // On vérifie si on ne clique pas déjà sur l'épisode actif
+      if (newEpisodeIndex !== String(state.currentEpisode.absolute_index)) {
+        // Mettre à jour l'URL dans la barre d'adresse sans recharger
+        history.pushState({ episode: newEpisodeIndex }, "", episodeLink.href);
+        // Mettre à jour le lecteur avec le nouvel épisode
+        updatePlayerState(newEpisodeIndex);
+      }
+    }
+  });
+
+  // Gérer les boutons Précédent/Suivant du navigateur
+  window.addEventListener("popstate", (e) => {
+    if (e.state && e.state.episode) {
+      updatePlayerState(e.state.episode);
+    }
+  });
+  // - Fin modification
 }
 
 function initializeDesktopEvents() {

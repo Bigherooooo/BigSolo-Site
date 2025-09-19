@@ -156,36 +156,111 @@ export function updateActiveEpisodeInList(
   if (!sidebar) return;
 
   const oldActive = qs("a.active", sidebar);
+  const newActive = qs(`a[data-episode-id="${newAbsoluteIndex}"]`, sidebar);
+
+  const collapsedHeight = "44px";
+  const expandedHeight = "77px";
+
+  // --- ANCIEN ÉLÉMENT ACTIF ---
   if (oldActive) {
-    const oldEpisode = state.allEpisodes.find(
-      (ep) => String(ep.absolute_index) === oldActive.dataset.episodeId
-    );
-    if (oldEpisode) oldActive.outerHTML = renderEpisodeItem(oldEpisode, false);
+    // 1. On lance l'animation de rétrécissement
+    oldActive.classList.remove("active");
+    oldActive.style.maxHeight = collapsedHeight;
+
+    // 2. APRÈS l'animation, on remplace son contenu par la version sans stats.
+    setTimeout(() => {
+      const oldEpisode = state.allEpisodes.find(
+        (ep) => String(ep.absolute_index) === oldActive.dataset.episodeId
+      );
+      // On vérifie que l'élément n'est pas redevenu actif entre-temps
+      if (oldEpisode && !oldActive.classList.contains("active")) {
+        const statsDetails = oldActive.querySelector(".chapter-stats-details");
+        if (statsDetails) {
+          statsDetails.remove();
+        }
+      }
+    }, 300); // 300ms = durée de la transition CSS
   }
 
-  const newActive = qs(`a[data-episode-id="${newAbsoluteIndex}"]`, sidebar);
+  // --- NOUVEL ÉLÉMENT ACTIF ---
   if (newActive) {
+    // 1. On s'assure qu'il a le contenu avec les stats
     const newEpisode = state.allEpisodes.find(
       (ep) => String(ep.absolute_index) === String(newAbsoluteIndex)
     );
-    if (newEpisode) newActive.outerHTML = renderEpisodeItem(newEpisode, true);
+    if (newEpisode && !newActive.querySelector(".chapter-stats-details")) {
+      newActive.insertAdjacentHTML(
+        "beforeend",
+        renderStatsForEpisode(newEpisode)
+      );
+    }
+
+    // 2. On le met à sa hauteur "rétrécie" pour préparer l'animation
+    newActive.style.maxHeight = collapsedHeight;
+    newActive.classList.add("active");
+
+    // 3. On utilise requestAnimationFrame pour déclencher l'animation d'agrandissement
+    requestAnimationFrame(() => {
+      newActive.style.maxHeight = expandedHeight;
+    });
   }
 
+  // Si c'est le premier chargement, on configure l'état initial
   if (isInitialLoad) {
-    const activeSeasonGroup = qs(`#info-sidebar .control-group:has(a.active)`);
-    if (activeSeasonGroup) {
-      const header = qs(".group-title", activeSeasonGroup);
-      if (header && !header.classList.contains("is-open")) {
-        header.click();
-      } else {
-        const activeLink = qs("a.active", activeSeasonGroup);
-        if (activeLink)
-          setTimeout(() => {
-            activeLink.scrollIntoView({ behavior: "smooth", block: "center" });
-          }, 400);
+    qsa("#info-sidebar .chapter-list a:not(.active)").forEach((link) => {
+      link.style.maxHeight = collapsedHeight;
+    });
+    const newlyActiveElement = qs(
+      `a[data-episode-id="${newAbsoluteIndex}"]`,
+      sidebar
+    );
+    if (newlyActiveElement) {
+      newlyActiveElement.style.maxHeight = expandedHeight;
+
+      const activeSeasonGroup = newlyActiveElement.closest(".control-group");
+      if (activeSeasonGroup) {
+        const header = qs(".group-title", activeSeasonGroup);
+        if (header && !header.classList.contains("is-open")) {
+          header.click();
+        }
+        setTimeout(() => {
+          newlyActiveElement.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }, 400);
       }
     }
   }
+}
+
+/**
+ * Fonction helper pour rendre uniquement la partie stats d'un épisode.
+ * @param {object} ep - L'objet épisode.
+ * @returns {string} Le HTML des statistiques.
+ */
+function renderStatsForEpisode(ep) {
+  const episodeId = `ep-S${ep.saison_ep || 1}-${ep.indice_ep}`;
+  const interactionKey = `interactions_${state.seriesData.slug}_${episodeId}`;
+  const localState = getLocalInteractionState(interactionKey);
+  const isLiked = !!localState.liked;
+
+  const episodeStats = state.seriesStats[episodeId] || { likes: 0 };
+  let displayLikes = episodeStats.likes || 0;
+  if (isLiked) {
+    displayLikes++;
+  }
+
+  return `
+        <div class="chapter-stats-details">
+            <span class="detail-chapter-likes ${
+              isLiked ? "liked" : ""
+            }"><i class="fas fa-heart"></i><span class="likes-count">${displayLikes}</span></span>
+            <span class="detail-chapter-date"><i class="fas fa-clock"></i> ${timeAgo(
+              ep.date_ep
+            )}</span>
+        </div>
+    `;
 }
 
 export function updateStatsInList() {

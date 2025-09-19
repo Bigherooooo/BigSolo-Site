@@ -65,10 +65,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  transition: all 0.2s ease;
   text-decoration: none;
   overflow: hidden;
   cursor: pointer;
+  transition: background-color 0.2s ease, max-height 0.3s ease-out;
+  /* On définit une hauteur minimale pour l'état "rétréci" */
+  max-height: 44px;
 }
 #playerpage #info-sidebar .chapter-list a:hover {
   background: var(--clr-bg-reader-invert);
@@ -109,6 +111,7 @@
   display: flex;
   justify-content: space-between;
   color: var(--clr-text-sub);
+  overflow: hidden;
 }
 #playerpage #info-sidebar .chapter-stats-details span {
   display: flex;
