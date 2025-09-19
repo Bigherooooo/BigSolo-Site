@@ -1,11 +1,5 @@
 // --- File: functions/api/process-log.js ---
 
-/**
- * Traite par lots les logs d'interactions stockés dans le KV.
- * Met à jour le cache principal et supprime les verrous IP.
- * @param {object} env - L'environnement d'exécution contenant les bindings KV.
- * @returns {Promise<string>} Un message de statut décrivant le résultat de l'opération.
- */
 async function processLogs(env) {
   try {
     const list = await env.INTERACTIONS_LOG.list({ prefix: "log:" });
@@ -40,7 +34,6 @@ async function processLogs(env) {
         if (logActionsText) {
           const logActions = JSON.parse(logActionsText);
 
-          // --- DEBUT DE LA LOGIQUE CORRIGÉE ET COMPLÈTE ---
           for (const action of logActions) {
             const { chapter, type, payload } = action;
             const isEpisode =
@@ -98,7 +91,6 @@ async function processLogs(env) {
                 break;
             }
           }
-          // --- FIN DE LA LOGIQUE CORRIGÉE ---
           totalActionsProcessed += logActions.length;
         }
         await env.INTERACTIONS_LOG.delete(logKey);
@@ -110,7 +102,6 @@ async function processLogs(env) {
           seriesInteractions.stats.ratings.average =
             Math.round((total / count) * 100) / 100;
         }
-        delete seriesInteractions.stats.ratings.total;
       }
 
       await env.INTERACTIONS_CACHE.put(
