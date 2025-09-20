@@ -143,11 +143,8 @@ export async function fetchAndLoadPages(initialPageNumber = 1) {
   const loadingMsgElement = qs("#reader-loading-msg");
 
   try {
-    // check si le chapitre est sorti officiellement
-    if (!state.currentChapter.groups.Big_herooooo &&
-      state.currentChapter.volume &&
-      state.currentChapter.licencied) {
-      const message = `Ce chapitre est sorti officiellement dans le volume ${state.currentChapter.volume}. Pour le lire, <a href="${state.currentChapter.licencied[0]}" target="_blank" rel="noopener">achetez le volume</a>.`;
+    if (state.currentChapter.licencied === true) {
+      const message = `Ce chapitre est désormais disponible dans l'édition officielle. Soutenez l'auteur en l'achetant !`;
       if (loadingMsgContainer) {
         loadingMsgContainer.innerHTML = `<p class="licensed-notice">${message}</p>`;
       }

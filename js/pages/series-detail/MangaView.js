@@ -66,7 +66,11 @@ export async function render(mainContainer, seriesData) {
   });
 
   // change quelques textes si one-shot
-  if (seriesData.os && Object.keys(seriesData.chapters).length === 1 && seriesData.chapters.hasOwnProperty("0")) {
+  if (
+    seriesData.os &&
+    Object.keys(seriesData.chapters).length === 1 &&
+    seriesData.chapters.hasOwnProperty("0")
+  ) {
     // si one-shot et un seul chapitre
     qs("[data-tab='chapters']").textContent = "One-shot";
   } else if (seriesData.os) {
@@ -103,11 +107,20 @@ function displayChapterList({ sort, search }) {
   );
 
   if (search.trim()) {
-    const searchTerm = search.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const searchTerm = search
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
     chapters = chapters.filter(
       (chap) =>
         chap.id.toLowerCase().includes(searchTerm) ||
-        (chap.title && chap.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(searchTerm))
+        (chap.title &&
+          chap.title
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(searchTerm))
     );
   }
 
@@ -142,18 +155,17 @@ function displayChapterList({ sort, search }) {
  */
 function renderChapterItem(chapterData) {
   const seriesSlug = currentSeriesData.slug;
-  const isLicensed =
-    chapterData.licencied && Array.isArray(chapterData.licencied);
+  const isLicensed = chapterData.licencied === true;
+
   const cardClasses = ["chapter-card-list-item"];
   if (isLicensed) {
     cardClasses.push("licensed-chapter");
   }
   const tooltipText = isLicensed
-    ? `Le volume français est sorti officiellement le ${chapterData.licencied[1]}.`
+    ? `Ce chapitre est disponible dans l'édition officielle.`
     : "";
-  const href = isLicensed
-    ? ''
-    : `href="/${seriesSlug}/${chapterData.id}"`;
+
+  const href = isLicensed ? "" : `href="/${seriesSlug}/${chapterData.id}"`;
 
   const interactionKey = `interactions_${seriesSlug}_${chapterData.id}`;
   const localState = getLocalInteractionState(interactionKey);
@@ -179,14 +191,14 @@ function renderChapterItem(chapterData) {
     ? `<span class="chapter-card-list-views detail-chapter-views" data-imgchest-id="${imgchestId}">
            <i class="fas fa-eye"></i> ...
          </span>`
-    : '';
+    : "";
 
-  // Utilisation de la nouvelle fonction partagée
   const chapterNumberHtml = renderItemNumber(chapterData, currentSeriesData.os);
 
   return `
-      <a ${href} class="${cardClasses.join(" ")}" data-chapter-id="${chapterData.id
-    }" title="${tooltipText}">
+      <a ${href} class="${cardClasses.join(" ")}" data-chapter-id="${
+    chapterData.id
+  }" title="${tooltipText}">
         <div class="chapter-card-list-top">
           <div class="chapter-card-list-left">
             <span class="chapter-card-list-number">${chapterNumberHtml}</span>
@@ -197,12 +209,14 @@ function renderChapterItem(chapterData) {
         </div>
         <div class="chapter-card-list-bottom">
           <div class="chapter-card-list-left">
-            <span class="chapter-card-list-title">${chapterData.title || ""
-    }</span>
+            <span class="chapter-card-list-title">${
+              chapterData.title || ""
+            }</span>
           </div>
           <div class="chapter-card-list-right">
-            <span class="chapter-card-list-likes${isLiked ? " liked" : ""
-    }" data-base-likes="${chapterStats.likes || 0}">
+            <span class="chapter-card-list-likes${
+              isLiked ? " liked" : ""
+            }" data-base-likes="${chapterStats.likes || 0}">
               <i class="fas fa-heart"></i>
               <span class="likes-count">${displayLikes}</span>
             </span>
@@ -261,7 +275,8 @@ function handleLikeToggle(seriesSlug, chapterId, likeButton) {
   });
 
   console.log(
-    `[MangaView] Action de like mise en file: ${!isLiked ? "like" : "unlike"
+    `[MangaView] Action de like mise en file: ${
+      !isLiked ? "like" : "unlike"
     } pour chap. ${chapterId}`
   );
 }
