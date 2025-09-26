@@ -3,8 +3,8 @@
   "description": "Deux lycées que tout oppose se font face : Chidori, le repaire des garçons cancres, et Kikyô, l'établissement prestigieux des filles d'élite. Rintarô, élève de Chidori, sympathise avec Kaoruko, une cliente de la pâtisserie familiale. Alors qu'un lien se tisse entre eux, il découvre qu'elle étudie à Kikyô... et qu'ils sont censés se détester. Leur relation naissante pourra-t-elle survivre à la haine qui oppose leurs écoles ?",
   "artist": "Saka Mikami",
   "author": "Saka Mikami",
-  "cover_hq": "https://cdn.imgchest.com/files/a1f12b843ff7.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/8072e5adfb6b.jpg",
+  "cover_hq": "https://cdn.imgchest.com/files/bf67ad6d167a.jpg",
+  "cover_low": "https://cdn.imgchest.com/files/817f3b401787.jpg",
   "manga_type": "Shonen",
   "magazine": "Pocket Magazine",
   "release_year": 2021,
@@ -13,6 +13,11 @@
   "alternative_titles": ["The Fragrant Flower Blooms with Dignity", "Bloom"],
   "release_status": "En cours",
   "covers_gallery": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/bf67ad6d167a.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/817f3b401787.jpg",
+      "volume": "20"
+    },
     {
       "url_hq": "https://cdn.imgchest.com/files/a1f12b843ff7.jpg",
       "url_lq": "https://cdn.imgchest.com/files/8072e5adfb6b.jpg",
@@ -197,6 +202,14 @@
       "indice_ep": 11,
       "date_ep": "1758317400",
       "title_ep": "Une bouchée de chaleur"
+    },
+    {
+      "type": "sibnet",
+      "id": "6021376",
+      "saison_ep": 1,
+      "indice_ep": 12,
+      "date_ep": "1758925800",
+      "title_ep": "Questionnements en bord de mer"
     }
   ],
   "anime": [
