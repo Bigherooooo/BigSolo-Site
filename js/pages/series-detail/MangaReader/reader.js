@@ -87,6 +87,7 @@ export async function initMangaReader() {
     if (isMobileView) {
       renderInteractionsShare();
       setupInteractionsShareListeners();
+      renderWebtoonChapterNavigation();
       moveCommentsForMobile();
       moveChaptersForMobile();
     }
@@ -145,6 +146,7 @@ function setupBaseLayout() {
               <div class="reader-viewer-container">
                   <p style="color: var(--clr-text-sub);">Chargement...</p>
               </div>
+              <div id="webtoon-chapter-navigation" class="mobile-only"></div>
               <section id="interactions-share"></section>
               <section id="comments-mobile-section"></section>
           </div>
@@ -401,7 +403,16 @@ function initializeGlobalEvents() {
   }
 
   document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("readerModeChanged", updateBarsInteractivity);
+  document.addEventListener("readerModeChanged", () => {
+    updateBarsInteractivity();
+    if (isMobileView) {
+      const navContainer = qs("#webtoon-chapter-navigation");
+      if (navContainer) {
+        navContainer.style.display =
+          state.settings.mode === "webtoon" ? "block" : "none";
+      }
+    }
+  });
   document.addEventListener(
     "readerModeChanged",
     updateMobileFooterSectionsVisibility
@@ -702,4 +713,54 @@ function handleError(message) {
   if (root) {
     root.innerHTML = `<p style="padding: 2rem; text-align: center; color: var(--clr-text-sub);">${message}</p>`;
   }
+}
+
+function renderWebtoonChapterNavigation() {
+  const container = qs("#webtoon-chapter-navigation");
+  if (!container || !isMobileView) return; // Sécurité
+
+  const { allChapterKeys, currentChapter, seriesData } = state;
+  const seriesSlug = slugify(seriesData.title);
+
+  const currentIndex = allChapterKeys.indexOf(currentChapter.number);
+
+  const prevChapterKey = allChapterKeys[currentIndex - 1];
+  const nextChapterKey = allChapterKeys[currentIndex + 1];
+
+  let prevButtonHtml = `
+    <span class="chapter-nav-button disabled">
+      <i class="fas fa-chevron-left"></i> Précédent
+    </span>
+  `;
+  if (prevChapterKey) {
+    prevButtonHtml = `
+      <a href="/${seriesSlug}/${prevChapterKey}" class="chapter-nav-button">
+        <i class="fas fa-chevron-left"></i> Précédent
+      </a>
+    `;
+  }
+
+  let nextButtonHtml = `
+    <span class="chapter-nav-button disabled">
+      Suivant <i class="fas fa-chevron-right"></i>
+    </span>
+  `;
+  if (nextChapterKey) {
+    nextButtonHtml = `
+      <a href="/${seriesSlug}/${nextChapterKey}" class="chapter-nav-button">
+        Suivant <i class="fas fa-chevron-right"></i>
+      </a>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="chapter-navigation-wrapper">
+      ${prevButtonHtml}
+      ${nextButtonHtml}
+    </div>
+  `;
+
+  // On affiche/cache le conteneur en fonction du mode de lecture
+  container.style.display =
+    state.settings.mode === "webtoon" ? "block" : "none";
 }

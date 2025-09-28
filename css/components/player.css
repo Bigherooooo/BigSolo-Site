@@ -166,7 +166,7 @@
   #mobile-reader-controls {
     min-height: var(--global-controls-height-mobile);
     width: 100%;
-    padding: 0.4rem 0.87rem;
+    padding: 0.4rem 0.8rem;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -216,25 +216,15 @@
     text-overflow: ellipsis;
   }
   #mobile-reader-controls button {
-    font-size: 1.1rem;
-    background: var(--clr-bg-card);
-    border: 1.5px solid var(--clr-bg-reader-invert);
-    border-radius: 4px;
+    background: none;
+    border: none;
     color: var(--clr-text);
-    height: 30px;
-    width: 30px;
+    padding: 0.25rem;
     line-height: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 0.4rem;
     flex-shrink: 0;
-  }
-
-  #mobile-reader-controls button:focus {
-    background: var(--clr-bg-reader-invert);
-    border: 1.5px solid var(--clr-bg-reader-invert);
-    color: var(--clr-text-invert);
   }
 
   #mobile-toggle-sidebar-btn {
