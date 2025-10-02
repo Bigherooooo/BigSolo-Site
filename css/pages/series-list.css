@@ -18,10 +18,7 @@
   font-size: 1.1rem;
   padding: 0 1.3rem;
   cursor: pointer;
-  transition:
-    background 0.18s,
-    border 0.18s,
-    color 0.18s;
+  transition: background 0.18s, border 0.18s, color 0.18s;
   position: relative;
 }
 
@@ -92,9 +89,7 @@
 .series-rating-menu li {
   padding: 0.5rem 1.2rem;
   cursor: pointer;
-  transition:
-    background 0.13s,
-    color 0.13s;
+  transition: background 0.13s, color 0.13s;
   font-weight: 500;
 }
 
@@ -316,9 +311,7 @@
 
 .detail-cover-wrapper.is-clickable {
   cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .detail-cover-wrapper.is-clickable:hover {
@@ -420,10 +413,7 @@
   text-decoration: none;
   color: var(--clr-text);
   background-color: var(--clr-bg-card);
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
@@ -507,9 +497,7 @@
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
-  transition:
-    color 0.3s,
-    border-color 0.3s;
+  transition: color 0.3s, border-color 0.3s;
   text-decoration: none;
   text-align: left;
   justify-content: flex-start;
@@ -550,6 +538,7 @@
 }
 
 .sort-chapter-btn {
+  height: 38px;
   background: var(--clr-bg-card);
   color: var(--clr-text-sub);
   border: 1.5px solid var(--clr-bg-card-invert);
@@ -558,10 +547,7 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -644,9 +630,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition:
-    color 0.18s,
-    opacity 0.18s;
+  transition: color 0.18s, opacity 0.18s;
   min-width: 0;
   flex: 1 1 0;
 }
@@ -716,10 +700,7 @@ a.chapter-card-list-item {
   padding: 1.1rem;
   display: flex;
   justify-content: space-between;
-  transition:
-    background 0.18s ease,
-    color 0.18s ease,
-    transform 0.3s ease-out,
+  transition: background 0.18s ease, color 0.18s ease, transform 0.3s ease-out,
     opacity 0.3s ease-out;
   cursor: pointer;
 }
@@ -911,6 +892,210 @@ a.chapter-card-list-item:hover {
 
 .chapter-card-tooltip.visible {
   opacity: 1;
+}
+/* --- Proposition "Signature 2.0" : La Version Finale --- */
+
+.chapter-header-actions {
+  align-items: flex-end;
+}
+.download-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* --- LOGIQUE DE SÉLECTION --- */
+
+.chapters-list-container.download-mode .chapter-card-list-item {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden; /* Crucial pour masquer l'excédent de la barre latérale */
+  opacity: 0.6;
+  transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+}
+
+.chapters-list-container.download-mode .chapter-card-list-item:hover,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+.chapters-list-container.download-mode
+  .chapter-card-list-item:not(.selected-for-download):hover {
+  border-color: var(--clr-text);
+}
+
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download {
+  border-color: rgba(var(--clr-text-rgb), 0.4);
+}
+
+/* La barre latérale animée, plus haute pour une finition parfaite. */
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 110%; /* Plus haute pour éviter les fuites de pixels */
+  background-color: var(--clr-text-sub);
+  border-radius: 4px;
+  transform: scaleY(0);
+  transform-origin: center;
+  animation: growBar 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transition: background-color 0.2s ease;
+}
+
+@keyframes growBar {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1.1);
+  }
+}
+
+/* La coche "vivante" avec une animation d'entrée ET une animation de pulsation constante. */
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download::after {
+  content: "\f00c";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 600; /* Coche plus fine */
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+
+  color: var(--clr-text);
+  background-color: var(--clr-bg-card);
+  border-radius: 50%;
+
+  /* On combine deux animations : une pour l'entrée, l'autre pour le pouls constant */
+  animation: popInCheck 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    livePulse 2s linear 0.4s infinite; /* Le pouls démarre après la fin de l'animation d'entrée */
+
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Animation d'entrée de la coche */
+@keyframes popInCheck {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animation de pouls constant avec deux cercles */
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--clr-text-rgb), 0.3),
+      0 0 0 0 rgba(var(--clr-text-rgb), 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(var(--clr-text-rgb), 0),
+      0 0 0 24px rgba(var(--clr-text-rgb), 0);
+  }
+}
+
+/* Gestion du survol sur une carte DÉJÀ sélectionnée */
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover {
+  background-color: var(--clr-bg-card-invert);
+  color: var(--clr-text-invert);
+  border-color: var(--clr-bg-card-invert);
+}
+
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover::before {
+  background-color: var(--clr-text-invert);
+}
+
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover::after {
+  color: var(--clr-text-invert);
+  background-color: var(--clr-bg-card-invert);
+  animation-name: popInCheck, livePulseInvert;
+}
+
+/* Animation de pouls pour le mode inversé (hover) */
+@keyframes livePulseInvert {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--clr-text-invert-rgb), 0.3),
+      0 0 0 0 rgba(var(--clr-text-invert-rgb), 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(var(--clr-text-invert-rgb), 0),
+      0 0 0 24px rgba(var(--clr-text-invert-rgb), 0);
+  }
+}
+
+/* Le texte et les icônes s'inversent */
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .chapter-card-list-number,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .volume-prefix,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .chapter-card-list-title,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .chapter-card-list-views,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .chapter-card-list-likes,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .chapter-card-list-comments,
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  i {
+  color: var(--clr-text-invert) !important;
+}
+.chapters-list-container.download-mode
+  .chapter-card-list-item.selected-for-download:hover
+  .chapter-card-list-likes.liked {
+  color: var(--clr-accent-invert) !important;
+}
+
+/* --- BOUTONS --- */
+#download-selected-btn {
+  background-color: var(--clr-bg-card-invert);
+  border-color: var(--clr-bg-card-invert);
+  color: var(--clr-text-invert);
+}
+#download-selected-btn:hover {
+  background-color: var(--clr-text);
+  border-color: var(--clr-text);
+  color: var(--clr-bg);
+}
+#download-selected-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--clr-disabled);
+  border-color: var(--clr-disabled);
+  color: var(--clr-text-invert);
+}
+#cancel-download-btn {
+  background-color: rgba(var(--clr-error-rgb), 0.1);
+  border-color: var(--clr-error);
+  color: var(--clr-error);
+}
+#cancel-download-btn:hover {
+  background-color: var(--clr-error);
+  border-color: var(--clr-error);
+  color: #fff;
 }
 
 .chapter-card-tooltip strong {

@@ -1,6 +1,6 @@
 // --- File: js/pages/series-detail/MangaView.js ---
 
-import { qs } from "../../utils/domUtils.js";
+import { qs, qsa, slugify } from "../../utils/domUtils.js";
 import { timeAgo, parseDateToTimestamp } from "../../utils/dateUtils.js";
 import { initMainScrollObserver } from "../../components/observer.js";
 import {
@@ -20,6 +20,10 @@ import { initAccordion } from "./shared/accordion.js";
 import { renderItemNumber } from "./shared/itemNumberRenderer.js";
 import { initCoverGallery } from "./shared/coverGallery.js";
 
+let abortController = null; // Pour gérer l'annulation
+let isDownloadMode = false;
+let selectedChaptersForDownload = new Set();
+
 let currentSeriesData = null;
 let currentSeriesStats = null;
 let viewContainer = null;
@@ -38,6 +42,22 @@ export async function render(mainContainer, seriesData) {
   // Déconnecte l'ancien observer s'il existe pour éviter les doublons
   if (resizeObserver) {
     resizeObserver.disconnect();
+  }
+
+  // Ajout dynamique des bibliothèques JSZip et FileSaver
+  if (!document.getElementById("jszip-script")) {
+    const jszipScript = document.createElement("script");
+    jszipScript.id = "jszip-script";
+    jszipScript.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+    document.head.appendChild(jszipScript);
+  }
+  if (!document.getElementById("filesaver-script")) {
+    const fileSaverScript = document.createElement("script");
+    fileSaverScript.id = "filesaver-script";
+    fileSaverScript.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js";
+    document.head.appendChild(fileSaverScript);
   }
 
   const statsPromise = fetchStats(currentSeriesData.slug);
@@ -65,6 +85,8 @@ export async function render(mainContainer, seriesData) {
     search: "",
   });
 
+  initDownloadListeners(); // Initialise les écouteurs pour les nouveaux boutons
+
   // change quelques textes si one-shot
   if (
     seriesData.os &&
@@ -82,6 +104,269 @@ export async function render(mainContainer, seriesData) {
   preloadAllImgChestViewsOnce();
   initCoverGallery(viewContainer, currentSeriesData);
 }
+
+// --- Fonctions pour le mode téléchargement ---
+
+function initDownloadListeners() {
+  console.log("[Download] Initialisation des écouteurs de téléchargement.");
+  const toggleBtn = qs("#toggle-download-mode-btn", viewContainer);
+  const downloadBtn = qs("#download-selected-btn", viewContainer);
+  const cancelBtn = qs("#cancel-download-btn", viewContainer);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", toggleDownloadMode);
+  }
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", startDownloadProcess);
+  }
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      console.log("[Download] Clic sur le bouton Annuler détecté.");
+      if (abortController) {
+        console.log(
+          "[Download] abortController existe. Appel de la méthode abort()."
+        );
+        abortController.abort(); // Déclenche l'annulation
+      } else {
+        console.warn(
+          "[Download] Clic sur Annuler, mais abortController est null."
+        );
+      }
+    });
+    console.log("[Download] Écouteur pour le bouton Annuler attaché.");
+  } else {
+    console.error(
+      "[Download] Le bouton Annuler n'a pas été trouvé dans le DOM."
+    );
+  }
+}
+
+function toggleDownloadMode() {
+  isDownloadMode = !isDownloadMode;
+  const container = qs(".chapters-list-container", viewContainer);
+  const toggleBtn = qs("#toggle-download-mode-btn", viewContainer);
+  const downloadBtn = qs("#download-selected-btn", viewContainer);
+  const infoMessage = qs("#download-mode-info", viewContainer);
+
+  // On utilise les ID pour cibler précisément les éléments
+  const sortBtn = qs("#sort-chapter-btn", viewContainer);
+  const searchInput = qs("#search-chapter-input", viewContainer);
+
+  if (container) container.classList.toggle("download-mode", isDownloadMode);
+  if (infoMessage)
+    infoMessage.style.display = isDownloadMode ? "block" : "none";
+  if (downloadBtn)
+    downloadBtn.style.display = isDownloadMode ? "inline-flex" : "none";
+
+  if (toggleBtn) {
+    toggleBtn.classList.toggle("active", isDownloadMode);
+    toggleBtn.title = isDownloadMode
+      ? "Quitter le mode téléchargement"
+      : "Activer le mode téléchargement";
+  }
+
+  if (isDownloadMode) {
+    // Cacher les contrôles de tri et de recherche
+    if (sortBtn) sortBtn.style.display = "none";
+    if (searchInput) searchInput.style.display = "none";
+  } else {
+    // Afficher les contrôles de tri et de recherche
+    if (sortBtn) sortBtn.style.display = "flex";
+    if (searchInput) searchInput.style.display = "inline-block";
+
+    // Nettoyer la sélection en quittant le mode
+    selectedChaptersForDownload.clear();
+    if (container) {
+      qsa(".chapter-card-list-item.selected-for-download", container).forEach(
+        (card) => {
+          card.classList.remove("selected-for-download");
+        }
+      );
+    }
+  }
+  updateDownloadButtonState();
+}
+
+function handleChapterSelection(chapterId, cardElement) {
+  if (cardElement.classList.contains("licensed-chapter")) {
+    return; // Ne pas autoriser la sélection des chapitres sous licence
+  }
+
+  if (selectedChaptersForDownload.has(chapterId)) {
+    selectedChaptersForDownload.delete(chapterId);
+    cardElement.classList.remove("selected-for-download");
+  } else {
+    selectedChaptersForDownload.add(chapterId);
+    cardElement.classList.add("selected-for-download");
+  }
+  updateDownloadButtonState();
+}
+
+function updateDownloadButtonState() {
+  const downloadBtn = qs("#download-selected-btn", viewContainer);
+  const count = selectedChaptersForDownload.size;
+  downloadBtn.disabled = count === 0;
+
+  const textSpan = qs(".download-btn-text", downloadBtn);
+  if (count > 0) {
+    textSpan.textContent = ` Télécharger (${count})`;
+  } else {
+    textSpan.textContent = ` Télécharger`;
+  }
+}
+
+async function startDownloadProcess() {
+  if (typeof JSZip === "undefined" || typeof saveAs === "undefined") {
+    alert(
+      "Les bibliothèques de téléchargement ne sont pas encore chargées. Veuillez patienter et réessayer."
+    );
+    return;
+  }
+
+  const downloadBtn = qs("#download-selected-btn", viewContainer);
+  const cancelBtn = qs("#cancel-download-btn", viewContainer);
+  const toggleBtn = qs("#toggle-download-mode-btn", viewContainer);
+  const originalText = downloadBtn.innerHTML;
+
+  abortController = new AbortController();
+  const signal = abortController.signal;
+
+  downloadBtn.disabled = true;
+  if (toggleBtn) toggleBtn.style.display = "none";
+  if (cancelBtn) cancelBtn.style.display = "inline-flex";
+
+  const masterZip = new JSZip();
+  const chaptersToDownload = Array.from(selectedChaptersForDownload);
+  const totalChapters = chaptersToDownload.length;
+  let processedChaptersCount = 0;
+
+  // Pour l'estimation du temps
+  const startTime = Date.now();
+  let timeEstimates = [];
+
+  try {
+    downloadBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Téléchargement 0/${totalChapters}`;
+
+    const chapterProcessingPromises = chaptersToDownload.map(
+      async (chapterId) => {
+        if (signal.aborted)
+          throw new DOMException("Téléchargement annulé", "AbortError");
+
+        const chapterStartTime = Date.now();
+
+        const chapterData = currentSeriesData.chapters[chapterId];
+        const imgchestId = chapterData.groups?.Big_herooooo?.split("/").pop();
+
+        if (!imgchestId) {
+          console.warn(
+            `Pas d'ID ImgChest pour le chapitre ${chapterId}, ignoré.`
+          );
+          return null; // On renvoie null pour que le compteur s'incrémente quand même
+        }
+
+        const zipResponse = await fetch(`/api/proxy-zip?id=${imgchestId}`, {
+          signal,
+        });
+        if (!zipResponse.ok) {
+          console.warn(`Échec du fetch pour le ZIP du chapitre ${chapterId}`);
+          return null;
+        }
+
+        const chapterZipBlob = await zipResponse.blob();
+        const chapterZip = await JSZip.loadAsync(chapterZipBlob);
+
+        // On retourne le zip chargé pour le traiter de manière synchrone plus tard
+        // et éviter les conflits d'écriture dans le masterZip
+        const chapterProcessingTime = Date.now() - chapterStartTime;
+        timeEstimates.push(chapterProcessingTime);
+
+        return { chapterId, chapterZip };
+      }
+    );
+
+    // On attend que chaque chapitre soit traité (téléchargé et chargé en mémoire)
+    for (const promise of chapterProcessingPromises) {
+      const result = await promise; // Attend la résolution de chaque promesse une par une
+
+      processedChaptersCount++;
+
+      // Calcul de l'estimation du temps restant
+      const averageTime =
+        timeEstimates.reduce((a, b) => a + b, 0) / timeEstimates.length;
+      const chaptersRemaining = totalChapters - processedChaptersCount;
+      const estimatedTimeMs = chaptersRemaining * averageTime;
+      const estimatedTimeSec = Math.round(estimatedTimeMs / 1000);
+      const timeString =
+        estimatedTimeSec > 0 ? ` (est. ${estimatedTimeSec}s)` : "";
+
+      downloadBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Téléchargement ${processedChaptersCount}/${totalChapters}${timeString}`;
+
+      if (result) {
+        // Maintenant on ajoute les fichiers au masterZip
+        const { chapterId, chapterZip } = result;
+        const chapterFolder = masterZip.folder(`Ch. ${chapterId}`);
+        const filePromises = [];
+        chapterZip.forEach((relativePath, file) => {
+          if (!file.dir) {
+            const p = file.async("blob").then((fileData) => {
+              chapterFolder.file(file.name, fileData);
+            });
+            filePromises.push(p);
+          }
+        });
+        await Promise.all(filePromises);
+      }
+    }
+
+    // --- Étape 2 : Génération de l'archive finale ---
+    downloadBtn.innerHTML = `<i class="fas fa-cog fa-spin"></i> Compression...`;
+
+    const finalZipBlob = await masterZip.generateAsync(
+      {
+        type: "blob",
+        compression: "DEFLATE",
+        compressionOptions: { level: 6 },
+      },
+      (metadata) => {
+        if (signal.aborted)
+          throw new DOMException("Annulé pendant la compression", "AbortError");
+        if (metadata.percent) {
+          downloadBtn.innerHTML = `<i class="fas fa-cog fa-spin"></i> Compression... ${Math.round(
+            metadata.percent
+          )}%`;
+        }
+      }
+    );
+
+    const seriesTitle = slugify(currentSeriesData.title);
+    const chapterNumbers = chaptersToDownload.join("-");
+    saveAs(finalZipBlob, `BigSolo - ${seriesTitle} - Ch ${chapterNumbers}.zip`);
+  } catch (error) {
+    if (error.name === "AbortError") {
+      alert("Le téléchargement a été annulé.");
+    } else {
+      console.error(
+        "Erreur lors du processus de téléchargement groupé :",
+        error
+      );
+      alert(
+        `Une erreur est survenue pendant le téléchargement : ${error.message}`
+      );
+    }
+  } finally {
+    // --- Étape 3 : Nettoyage de l'interface ---
+    downloadBtn.innerHTML = originalText;
+    if (cancelBtn) cancelBtn.style.display = "none";
+    if (toggleBtn) toggleBtn.style.display = "inline-flex";
+    abortController = null;
+
+    if (isDownloadMode) {
+      toggleDownloadMode();
+    }
+  }
+}
+
+// --- Fin des fonctions pour le mode téléchargement ---
 
 /**
  * Gère les changements de filtre ou de tri et met à jour la liste des chapitres.
@@ -234,20 +519,33 @@ function renderChapterItem(chapterData) {
  * @param {HTMLElement} container - Le conteneur de la liste.
  */
 function attachChapterItemEventListeners(container) {
-  container
-    .querySelectorAll(".chapter-card-list-likes")
-    .forEach((likeButton) => {
-      likeButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+  container.addEventListener("click", (e) => {
+    const card = e.target.closest(".chapter-card-list-item");
+    if (!card) return;
 
-        const card = likeButton.closest(".chapter-card-list-item");
-        const chapterId = card.dataset.chapterId;
-        const seriesSlug = currentSeriesData.slug;
+    // --- LOGIQUE LIKE ---
+    const likeButton = e.target.closest(".chapter-card-list-likes");
+    if (likeButton) {
+      e.preventDefault();
+      e.stopPropagation();
+      const chapterId = card.dataset.chapterId;
+      const seriesSlug = currentSeriesData.slug;
+      handleLikeToggle(seriesSlug, chapterId, likeButton);
+      return;
+    }
 
-        handleLikeToggle(seriesSlug, chapterId, likeButton);
-      });
-    });
+    // --- LOGIQUE SÉLECTION POUR TÉLÉCHARGEMENT ---
+    if (isDownloadMode) {
+      e.preventDefault();
+      e.stopPropagation();
+      const chapterId = card.dataset.chapterId;
+      handleChapterSelection(chapterId, card);
+      return;
+    }
+
+    // Si on n'est ni en mode like ni en mode download, c'est une navigation normale,
+    // le comportement par défaut du lien `<a>` s'appliquera.
+  });
 }
 
 /**

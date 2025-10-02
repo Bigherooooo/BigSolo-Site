@@ -13,7 +13,7 @@ let currentSearch = "";
 export function initListControls(viewContainer, onUpdate) {
   console.log("[ListControls] Initialisation des contrôles.");
   const searchInput = qs('.search-chapter input[type="text"]', viewContainer);
-  const sortBtn = qs(".sort-chapter-btn", viewContainer);
+  const sortBtn = qs("#sort-chapter-btn", viewContainer);
 
   if (!searchInput || !sortBtn) {
     console.warn("[ListControls] Éléments de recherche ou de tri non trouvés.");
