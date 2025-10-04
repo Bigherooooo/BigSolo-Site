@@ -45,6 +45,13 @@ export async function handleRouteChange(seriesData) {
       const templateHtml = await response.text();
       main.innerHTML = templateHtml;
 
+      if (isAnimeView) {
+        const downloadActions = main.querySelector(".download-actions");
+        if (downloadActions) {
+          downloadActions.style.display = "none";
+        }
+      }
+
       // 4. Appeler le module de rendu approprié pour remplir le template
       if (isAnimeView) {
         console.log("[Router] Rendu de la vue Anime.");
