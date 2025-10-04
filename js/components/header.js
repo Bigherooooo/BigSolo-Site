@@ -1,4 +1,5 @@
 import { qs, qsa, slugify } from "../utils/domUtils.js";
+import { fetchAllSeriesData } from "../utils/fetchUtils.js";
 
 const mainNavLinksConfig = [
   { text: "Accueil", href: "/", icon: "fas fa-home", id: "home" },
@@ -353,10 +354,198 @@ function setupMobileMenuInteractions() {
   }
 }
 
+/**
+ * Initialise et gère le panneau d'historique.
+ */
+function initHistoryPanel() {
+  const toggleBtn = qs("#history-toggle");
+  const panel = qs("#history-panel");
+  const closeBtn = qs("#history-close-btn");
+  const content = qs("#history-content");
+
+  if (!toggleBtn || !panel || !closeBtn || !content) return;
+
+  const showPanel = async () => {
+    panel.style.display = "flex";
+    await populateHistoryPanel();
+    setTimeout(() => panel.classList.add("visible"), 10);
+  };
+
+  const hidePanel = () => {
+    panel.classList.remove("visible");
+    setTimeout(() => {
+      panel.style.display = "none";
+      content.innerHTML = '<p class="history-empty">Chargement...</p>';
+    }, 200);
+  };
+
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (panel.classList.contains("visible")) {
+      hidePanel();
+    } else {
+      showPanel();
+    }
+  });
+
+  closeBtn.addEventListener("click", hidePanel);
+
+  document.addEventListener("click", (e) => {
+    if (
+      panel.classList.contains("visible") &&
+      !panel.contains(e.target) &&
+      !toggleBtn.contains(e.target)
+    ) {
+      hidePanel();
+    }
+  });
+}
+
+/**
+ * Récupère les données et remplit le panneau d'historique.
+ */
+async function populateHistoryPanel() {
+  const content = qs("#history-content");
+  content.innerHTML = '<p class="history-empty">Chargement...</p>';
+
+  try {
+    const allSeries = await fetchAllSeriesData();
+    const historyData = {};
+
+    // 1. Scanner le localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith("reading-progress-")) {
+        const slug = key.replace("reading-progress-", "");
+        if (!historyData[slug]) historyData[slug] = {};
+        historyData[slug].progress = localStorage.getItem(key);
+      } else if (key.startsWith("series-rating-")) {
+        const slug = key.replace("series-rating-", "");
+        if (!historyData[slug]) historyData[slug] = {};
+        historyData[slug].rating = localStorage.getItem(key);
+      }
+    }
+
+    if (Object.keys(historyData).length === 0) {
+      content.innerHTML =
+        '<p class="history-empty">Votre historique est vide.</p>';
+      return;
+    }
+
+    // 2. Enrichir les données
+    const enrichedHistory = Object.entries(historyData)
+      .map(([slug, data]) => {
+        const series = allSeries.find((s) => slugify(s.title) === slug);
+        if (!series) return null;
+
+        // - Debut modification
+        const chapterKeys = Object.keys(series.chapters || {}).filter(
+          (k) => series.chapters[k]?.groups?.Big_herooooo
+        );
+        const totalChapters =
+          chapterKeys.length > 0
+            ? Math.max(...chapterKeys.map((k) => parseFloat(k)))
+            : 0;
+        // - Fin modification
+
+        return {
+          slug,
+          title: series.title,
+          cover: series.cover_low || series.cover_hq,
+          progress: data.progress ? parseFloat(data.progress) : null,
+          rating: data.rating ? parseFloat(data.rating) : null,
+          totalChapters: totalChapters,
+          os: series.os, // On ajoute la propriété 'os'
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.title.localeCompare(b.title)); // Tri alphabétique
+
+    if (enrichedHistory.length === 0) {
+      content.innerHTML =
+        '<p class="history-empty">Votre historique est vide.</p>';
+      return;
+    }
+
+    // 3. Générer le HTML
+    content.innerHTML = enrichedHistory.map(renderHistoryCard).join("");
+  } catch (error) {
+    console.error("Erreur lors de la construction de l'historique:", error);
+    content.innerHTML = '<p class="history-empty">Erreur de chargement.</p>';
+  }
+}
+
+/**
+ * Génère le HTML pour une carte d'historique.
+ * @param {object} item - Un objet d'historique enrichi.
+ * @returns {string} Le HTML de la carte.
+ */
+function renderHistoryCard(item) {
+  let detailsHtml = "";
+  let ratingHtml = "";
+
+  // 1. Construit le HTML pour la note si elle existe
+  if (item.rating) {
+    ratingHtml = `
+      <span class="history-card-rating">
+        <i class="fas fa-star"></i>
+        <span>${item.rating}/10</span>
+      </span>
+    `;
+  }
+
+  // 2. Construit le HTML pour la section sous le titre (progression ou rien)
+  if (item.os) {
+    // Si c'est un one-shot, toujours afficher la barre de progression pleine
+    detailsHtml = `
+      <div class="history-progress">
+        <div class="history-progress-bar">
+          <div class="history-progress-bar-inner" style="width: 100%;"></div>
+        </div>
+        <span class="history-progress-text">One-shot (1/1)</span>
+      </div>
+    `;
+  } else if (item.progress && item.totalChapters > 0) {
+    // Si ce n'est pas un one-shot, afficher la progression normale
+    const progressPercent = Math.min(
+      (item.progress / item.totalChapters) * 100,
+      100
+    );
+    detailsHtml = `
+      <div class="history-progress">
+        <div class="history-progress-bar">
+          <div class="history-progress-bar-inner" style="width: ${progressPercent}%;"></div>
+        </div>
+        <span class="history-progress-text">Ch. ${item.progress} / ${item.totalChapters}</span>
+      </div>
+    `;
+  }
+  // Si ni one-shot ni progression, detailsHtml reste une chaîne vide, ce qui est correct.
+
+  // 3. Assemble la carte finale avec la nouvelle structure
+  return `
+    <a href="/${item.slug}" class="history-card">
+      <img src="${
+        item.cover || "/img/placeholder_preview.png"
+      }" class="history-card-cover" alt="Couverture de ${
+    item.title
+  }" loading="lazy">
+      <div class="history-card-info">
+        <div class="history-card-title-line">
+            <span class="history-card-title">${item.title}</span>
+            ${ratingHtml}
+        </div>
+        ${detailsHtml}
+      </div>
+    </a>
+  `;
+}
+
 export function initHeader() {
   setupThemeToggle();
   populateDesktopNavigation();
   initAnchorLinks();
+  initHistoryPanel(); // Ajout de l'initialisation du panneau d'historique
   document.body.addEventListener("routeChanged", () => {
     console.log(
       "Header a détecté un changement de route. Mise à jour de la navigation..."
