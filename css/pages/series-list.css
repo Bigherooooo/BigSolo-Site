@@ -787,10 +787,23 @@ a.chapter-card-list-item:focus {
 .download-actions {
   display: flex;
   gap: 1rem;
-  position: relative;
+  position: relative; /* Indispensable pour positionner les menus déroulants */
 }
 
-/* --- LOGIQUE DE SÉLECTION --- */
+/* --- NOUVEAU : Overlay pour le mode modal --- */
+.download-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9; /* Juste en dessous des popups */
+  background-color: transparent; /* Intercepte les clics sans être visible */
+  display: none;
+}
+
+.download-modal-overlay.visible {
+  display: block;
+}
+
+/* --- LOGIQUE DE SÉLECTION DES CARTES --- */
 .chapters-list-container.download-mode .chapter-card-list-item {
   cursor: pointer;
   position: relative;
@@ -887,7 +900,235 @@ a.chapter-card-list-item:focus {
   }
 }
 
-/* --- Effets de survol pour le mode téléchargement --- */
+/* --- BOUTONS ET MENUS DE TÉLÉCHARGEMENT --- */
+#download-selected-btn {
+  background-color: var(--clr-bg-card-invert);
+  border-color: var(--clr-bg-card-invert);
+  color: var(--clr-text-invert);
+  min-width: 150px;
+  justify-content: center;
+}
+
+#download-selected-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--clr-disabled);
+  border-color: var(--clr-disabled);
+  color: var(--clr-text-invert);
+}
+
+.download-options-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  z-index: 10;
+  background-color: var(--clr-bg-card);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  padding: 1rem;
+  display: none;
+  flex-direction: column;
+  gap: 1.2rem;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.download-options-popup.visible {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.download-options-popup h5 {
+  margin: 0 0 0.2rem 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--clr-text-sub);
+  letter-spacing: 0.5px;
+}
+
+.download-options-popup .option-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.download-options-popup .secondary-toggle-btn {
+  flex: 1;
+  padding: 0.75rem 1rem 0.75rem 2.5rem; /* Espace pour l'icône */
+  border-radius: 4px;
+  background: var(--clr-bg-card);
+  border: 1.5px solid transparent;
+  color: var(--clr-text);
+  text-align: left;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  opacity: 0.7;
+  font-size: 0.85rem;
+  position: relative; /* Contexte pour l'icône */
+}
+
+.download-options-popup .secondary-toggle-btn.active {
+  opacity: 1;
+  border-color: var(--clr-bg-invert);
+}
+
+.download-options-popup .secondary-toggle-btn .check-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1em;
+  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.download-options-popup .secondary-toggle-btn .check-icon::before {
+  content: "\f0c8"; /* fa-square */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 400; /* far */
+}
+
+.download-options-popup .secondary-toggle-btn.active .check-icon::before {
+  content: "\f14a"; /* fa-check-square */
+  font-weight: 900; /* fas */
+}
+
+.download-options-popup .main-setting-btn {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  background: var(--clr-bg-invert);
+  border: none;
+  color: var(--clr-text-invert);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.download-options-popup .compression-info {
+  font-size: 0.8rem;
+  color: var(--clr-text-sub);
+  margin-top: -0.8rem;
+  padding-left: 0.2rem;
+}
+
+/* Popup de progression */
+.download-progress-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 400px;
+  max-width: 90vw;
+  z-index: 10;
+  background-color: var(--clr-bg-card);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.download-progress-popup.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+#progress-eta {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--clr-text-sub);
+}
+#cancel-download-btn {
+  background: none;
+  border: none;
+  color: var(--clr-error);
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+#progress-options-summary {
+  font-size: 0.8rem;
+  color: var(--clr-text-sub);
+  padding: 0.5rem 1rem;
+  background-color: rgba(var(--clr-text-rgb), 0.05);
+  border-top: 1px solid rgba(var(--clr-text-rgb), 0.1);
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
+}
+#progress-log-list {
+  list-style: none;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow-y: auto;
+  max-height: 250px;
+  font-size: 0.85rem;
+}
+.progress-sublist {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+}
+.progress-log-entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  color: var(--clr-text-sub);
+  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
+}
+.progress-log-entry .log-status {
+  font-weight: 600;
+  width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.progress-log-entry.pending .log-status {
+  color: var(--clr-text-sub);
+}
+.progress-log-entry.in-progress .log-status {
+  color: var(--clr-primary);
+  animation: blink 1.5s infinite;
+}
+.progress-log-entry.success .log-status {
+  color: var(--clr-success);
+}
+.progress-log-entry.error .log-status {
+  color: var(--clr-error);
+}
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* --- Effets de survol pour TOUTE la section 9 (anti "sticky hover") --- */
 @media (hover: hover) and (pointer: fine) {
   .chapters-list-container.download-mode .chapter-card-list-item:hover {
     transform: translateY(-4px);
@@ -941,132 +1182,6 @@ a.chapter-card-list-item:focus {
     .chapter-card-list-likes.liked {
     color: var(--clr-accent-invert) !important;
   }
-}
-
-/* --- BOUTONS DE TÉLÉCHARGEMENT --- */
-#download-selected-btn {
-  background-color: var(--clr-bg-card-invert);
-  border-color: var(--clr-bg-card-invert);
-  color: var(--clr-text-invert);
-  min-width: 150px;
-  justify-content: center;
-}
-
-#download-selected-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background-color: var(--clr-disabled);
-  border-color: var(--clr-disabled);
-  color: var(--clr-text-invert);
-}
-
-.download-progress-popup {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  width: 400px;
-  max-width: 90vw;
-  z-index: 10;
-  background-color: var(--clr-bg-card);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(var(--clr-text-rgb), 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.download-progress-popup.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.progress-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background-color: rgba(var(--clr-text-rgb), 0.05);
-}
-#progress-eta {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--clr-text-sub);
-}
-#cancel-download-btn {
-  background: none;
-  border: none;
-  color: var(--clr-error);
-  font-weight: 600;
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-}
-#progress-log-list {
-  list-style: none;
-  padding: 0.5rem 1rem;
-  margin: 0;
-  overflow-y: auto;
-  max-height: 250px;
-  font-size: 0.85rem;
-}
-.progress-phase {
-  font-weight: 700;
-  color: var(--clr-text);
-  margin-top: 0.8rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
-}
-.progress-phase:first-child {
-  margin-top: 0;
-}
-.progress-phase:last-child {
-  border-bottom: unset;
-}
-.progress-sublist {
-  list-style: none;
-  padding-left: 1rem;
-  margin-top: 0.5rem;
-}
-.progress-log-entry {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.3rem 0;
-  color: var(--clr-text-sub);
-}
-.progress-log-entry .log-status {
-  font-weight: 600;
-  width: 100px;
-  text-align: right;
-}
-.progress-log-entry.pending .log-status {
-  color: var(--clr-text-sub);
-}
-.progress-log-entry.in-progress .log-status {
-  color: var(--clr-primary);
-  animation: blink 1.5s infinite;
-}
-.progress-log-entry.success .log-status {
-  color: var(--clr-success);
-}
-.progress-log-entry.error .log-status {
-  color: var(--clr-error);
-}
-@keyframes blink {
-  50% {
-    opacity: 0.5;
-  }
-}
-
-/* --- Effets de survol pour les boutons de téléchargement --- */
-@media (hover: hover) and (pointer: fine) {
   #download-selected-btn:hover {
     background-color: var(--clr-text);
     border-color: var(--clr-text);
@@ -1074,6 +1189,10 @@ a.chapter-card-list-item:focus {
   }
   #cancel-download-btn:hover {
     background-color: rgba(var(--clr-error-rgb), 0.1);
+  }
+  .download-options-popup .secondary-toggle-btn:hover {
+    opacity: 1;
+    background-color: var(--clr-bg-reader);
   }
 }
 
