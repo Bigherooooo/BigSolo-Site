@@ -232,7 +232,7 @@ header#main-header.is-hidden {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: 1rem;
+    padding-right: 2.3rem;
   }
 
   .desktop-only {

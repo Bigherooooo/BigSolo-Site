@@ -1153,6 +1153,11 @@ a.chapter-card-list-item:hover {
 .progress-phase:first-child {
   margin-top: 0;
 }
+
+.progress-phase:last-child {
+  border-bottom: unset;
+}
+
 .progress-sublist {
   list-style: none;
   padding-left: 1rem;

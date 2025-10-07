@@ -3,23 +3,25 @@
 // La partie IIFE (Immediately Invoked Function Expression) reste la même pour l'anti-flash
 (function () {
   try {
-    const savedTheme = localStorage.getItem('mv-theme');
-    const prefersDarkSys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem("mv-theme");
+    const prefersDarkSys = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     const htmlEl = document.documentElement;
 
     const applyDarkTheme = () => {
-      htmlEl.classList.add('dark');
+      htmlEl.classList.add("dark");
       // htmlEl.style.backgroundColor = '#15171a'; // Géré par CSS
       // htmlEl.style.color = '#eceff4'; // Géré par CSS
     };
 
     const applyLightTheme = () => {
-      htmlEl.classList.remove('dark');
+      htmlEl.classList.remove("dark");
       // htmlEl.style.backgroundColor = '#f7f8fc'; // Géré par CSS
       // htmlEl.style.color = '#222831'; // Géré par CSS
     };
 
-    if (savedTheme === 'dark' || (!savedTheme && prefersDarkSys)) {
+    if (savedTheme === "dark" || (!savedTheme && prefersDarkSys)) {
       applyDarkTheme();
     } else {
       applyLightTheme();
@@ -30,21 +32,22 @@
 })();
 
 function syncBodyThemeClass() {
-  if (document.body) { // Vérifier que document.body existe
-    if (document.documentElement.classList.contains('dark')) {
-      if (!document.body.classList.contains('dark')) {
-        document.body.classList.add('dark');
+  if (document.body) {
+    // Vérifier que document.body existe
+    if (document.documentElement.classList.contains("dark")) {
+      if (!document.body.classList.contains("dark")) {
+        document.body.classList.add("dark");
       }
     } else {
-      if (document.body.classList.contains('dark')) {
-        document.body.classList.remove('dark');
+      if (document.body.classList.contains("dark")) {
+        document.body.classList.remove("dark");
       }
     }
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', syncBodyThemeClass);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", syncBodyThemeClass);
 } else {
   syncBodyThemeClass();
 }
@@ -54,9 +57,9 @@ window.themeUtils = {
   toggleTheme: function () {
     const htmlEl = document.documentElement;
     const bodyEl = document.body;
-    const isDark = htmlEl.classList.toggle('dark');
+    const isDark = htmlEl.classList.toggle("dark");
 
-    if (bodyEl) bodyEl.classList.toggle('dark', isDark);
+    if (bodyEl) bodyEl.classList.toggle("dark", isDark);
 
     localStorage.setItem("mv-theme", isDark ? "dark" : "light");
 
@@ -64,11 +67,13 @@ window.themeUtils = {
   },
 
   getCurrentTheme: function () {
-    const savedTheme = localStorage.getItem('mv-theme');
-    const prefersDarkSys = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (savedTheme === 'dark' || (!savedTheme && prefersDarkSys)) {
-      return 'dark';
+    const savedTheme = localStorage.getItem("mv-theme");
+    const prefersDarkSys = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    if (savedTheme === "dark" || (!savedTheme && prefersDarkSys)) {
+      return "dark";
     }
-    return 'light';
-  }
+    return "light";
+  },
 };
