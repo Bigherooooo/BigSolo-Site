@@ -1343,12 +1343,34 @@
     },
     {
         "id": 128,
+        "author_id": "1098738913335582720",
+        "chapitre": 142.0,
+        "page": 20,
+        "date": "2025-09-12 00:00:00",
+        "twitter": null,
+        "instagram": null,
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 129,
         "author_id": "907607995452653618",
         "chapitre": 18.0,
         "page": 6,
         "date": "2025-10-05 00:00:00",
-        "twitter": "https://x.com/carla_tssr/status/1974896812621472252?s=46",
-        "instagram": "https://www.instagram.com/p/DPb8wdfDBCa/?igsh=ZXFzYzFqaWxnMDQz",
+        "twitter": "https://x.com/carla_tssr/status/1974896812621472252",
+        "instagram": "https://www.instagram.com/p/DPb8wdfDBCa/",
+        "tiktok": null,
+        "reddit": null
+    },
+    {
+        "id": 130,
+        "author_id": "907607995452653618",
+        "chapitre": 129.0,
+        "page": 20,
+        "date": "2025-10-10 00:00:00",
+        "twitter": "https://x.com/carla_tssr/status/1976710268110750022",
+        "instagram": "https://www.instagram.com/p/DPo1hcGDD0e/",
         "tiktok": null,
         "reddit": null
     }
