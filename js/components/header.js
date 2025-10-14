@@ -1,4 +1,5 @@
 import { qs, qsa, slugify } from "../utils/domUtils.js";
+import { fetchAllSeriesData } from "../utils/fetchUtils.js";
 
 const mainNavLinksConfig = [
   { text: "Accueil", href: "/", icon: "fas fa-home", id: "home" },
@@ -28,6 +29,7 @@ const subNavLinksConfig = {
   seriesdetailpage: [],
   seriescoverspage: [],
 };
+let preloadedHistoryData = null; // Variable pour stocker les données préchargées
 
 function updateAllNavigation() {
   populateDesktopNavigation();
@@ -267,7 +269,6 @@ function initAnchorLinks() {
 }
 
 function updateActiveNavLinks() {
-  // Normalise un chemin : supprime ".html", et transforme "/index.html" en "/"
   const normalizePath = (p) =>
     p.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
 
@@ -278,7 +279,6 @@ function updateActiveNavLinks() {
     const linkHref = a.getAttribute("href");
     if (linkHref) {
       const linkPath = normalizePath(linkHref);
-      // La page d'accueil ('/') est active même si on est sur une sous-page qui n'a pas son propre bouton de nav
       if (linkPath === "/" && currentPath === "/") {
         a.classList.add("active-nav-link");
       } else if (linkPath !== "/" && currentPath.startsWith(linkPath)) {
@@ -298,32 +298,20 @@ function setupMobileMenuInteractions() {
   let savedScrollY = 0;
 
   const openMobileMenu = () => {
-    // 1. Sauvegarder la position de scroll actuelle de la page
     savedScrollY = window.scrollY;
-
     populateMobileNavigation();
-
-    // 2. Positionner dynamiquement l'overlay (en position: absolute)
-    // pour qu'il commence en haut de la fenêtre visible actuelle
     mobileMenuOverlayContainer.style.top = `${savedScrollY}px`;
     mobileMenuOverlayContainer.classList.add("open");
-
-    // 3. Bloquer le scroll du body
     document.body.classList.add("mobile-menu-is-open");
-
     hamburgerBtn.setAttribute("aria-expanded", "true");
   };
 
   const closeMobileMenu = () => {
     mobileMenuOverlayContainer.classList.remove("open");
-
-    // 4. Restaurer le scroll du body
     document.body.classList.remove("mobile-menu-is-open");
-
     hamburgerBtn.setAttribute("aria-expanded", "false");
   };
 
-  // Clic sur le hamburger pour ouvrir/fermer
   hamburgerBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     if (mobileMenuOverlayContainer.classList.contains("open")) {
@@ -333,16 +321,12 @@ function setupMobileMenuInteractions() {
     }
   });
 
-  // Clic sur l'overlay (le fond) pour fermer
   mobileMenuOverlayContainer.addEventListener("click", (e) => {
-    // On ferme uniquement si le clic est sur l'overlay lui-même
-    // et non sur le contenu du menu qui est à l'intérieur.
     if (e.target === mobileMenuOverlayContainer) {
       closeMobileMenu();
     }
   });
 
-  // Clic sur un lien à l'intérieur du menu pour fermer (après un court délai)
   const menuContent = qs(".mobile-menu-content", mobileMenuOverlayContainer);
   if (menuContent) {
     menuContent.addEventListener("click", (e) => {
@@ -353,10 +337,208 @@ function setupMobileMenuInteractions() {
   }
 }
 
+/**
+ * Prépare les données de l'historique en arrière-plan et précharge les images.
+ */
+async function preloadHistoryData() {
+  console.log(
+    "[Action Log] Démarrage du préchargement des données de l'historique..."
+  );
+  try {
+    const allSeries = await fetchAllSeriesData();
+    const historyData = {};
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith("reading-progress-")) {
+        const slug = key.replace("reading-progress-", "");
+        if (!historyData[slug]) historyData[slug] = {};
+        historyData[slug].progress = localStorage.getItem(key);
+      } else if (key.startsWith("series-rating-")) {
+        const slug = key.replace("series-rating-", "");
+        if (!historyData[slug]) historyData[slug] = {};
+        historyData[slug].rating = localStorage.getItem(key);
+      }
+    }
+
+    if (Object.keys(historyData).length === 0) {
+      preloadedHistoryData = [];
+      console.log("[Action Log] Préchargement terminé: Historique vide.");
+      return;
+    }
+
+    const enrichedHistory = Object.entries(historyData)
+      .map(([slug, data]) => {
+        const series = allSeries.find((s) => slugify(s.title) === slug);
+        if (!series) return null;
+
+        const chapterKeys = Object.keys(series.chapters || {}).filter(
+          (k) => series.chapters[k]?.groups?.Big_herooooo
+        );
+        const totalChapters =
+          chapterKeys.length > 0
+            ? Math.max(...chapterKeys.map((k) => parseFloat(k)))
+            : 0;
+
+        return {
+          slug,
+          title: series.title,
+          cover: series.cover_low || series.cover_hq,
+          progress: data.progress ? parseFloat(data.progress) : null,
+          rating: data.rating ? parseFloat(data.rating) : null,
+          totalChapters: totalChapters,
+          os: series.os,
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.title.localeCompare(b.title));
+
+    preloadedHistoryData = enrichedHistory;
+    console.log(
+      `[Action Log] Préchargement: ${enrichedHistory.length} items d'historique trouvés.`
+    );
+
+    // Préchargement des images de couverture
+    console.log(
+      "[Action Log] Démarrage du préchargement des images de couverture de l'historique..."
+    );
+    preloadedHistoryData.forEach((item) => {
+      if (item.cover) {
+        const img = new Image();
+        img.src = item.cover;
+      }
+    });
+  } catch (error) {
+    console.error("Erreur lors du préchargement de l'historique:", error);
+    preloadedHistoryData = []; // Mettre à vide en cas d'erreur pour éviter de réessayer
+  }
+}
+
+function initHistoryPanel() {
+  const toggleBtn = qs("#history-toggle");
+  const panel = qs("#history-panel");
+  const closeBtn = qs("#history-close-btn");
+  const content = qs("#history-content");
+
+  if (!toggleBtn || !panel || !closeBtn || !content) return;
+
+  const showPanel = () => {
+    panel.style.display = "flex";
+    populateHistoryPanel(); // Utilise maintenant les données préchargées
+    setTimeout(() => panel.classList.add("visible"), 10);
+  };
+
+  const hidePanel = () => {
+    panel.classList.remove("visible");
+    setTimeout(() => {
+      panel.style.display = "none";
+      // Pas besoin de vider le contenu, il sera regénéré à la prochaine ouverture
+    }, 200);
+  };
+
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (panel.classList.contains("visible")) {
+      hidePanel();
+    } else {
+      showPanel();
+    }
+  });
+
+  closeBtn.addEventListener("click", hidePanel);
+
+  document.addEventListener("click", (e) => {
+    if (
+      panel.classList.contains("visible") &&
+      !panel.contains(e.target) &&
+      !toggleBtn.contains(e.target)
+    ) {
+      hidePanel();
+    }
+  });
+}
+
+function populateHistoryPanel() {
+  const content = qs("#history-content");
+
+  if (preloadedHistoryData === null) {
+    content.innerHTML = '<p class="history-empty">Chargement...</p>';
+    return;
+  }
+
+  if (preloadedHistoryData.length === 0) {
+    content.innerHTML =
+      '<p class="history-empty">Votre historique est vide.</p>';
+    return;
+  }
+
+  content.innerHTML = preloadedHistoryData.map(renderHistoryCard).join("");
+}
+
+function renderHistoryCard(item) {
+  let detailsHtml = "";
+  let ratingHtml = "";
+
+  if (item.rating) {
+    ratingHtml = `
+      <span class="history-card-rating">
+        <i class="fas fa-star"></i>
+        <span>${item.rating}/10</span>
+      </span>
+    `;
+  }
+
+  if (item.os) {
+    detailsHtml = `
+      <div class="history-progress">
+        <div class="history-progress-bar">
+          <div class="history-progress-bar-inner" style="width: 100%;"></div>
+        </div>
+        <span class="history-progress-text">One-shot (1/1)</span>
+      </div>
+    `;
+  } else if (item.progress && item.totalChapters > 0) {
+    const progressPercent = Math.min(
+      (item.progress / item.totalChapters) * 100,
+      100
+    );
+    detailsHtml = `
+      <div class="history-progress">
+        <div class="history-progress-bar">
+          <div class="history-progress-bar-inner" style="width: ${progressPercent}%;"></div>
+        </div>
+        <span class="history-progress-text">Ch. ${item.progress} / ${item.totalChapters}</span>
+      </div>
+    `;
+  }
+
+  return `
+    <a href="/${item.slug}" class="history-card">
+      <img src="${
+        item.cover || "/img/placeholder_preview.png"
+      }" class="history-card-cover" alt="Couverture de ${
+    item.title
+  }" loading="lazy">
+      <div class="history-card-info">
+        <div class="history-card-title-line">
+            <span class="history-card-title">${item.title}</span>
+            ${ratingHtml}
+        </div>
+        ${detailsHtml}
+      </div>
+    </a>
+  `;
+}
+
 export function initHeader() {
   setupThemeToggle();
   populateDesktopNavigation();
   initAnchorLinks();
+  initHistoryPanel();
+
+  // Déclencher le préchargement après que la page soit entièrement chargée
+  window.addEventListener("load", preloadHistoryData);
+
   document.body.addEventListener("routeChanged", () => {
     console.log(
       "Header a détecté un changement de route. Mise à jour de la navigation..."
@@ -364,5 +546,7 @@ export function initHeader() {
     updateAllNavigation();
   });
 }
+
+// - Fin modification
 
 export { setupMobileMenuInteractions };

@@ -38,7 +38,7 @@ const lightboxCloseBtn = qs(".lightbox-close");
 
 function renderColoCard(colo, author) {
   const authorName = author?.username || "Artiste inconnu";
-  const previewUrl = `https://cdn.imgchest.com/files/${colo.preview}.webp`;
+  const previewUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${colo.id}_preview.webp`;
 
   return `
     <div class="colo-card" data-colo-id="${colo.id}"> 
@@ -61,7 +61,7 @@ function setRandomBannerImage(colos) {
     return;
   }
   const randomColo = colos[Math.floor(Math.random() * colos.length)];
-  const imageUrl = `https://cdn.imgchest.com/files/${randomColo.preview}.webp`;
+  const imageUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${randomColo.id}_preview.webp`;
   const gallerySection = qs(".gallery-section");
   if (gallerySection) {
     gallerySection.style.setProperty(
@@ -216,7 +216,7 @@ function openLightboxForId(coloId) {
     (c) => c.id.toString() === coloId.toString()
   );
   if (selectedColo && lightboxModal && lightboxImg) {
-    lightboxImg.src = `https://cdn.imgchest.com/files/${selectedColo.file}.webp`;
+    lightboxImg.src = `https://file.garden/aDmcfobZthZjQO3m/images/${selectedColo.id}.webp`;
     const author = authorsInfoData[selectedColo.author_id];
     displayLightboxInfo(selectedColo, author);
     lightboxModal.style.display = "flex";

@@ -70,12 +70,71 @@
     </div>
     <div class="chapter-header-actions">
       <div class="search-chapter">
-        <input type="text" placeholder="Rechercher un chapitre..." />
+        <input
+          id="search-chapter-input"
+          type="text"
+          placeholder="Rechercher un chapitre..."
+        />
       </div>
       <div class="sort-chapter">
-        <button class="sort-chapter-btn">
-          <i class="fas fa-sort"></i> Trier
+        <button id="sort-chapter-btn" class="sort-chapter-btn">
+          <i class="fas fa-sort"></i><span class="sort-btn-text"> Trier</span>
         </button>
+      </div>
+      <div class="download-actions">
+        <button
+          id="download-selected-btn"
+          class="sort-chapter-btn"
+          style="display: none"
+        >
+          <i class="fas fa-file-archive"></i
+          ><span class="download-btn-text"> Télécharger</span>
+        </button>
+        <button
+          id="download-options-btn"
+          class="sort-chapter-btn"
+          title="Options de téléchargement"
+          style="display: none"
+        >
+          <i class="fas fa-cog"></i>
+        </button>
+        <div id="download-options-popup" class="download-options-popup">
+          <h5>Format</h5>
+          <div class="option-group" id="format-options">
+            <button class="secondary-toggle-btn" data-value="ZIP">
+              <i class="check-icon"></i> ZIP
+            </button>
+            <button class="secondary-toggle-btn" data-value="CBZ">
+              <i class="check-icon"></i> CBZ
+            </button>
+          </div>
+          <h5>Compression (Qualité)</h5>
+          <button
+            id="compression-btn"
+            class="main-setting-btn"
+            data-setting="compression"
+          ></button>
+          <p id="compression-info" class="compression-info"></p>
+        </div>
+        <button
+          id="toggle-download-mode-btn"
+          class="sort-chapter-btn"
+          title="Activer le mode téléchargement"
+        >
+          <i class="fas fa-download"></i>
+        </button>
+
+        <!-- Le menu déroulant de progression -->
+        <div id="download-progress-popup" class="download-progress-popup">
+          <div class="progress-header">
+            <span id="progress-eta">Calcul en cours...</span>
+            <button id="cancel-download-btn" title="Annuler le téléchargement">
+              <i class="fas fa-times"></i> Annuler
+            </button>
+          </div>
+          <div id="progress-options-summary"></div>
+          <ul id="progress-log-list"></ul>
+        </div>
       </div>
     </div>
   </div>

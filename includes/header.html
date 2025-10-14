@@ -41,11 +41,34 @@
     </div>
     <div id="nav-separator" class="nav-separator">|</div>
     <button
+      id="history-toggle"
+      class="theme-toggle"
+      aria-label="Afficher l'historique"
+    >
+      <i class="fas fa-history"></i>
+    </button>
+    <button
       id="theme-toggle"
       class="theme-toggle"
       aria-label="Changer de thème"
     >
       <i class="fas fa-moon"></i>
     </button>
+  </div>
+</div>
+
+<div id="history-panel" class="history-panel" style="display: none">
+  <div class="history-header">
+    <h3>Historique</h3>
+    <button
+      id="history-close-btn"
+      class="history-close-btn"
+      aria-label="Fermer"
+    >
+      &times;
+    </button>
+  </div>
+  <div id="history-content" class="history-content">
+    <p class="history-empty">Chargement...</p>
   </div>
 </div>

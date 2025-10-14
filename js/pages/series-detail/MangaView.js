@@ -1,6 +1,6 @@
 // --- File: js/pages/series-detail/MangaView.js ---
 
-import { qs } from "../../utils/domUtils.js";
+import { qs, qsa, slugify } from "../../utils/domUtils.js";
 import { timeAgo, parseDateToTimestamp } from "../../utils/dateUtils.js";
 import { initMainScrollObserver } from "../../components/observer.js";
 import {
@@ -19,6 +19,11 @@ import {
 import { initAccordion } from "./shared/accordion.js";
 import { renderItemNumber } from "./shared/itemNumberRenderer.js";
 import { initCoverGallery } from "./shared/coverGallery.js";
+import { initDownloadManager } from "./shared/downloadManager.js";
+
+let abortController = null; // Pour gérer l'annulation
+let isDownloadMode = false;
+let selectedChaptersForDownload = new Set();
 
 let currentSeriesData = null;
 let currentSeriesStats = null;
@@ -35,52 +40,122 @@ export async function render(mainContainer, seriesData) {
   currentSeriesData = seriesData;
   viewContainer = mainContainer;
 
-  // Déconnecte l'ancien observer s'il existe pour éviter les doublons
+  // Déconnecte l'ancien observer de redimensionnement s'il en existe un
   if (resizeObserver) {
     resizeObserver.disconnect();
   }
 
+  // 1. Lancer le chargement des statistiques en arrière-plan
   const statsPromise = fetchStats(currentSeriesData.slug);
+
+  // 2. Rendre les informations statiques de la série et les boutons d'action immédiatement
   renderSeriesInfo(viewContainer, currentSeriesData, {}, "manga");
   renderActionButtons(viewContainer, currentSeriesData, "manga");
 
+  // 3. Attendre que les statistiques soient récupérées
   currentSeriesStats = await statsPromise;
 
+  // 4. Mettre à jour l'interface avec les statistiques (notes, etc.)
   renderSeriesInfo(
     viewContainer,
     currentSeriesData,
     currentSeriesStats,
     "manga"
   );
-  initListControls(viewContainer, handleFilterOrSortChange);
 
+  // 5. Initialiser tous les composants interactifs de la page
+  initListControls(viewContainer, handleFilterOrSortChange);
   initAccordion({
     buttonSelector: ".series-see-more-btn",
     contentSelector: ".series-more-infos",
     context: viewContainer,
   });
 
+  // 6. Afficher la liste des chapitres
   displayChapterList({
     sort: { type: "number", order: "desc" },
     search: "",
   });
 
-  // change quelques textes si one-shot
+  // 7. Initialiser le gestionnaire de téléchargement (qui gère ses propres scripts)
+  initDownloadManager(viewContainer, currentSeriesData);
+
+  // 8. Ajuster le texte pour les One-Shots si nécessaire
   if (
     seriesData.os &&
     Object.keys(seriesData.chapters).length === 1 &&
     seriesData.chapters.hasOwnProperty("0")
   ) {
-    // si one-shot et un seul chapitre
-    qs("[data-tab='chapters']").textContent = "One-shot";
+    const tab = qs("[data-tab='chapters']");
+    if (tab) tab.textContent = "One-shot";
   } else if (seriesData.os) {
-    // si collection/compilation de one-shots (comme ceux de takaki tsuyoshi)
-    qs("[data-tab='chapters']").textContent = "One-shots";
+    const tab = qs("[data-tab='chapters']");
+    if (tab) tab.textContent = "One-shots";
   }
 
+  // 9. Initialiser les fonctionnalités avancées
   setupResponsiveLayout(viewContainer);
   preloadAllImgChestViewsOnce();
   initCoverGallery(viewContainer, currentSeriesData);
+}
+
+function toggleDownloadMode() {
+  isDownloadMode = !isDownloadMode;
+  const container = qs(".chapters-list-container", viewContainer);
+  const toggleBtn = qs("#toggle-download-mode-btn", viewContainer);
+  const downloadBtn = qs("#download-selected-btn", viewContainer);
+  const infoMessage = qs("#download-mode-info", viewContainer);
+
+  // On utilise les ID pour cibler précisément les éléments
+  const sortBtn = qs("#sort-chapter-btn", viewContainer);
+  const searchInput = qs("#search-chapter-input", viewContainer);
+
+  if (container) container.classList.toggle("download-mode", isDownloadMode);
+  if (infoMessage)
+    infoMessage.style.display = isDownloadMode ? "block" : "none";
+  if (downloadBtn)
+    downloadBtn.style.display = isDownloadMode ? "inline-flex" : "none";
+
+  if (toggleBtn) {
+    toggleBtn.classList.toggle("active", isDownloadMode);
+    toggleBtn.title = isDownloadMode
+      ? "Quitter le mode téléchargement"
+      : "Activer le mode téléchargement";
+  }
+
+  if (isDownloadMode) {
+    // Cacher les contrôles de tri et de recherche
+    if (sortBtn) sortBtn.style.display = "none";
+    if (searchInput) searchInput.style.display = "none";
+  } else {
+    // Afficher les contrôles de tri et de recherche
+    if (sortBtn) sortBtn.style.display = "flex";
+    if (searchInput) searchInput.style.display = "inline-block";
+
+    // Nettoyer la sélection en quittant le mode
+    selectedChaptersForDownload.clear();
+    if (container) {
+      qsa(".chapter-card-list-item.selected-for-download", container).forEach(
+        (card) => {
+          card.classList.remove("selected-for-download");
+        }
+      );
+    }
+  }
+  updateDownloadButtonState();
+}
+
+function updateDownloadButtonState() {
+  const downloadBtn = qs("#download-selected-btn", viewContainer);
+  const count = selectedChaptersForDownload.size;
+  downloadBtn.disabled = count === 0;
+
+  const textSpan = qs(".download-btn-text", downloadBtn);
+  if (count > 0) {
+    textSpan.textContent = ` Télécharger (${count})`;
+  } else {
+    textSpan.textContent = ` Télécharger`;
+  }
 }
 
 /**
@@ -234,20 +309,19 @@ function renderChapterItem(chapterData) {
  * @param {HTMLElement} container - Le conteneur de la liste.
  */
 function attachChapterItemEventListeners(container) {
-  container
-    .querySelectorAll(".chapter-card-list-likes")
-    .forEach((likeButton) => {
-      likeButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+  container.addEventListener("click", (e) => {
+    const card = e.target.closest(".chapter-card-list-item");
+    if (!card) return;
 
-        const card = likeButton.closest(".chapter-card-list-item");
-        const chapterId = card.dataset.chapterId;
-        const seriesSlug = currentSeriesData.slug;
-
-        handleLikeToggle(seriesSlug, chapterId, likeButton);
-      });
-    });
+    const likeButton = e.target.closest(".chapter-card-list-likes");
+    if (likeButton) {
+      e.preventDefault();
+      e.stopPropagation();
+      const chapterId = card.dataset.chapterId;
+      const seriesSlug = currentSeriesData.slug;
+      handleLikeToggle(seriesSlug, chapterId, likeButton);
+    }
+  });
 }
 
 /**
