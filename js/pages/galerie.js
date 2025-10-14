@@ -38,7 +38,7 @@ const lightboxCloseBtn = qs(".lightbox-close");
 
 function renderColoCard(colo, author) {
   const authorName = author?.username || "Artiste inconnu";
-  const previewUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${colo.id}_preview.webp`;
+  const previewUrl = `https://cdn.imgchest.com/files/${colo.preview}.webp`;
 
   return `
     <div class="colo-card" data-colo-id="${colo.id}"> 
@@ -47,7 +47,9 @@ function renderColoCard(colo, author) {
            alt="Colorisation Chap. ${colo.chapitre || "N/A"} par ${authorName}" 
            data-src="${previewUrl}"> 
       <div class="colo-card-overlay">
-        <p>Chap. ${colo.chapitre || "N/A"}${colo.page ? `, Page ${colo.page}` : ""}</p>
+        <p>Chap. ${colo.chapitre || "N/A"}${
+    colo.page ? `, Page ${colo.page}` : ""
+  }</p>
         <p>Par ${authorName}</p>
       </div>
     </div>`;
@@ -61,7 +63,7 @@ function setRandomBannerImage(colos) {
     return;
   }
   const randomColo = colos[Math.floor(Math.random() * colos.length)];
-  const imageUrl = `https://file.garden/aDmcfobZthZjQO3m/previews/${randomColo.id}_preview.webp`;
+  const imageUrl = `https://cdn.imgchest.com/files/${randomColo.preview}.webp`;
   const gallerySection = qs(".gallery-section");
   if (gallerySection) {
     gallerySection.style.setProperty(
@@ -185,8 +187,8 @@ function displayLightboxInfo(colo, author) {
           <div class="artist-details">
             <h3 class="artist-name">${author.username}</h3>
             <p class="artist-colo-count">${occurrenceCount} colo${
-              occurrenceCount > 1 ? "s" : ""
-            } sur le site</p>
+      occurrenceCount > 1 ? "s" : ""
+    } sur le site</p>
           </div>
         </div>
         ${
@@ -216,7 +218,7 @@ function openLightboxForId(coloId) {
     (c) => c.id.toString() === coloId.toString()
   );
   if (selectedColo && lightboxModal && lightboxImg) {
-    lightboxImg.src = `https://file.garden/aDmcfobZthZjQO3m/images/${selectedColo.id}.webp`;
+    lightboxImg.src = `https://cdn.imgchest.com/files/${selectedColo.file}.webp`;
     const author = authorsInfoData[selectedColo.author_id];
     displayLightboxInfo(selectedColo, author);
     lightboxModal.style.display = "flex";
@@ -275,8 +277,8 @@ function populateCustomArtistFilter() {
           <img src="${
             author.profile_img || "/img/profil.png"
           }" class="artist-pfp" alt="Profil de ${
-            author.username
-          }" loading="lazy">
+        author.username
+      }" loading="lazy">
           <span class="artist-name">${author.username}</span>
           <span class="artist-count">${count}</span>
         </label>
