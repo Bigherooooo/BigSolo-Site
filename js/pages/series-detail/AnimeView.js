@@ -147,9 +147,9 @@ export async function render(mainContainer, seriesData) {
 
   displayEpisodeList({
     search: "",
+    sort: { type: "number", order: "desc" },
   });
 
-  // Appel de la fonction de réorganisation responsive
   setupResponsiveLayout(viewContainer);
 }
 
@@ -157,7 +157,7 @@ function handleFilterOrSortChange(controls) {
   displayEpisodeList(controls);
 }
 
-function displayEpisodeList({ search }) {
+function displayEpisodeList({ search, sort }) {
   const container = qs(".chapters-list-container", viewContainer);
   if (!container) {
     console.error("[AnimeView] Conteneur de liste d'épisodes introuvable.");
@@ -169,20 +169,41 @@ function displayEpisodeList({ search }) {
   );
 
   if (search.trim()) {
-    const searchTerm = search.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const searchTerm = search
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
     episodes = episodes.filter(
       (ep) =>
         String(ep.indice_ep).toLowerCase().includes(searchTerm) ||
-        (ep.title_ep && ep.title_ep.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(searchTerm))
+        (ep.title_ep &&
+          ep.title_ep
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(searchTerm))
     );
   }
 
-  // Tri par saison (décroissant) puis par épisode (décroissant)
+  // NOUVELLE LOGIQUE DE TRI DYNAMIQUE
   episodes.sort((a, b) => {
+    // Le tri primaire par saison (décroissant) est conservé pour la cohérence
     if (b.saison_ep !== a.saison_ep) {
       return b.saison_ep - a.saison_ep;
     }
-    return b.indice_ep - a.indice_ep;
+
+    // Le tri secondaire dépend du choix de l'utilisateur
+    if (sort.type === "date") {
+      const dateA = parseDateToTimestamp(a.date_ep);
+      const dateB = parseDateToTimestamp(b.date_ep);
+      return sort.order === "desc" ? dateB - dateA : dateA - dateB;
+    } else {
+      // 'number'
+      const numA = a.indice_ep;
+      const numB = b.indice_ep;
+      return sort.order === "desc" ? numB - numA : numA - numB;
+    }
   });
 
   if (episodes.length === 0) {
@@ -262,7 +283,6 @@ function attachEpisodeItemEventListeners(container) {
         const absoluteEpisodeIndex = card.dataset.episodeId;
         const seriesSlug = currentSeriesData.slug;
 
-        // On doit retrouver l'épisode original pour avoir son ID de stats
         const allEnrichedEpisodes = enrichEpisodesWithAbsoluteIndex(
           currentSeriesData.episodes || []
         );
@@ -292,7 +312,7 @@ function handleLikeToggle(seriesSlug, episode, likeButton) {
 
   queueAction(seriesSlug, {
     type: !isLiked ? "like" : "unlike",
-    chapter: episodeId, // Utilise l'ID de stats correct
+    chapter: episodeId,
   });
 
   console.log(

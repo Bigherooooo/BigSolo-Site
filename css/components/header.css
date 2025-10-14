@@ -32,7 +32,7 @@ header#main-header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 500;
+  z-index: 2000;
   min-height: 60px;
   transition: transform 0.3s ease-in-out; /* Assure que la transition est définie */
 }
@@ -329,7 +329,7 @@ header#main-header.is-hidden {
 }
 
 .history-content {
-  padding: 0.5rem;
+  padding: 0.4rem;
   overflow-y: auto;
   max-height: 70vh;
 }
@@ -432,5 +432,18 @@ header#main-header.is-hidden {
 @media (max-width: 768px) {
   .history-panel {
     right: 0.5rem;
+  }
+
+  .history-card {
+    padding: 0.4rem;
+  }
+
+  .history-card-cover {
+    width: 50px;
+    height: 75px;
+  }
+
+  .history-header {
+    padding: 0.3rem 0.8rem;
   }
 }

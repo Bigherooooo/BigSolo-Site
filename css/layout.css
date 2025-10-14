@@ -7,7 +7,7 @@ header#main-header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 500;
+  z-index: 2000;
   min-height: 60px;
 }
 

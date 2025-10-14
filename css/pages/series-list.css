@@ -1103,6 +1103,11 @@ a.chapter-card-list-item:focus {
   color: var(--clr-text-sub);
   border-bottom: 1px solid rgba(var(--clr-text-rgb), 0.1);
 }
+
+.progress-log-entry:last-child {
+  border-bottom: unset;
+}
+
 .progress-log-entry .log-status {
   font-weight: 600;
   width: 100px;
@@ -1489,8 +1494,13 @@ a.chapter-card-list-item:focus {
   }
   .chapters-list-header {
     gap: 0.7rem;
+    margin-bottom: 1rem;
   }
   .chapter-header-actions {
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+  .download-actions {
     gap: 0.75rem;
   }
   .search-chapter {

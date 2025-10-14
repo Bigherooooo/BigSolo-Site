@@ -3,8 +3,8 @@
   "description": "Une comédie romantique sur quatre sœurs qui vivent leur premier amour en même temps. Alors que l'aînée a le béguin pour le garçon de son travail à temps partiel, les trois autres font face à leurs premières expériences romantiques avec les garçons de leurs classes et clubs scolaires. Tous les soirs, les quatre sœurs ont des discussions entre filles, à cœur ouvert, sur leurs premiers amours respectifs",
   "artist": "Ogata Akane",
   "author": "Ogata Akane",
-  "cover_hq": "https://cdn.imgchest.com/files/f879f3af2340.png",
-  "cover_low": "https://cdn.imgchest.com/files/5acf33ce1176.jpg",
+  "cover_hq": "https://cdn.imgchest.com/files/fe2eb5371538.png",
+  "cover_low": "https://cdn.imgchest.com/files/c7347af06d6c.jpg",
   "manga_type": "Shonen",
   "magazine": "Sunday Webry",
   "release_year": 2024,
@@ -13,6 +13,11 @@
   "alternative_titles": ["The Wakaba Home's Blue Loves"],
   "release_status": "En cours",
   "covers_gallery": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/fe2eb5371538.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/c7347af06d6c.jpg",
+      "volume": "3"
+    },
     {
       "url_hq": "https://cdn.imgchest.com/files/f879f3af2340.png",
       "url_lq": "https://cdn.imgchest.com/files/5acf33ce1176.jpg",
@@ -87,6 +92,14 @@
       "last_updated": "1759590000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/9rydq52dl4k"
+      }
+    },
+    "9": {
+      "title": "Le raccourci",
+      "volume": "2",
+      "last_updated": "1759766400",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/na7karvg348"
       }
     }
   }
