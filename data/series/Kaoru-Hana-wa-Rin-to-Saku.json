@@ -1563,7 +1563,7 @@
     },
     "150": {
       "title": "Petite amie",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1747267200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/md7own6b24p"
@@ -1571,7 +1571,7 @@
     },
     "151": {
       "title": "Vers les Examens Blancs Nationaux",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1747946040",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gelxjyr"
@@ -1579,7 +1579,7 @@
     },
     "152": {
       "title": "Évaluation",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1748516400",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwgxrjyd"
@@ -1587,7 +1587,7 @@
     },
     "153": {
       "title": "Le Mur à Franchir",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1749834600",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/n87wxgapzyx"
@@ -1595,7 +1595,7 @@
     },
     "154": {
       "title": "Kyoko et Keichiro",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1750456200",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/n87wxdqmgyx"
@@ -1603,7 +1603,7 @@
     },
     "155": {
       "title": "Keichiro et Kyoko",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1751229000",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/pg7356keg4r"
@@ -1611,7 +1611,7 @@
     },
     "156": {
       "title": "Une Douceur et un Parfum Sucré",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1752321600",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/o24a8lneg7l"
@@ -1715,7 +1715,7 @@
     },
     "2.5": {
       "title": "La Cliente Régulière",
-      "volume": "",
+      "volume": "20",
       "last_updated": "1751410800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/bp4556b2x45"
@@ -2017,6 +2017,14 @@
       "last_updated": "1709164800",
       "groups": {
         "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9ozyd"
+      }
+    },
+    "156.5": {
+      "title": "Extra volume 20",
+      "volume": "20",
+      "last_updated": "1760436000",
+      "groups": {
+        "Big_herooooo": "/proxy/api/imgchest/chapter/md7oaede9yp"
       }
     }
   }
