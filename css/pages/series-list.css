@@ -757,6 +757,7 @@ a.chapter-card-list-item:focus {
   }
   .chapter-card-list-item.licensed-chapter:hover {
     background: var(--clr-bg-card);
+    color: inherit;
   }
   .chapter-card-list-item.licensed-chapter:hover .chapter-card-list-views,
   .chapter-card-list-item.licensed-chapter:hover .chapter-card-list-comments,

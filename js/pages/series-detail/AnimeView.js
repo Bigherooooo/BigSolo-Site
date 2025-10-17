@@ -28,11 +28,11 @@ function enrichEpisodesWithAbsoluteIndex(episodes) {
 
   const episodesWithSeason = episodes.map((ep) => ({
     ...ep,
-    saison_ep: ep.saison_ep || 1,
+    season: ep.season || 1,
   }));
 
   const episodesBySeason = episodesWithSeason.reduce((acc, ep) => {
-    const season = ep.saison_ep;
+    const season = ep.season;
     if (!acc[season]) acc[season] = [];
     acc[season].push(ep);
     return acc;
@@ -46,7 +46,7 @@ function enrichEpisodesWithAbsoluteIndex(episodes) {
 
   sortedSeasons.forEach((seasonNum) => {
     const seasonEpisodes = episodesBySeason[seasonNum].sort(
-      (a, b) => a.indice_ep - b.indice_ep
+      (a, b) => a.number - b.number
     );
     seasonEpisodes.forEach((ep) => {
       enrichedEpisodes.push({ ...ep, absolute_index: absoluteIndexCounter });
@@ -176,9 +176,9 @@ function displayEpisodeList({ search, sort }) {
       .replace(/[\u0300-\u036f]/g, "");
     episodes = episodes.filter(
       (ep) =>
-        String(ep.indice_ep).toLowerCase().includes(searchTerm) ||
-        (ep.title_ep &&
-          ep.title_ep
+        String(ep.number).toLowerCase().includes(searchTerm) ||
+        (ep.title &&
+          ep.title
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
@@ -189,19 +189,19 @@ function displayEpisodeList({ search, sort }) {
   // NOUVELLE LOGIQUE DE TRI DYNAMIQUE
   episodes.sort((a, b) => {
     // Le tri primaire par saison (décroissant) est conservé pour la cohérence
-    if (b.saison_ep !== a.saison_ep) {
-      return b.saison_ep - a.saison_ep;
+    if (b.season !== a.season) {
+      return b.season - a.season;
     }
 
     // Le tri secondaire dépend du choix de l'utilisateur
     if (sort.type === "date") {
-      const dateA = parseDateToTimestamp(a.date_ep);
-      const dateB = parseDateToTimestamp(b.date_ep);
+      const dateA = parseDateToTimestamp(a.timestamp);
+      const dateB = parseDateToTimestamp(b.timestamp);
       return sort.order === "desc" ? dateB - dateA : dateA - dateB;
     } else {
       // 'number'
-      const numA = a.indice_ep;
-      const numB = b.indice_ep;
+      const numA = a.number;
+      const numB = b.number;
       return sort.order === "desc" ? numB - numA : numA - numB;
     }
   });
@@ -218,8 +218,8 @@ function displayEpisodeList({ search, sort }) {
 
 function renderEpisodeItem(episodeData) {
   const seriesSlug = currentSeriesData.slug;
-  const episodeId = `ep-S${episodeData.saison_ep || 1}-${
-    episodeData.indice_ep
+  const episodeId = `ep-S${episodeData.season || 1}-${
+    episodeData.number
   }`;
   const interactionKey = `interactions_${seriesSlug}_${episodeId}`;
   const localState = getLocalInteractionState(interactionKey);
@@ -232,13 +232,13 @@ function renderEpisodeItem(episodeData) {
   }
 
   let episodeNumberHtml;
-  if (episodeData.saison_ep && !isNaN(episodeData.saison_ep)) {
+  if (episodeData.season && !isNaN(episodeData.season)) {
     episodeNumberHtml = `
-      <span class="volume-prefix">Saison ${episodeData.saison_ep}</span>
-      <span class="chapter-prefix">Épisode ${episodeData.indice_ep}</span>
+      <span class="volume-prefix">Saison ${episodeData.season}</span>
+      <span class="chapter-prefix">Épisode ${episodeData.number}</span>
     `;
   } else {
-    episodeNumberHtml = `Épisode ${episodeData.indice_ep}`;
+    episodeNumberHtml = `Épisode ${episodeData.number}`;
   }
 
   return `
@@ -255,7 +255,7 @@ function renderEpisodeItem(episodeData) {
         <div class="chapter-card-list-bottom">
             <div class="chapter-card-list-left">
             <span class="chapter-card-list-title">${
-              episodeData.title_ep || ""
+              episodeData.title || ""
             }</span>
             </div>
             <div class="chapter-card-list-right">
@@ -297,7 +297,7 @@ function attachEpisodeItemEventListeners(container) {
 }
 
 function handleLikeToggle(seriesSlug, episode, likeButton) {
-  const episodeId = `ep-S${episode.saison_ep || 1}-${episode.indice_ep}`;
+  const episodeId = `ep-S${episode.season || 1}-${episode.number}`;
   const interactionKey = `interactions_${seriesSlug}_${episodeId}`;
   const localState = getLocalInteractionState(interactionKey);
   const isLiked = !!localState.liked;
@@ -318,6 +318,6 @@ function handleLikeToggle(seriesSlug, episode, likeButton) {
   console.log(
     `[AnimeView] Action de like mise en file: ${
       !isLiked ? "like" : "unlike"
-    } pour ép. ${episode.indice_ep}`
+    } pour ép. ${episode.number}`
   );
 }

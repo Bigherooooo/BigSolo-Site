@@ -3,16 +3,24 @@
   "description": "Deux lycées que tout oppose se font face : Chidori, le repaire des garçons cancres, et Kikyô, l'établissement prestigieux des filles d'élite. Rintarô, élève de Chidori, sympathise avec Kaoruko, une cliente de la pâtisserie familiale. Alors qu'un lien se tisse entre eux, il découvre qu'elle étudie à Kikyô... et qu'ils sont censés se détester. Leur relation naissante pourra-t-elle survivre à la haine qui oppose leurs écoles ?",
   "artist": "Saka Mikami",
   "author": "Saka Mikami",
-  "cover_hq": "https://cdn.imgchest.com/files/bf67ad6d167a.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/817f3b401787.jpg",
-  "manga_type": "Shonen",
+  "demographic": "Shonen",
   "magazine": "Pocket Magazine",
   "release_year": 2021,
-  "tags": ["Comédie", "Drame", "Ecole", "Romance", "Tranche de vie"],
-  "jp_title": "薫る花は凛と咲く",
-  "alternative_titles": ["The Fragrant Flower Blooms with Dignity", "Bloom"],
-  "release_status": "En cours",
-  "covers_gallery": [
+  "tags": [
+    "Comédie",
+    "Drame",
+    "Ecole",
+    "Romance",
+    "Tranche de vie"
+  ],
+  "ja_title": "薫る花は凛と咲く",
+  "alternative_titles": [
+    "The Fragrant Flower Blooms with Dignity",
+    "Bloom"
+  ],
+  "teams": ["Big_herooooo"],
+  "status": "En cours",
+  "covers": [
     {
       "url_hq": "https://cdn.imgchest.com/files/bf67ad6d167a.jpg",
       "url_lq": "https://cdn.imgchest.com/files/817f3b401787.jpg",
@@ -116,1924 +124,2815 @@
   ],
   "episodes": [
     {
-      "type": "sibnet",
-      "id": "6014866",
-      "saison_ep": 1,
-      "indice_ep": 1,
-      "date_ep": "1720137600",
-      "title_ep": "Rintarô et Kaoruko"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014866"
+      },
+      "season": 1,
+      "number": 1,
+      "timestamp": "1720137600",
+      "title": "Rintarô et Kaoruko"
     },
     {
-      "type": "sibnet",
-      "id": "6014867",
-      "saison_ep": 1,
-      "indice_ep": 2,
-      "date_ep": "1752429600",
-      "title_ep": "Chidori et Kikyô"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014867"
+      },
+      "season": 1,
+      "number": 2,
+      "timestamp": "1752429600",
+      "title": "Chidori et Kikyô"
     },
     {
-      "type": "sibnet",
-      "id": "6014868",
-      "saison_ep": 1,
-      "indice_ep": 3,
-      "date_ep": "1753034400",
-      "title_ep": "Une personne bienveillante"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014868"
+      },
+      "season": 1,
+      "number": 3,
+      "timestamp": "1753034400",
+      "title": "Une personne bienveillante"
     },
     {
-      "type": "sibnet",
-      "id": "6014869",
-      "saison_ep": 1,
-      "indice_ep": 4,
-      "date_ep": "1753650000",
-      "title_ep": "La chaleur d'un cœur"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014869"
+      },
+      "season": 1,
+      "number": 4,
+      "timestamp": "1753650000",
+      "title": "La chaleur d'un cœur"
     },
     {
-      "type": "sibnet",
-      "id": "6014870",
-      "saison_ep": 1,
-      "indice_ep": 5,
-      "date_ep": "1754244000",
-      "title_ep": "Un parfum de commencement"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014870"
+      },
+      "season": 1,
+      "number": 5,
+      "timestamp": "1754244000",
+      "title": "Un parfum de commencement"
     },
     {
-      "type": "sibnet",
-      "id": "6014871",
-      "saison_ep": 1,
-      "indice_ep": 6,
-      "date_ep": "1755104400",
-      "title_ep": "Je me déteste / Je t'adore"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014871"
+      },
+      "season": 1,
+      "number": 6,
+      "timestamp": "1755104400",
+      "title": "Je me déteste / Je t'adore"
     },
     {
-      "type": "sibnet",
-      "id": "6014872",
-      "saison_ep": 1,
-      "indice_ep": 7,
-      "date_ep": "1755464400",
-      "title_ep": "Un garçon classe"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014872"
+      },
+      "season": 1,
+      "number": 7,
+      "timestamp": "1755464400",
+      "title": "Un garçon classe"
     },
     {
-      "type": "sibnet",
-      "id": "6014873",
-      "saison_ep": 1,
-      "indice_ep": 8,
-      "date_ep": "1756065600",
-      "title_ep": "La nature des sentiments"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014873"
+      },
+      "season": 1,
+      "number": 8,
+      "timestamp": "1756065600",
+      "title": "La nature des sentiments"
     },
     {
-      "type": "sibnet",
-      "id": "6014874",
-      "saison_ep": 1,
-      "indice_ep": 9,
-      "date_ep": "1756677600",
-      "title_ep": "Boucles d'oreilles et cheveux décolorés"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014874"
+      },
+      "season": 1,
+      "number": 9,
+      "timestamp": "1756677600",
+      "title": "Boucles d'oreilles et cheveux décolorés"
     },
     {
-      "type": "sibnet",
-      "id": "6014875",
-      "saison_ep": 1,
-      "indice_ep": 10,
-      "date_ep": "1757275200",
-      "title_ep": "Tempête d'été"
+      "sources": {
+        "service": "sibnet",
+        "id": "6014875"
+      },
+      "season": 1,
+      "number": 10,
+      "timestamp": "1757275200",
+      "title": "Tempête d'été"
     },
     {
-      "type": "sibnet",
-      "id": "6016627",
-      "saison_ep": 1,
-      "indice_ep": 11,
-      "date_ep": "1758317400",
-      "title_ep": "Une bouchée de chaleur"
+      "sources": {
+        "service": "sibnet",
+        "id": "6016627"
+      },
+      "season": 1,
+      "number": 11,
+      "timestamp": "1758317400",
+      "title": "Une bouchée de chaleur"
     },
     {
-      "type": "sibnet",
-      "id": "6021425",
-      "saison_ep": 1,
-      "indice_ep": 12,
-      "date_ep": "1758925800",
-      "title_ep": "Questionnements en bord de mer"
+      "sources": {
+        "service": "sibnet",
+        "id": "6021425"
+      },
+      "season": 1,
+      "number": 12,
+      "timestamp": "1758925800",
+      "title": "Questionnements en bord de mer"
     },
     {
-      "type": "sibnet",
-      "id": "6022642",
-      "saison_ep": 1,
-      "indice_ep": 13,
-      "date_ep": "1759084200",
-      "title_ep": "Kaoruko et Rintarô"
+      "sources": {
+        "service": "sibnet",
+        "id": "6022642"
+      },
+      "season": 1,
+      "number": 13,
+      "timestamp": "1759084200",
+      "title": "Kaoruko et Rintarô"
     }
   ],
   "anime": [
     {
-      "cover_an": "https://i.imgur.com/q5dLTZD.jpeg",
-      "type_an": "TV",
-      "status_an": "Fini",
-      "studios_an": ["CloverWorks"],
-      "date_start_an": "2025",
-      "op_an": [
-        {
-          "title_op_fr_an": "Ton regard est lumière",
-          "title_op_jp_an": "まなざしは光",
-          "author_op_an": "Tatsuya Kitani",
-          "youtube_url_op_an": "https://www.youtube.com/watch?v=8WLNNu78mUk"
-        }
+      "cover": "https://i.imgur.com/q5dLTZD.jpeg",
+      "type": "TV",
+      "status": "Fini",
+      "studios": [
+        "CloverWorks"
       ],
-      "ed_an": [
-        {
-          "title_op_fr_an": "Un grand jour",
-          "title_op_jp_an": "ハレの日に]",
-          "author_op_an": "Ushio Reira",
-          "youtube_url_op_an": "https://www.youtube.com/watch?v=W4fND8qaTtE"
-        }
+      "date_start": "2025",
+      "musics": {
+        "opening": [
+          {
+            "ja_title": "まなざしは光",
+            "title": "Ton regard est lumière",
+            "artist": "Tatsuya Kitani",
+            "youtube": "https://www.youtube.com/watch?v=8WLNNu78mUk"
+          }
+        ],
+        "ending": [
+          {
+            "ja_title": "ハレの日に]",
+            "title": "Un grand jour",
+            "artist": "Ushio Reira",
+            "youtube": "https://www.youtube.com/watch?v=W4fND8qaTtE"
+          }
+        ]
+      },
+      "tags": [
+        "Comédie",
+        "Drame",
+        "Ecole",
+        "Romance",
+        "Tranche de vie"
       ],
-      "tags": ["Comédie", "Drame", "Ecole", "Romance", "Tranche de vie"],
       "description": "Deux lycées que tout oppose se font face : Chidori, le repaire des garçons cancres, et Kikyô, l'établissement prestigieux des filles d'élite. Rintarô, élève de Chidori, sympathise avec Kaoruko, une cliente de la pâtisserie familiale. Alors qu'un lien se tisse entre eux, il découvre qu'elle étudie à Kikyô... et qu'ils sont censés se détester. Leur relation naissante pourra-t-elle survivre à la haine qui oppose leurs écoles ?"
     }
   ],
   "chapters": {
-    "1": {
-      "title": "Rintaro et Kaoruko",
-      "volume": "1",
-      "last_updated": "1726704000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "2": {
-      "title": "Chidori et Kikyo",
-      "volume": "1",
-      "last_updated": "1653868800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "3": {
-      "title": "Préparation des examens",
-      "volume": "1",
-      "last_updated": "1654473600",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "4": {
-      "title": "Les amis de Kaoruko",
-      "volume": "1",
-      "last_updated": "1655078400",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "5": {
-      "title": "Camarades d'étude",
-      "volume": "1",
-      "last_updated": "1655683200",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "6": {
-      "title": "Subaru Hoshina",
-      "volume": "2",
-      "last_updated": "1656288000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "7": {
-      "title": "La chaleur d'un cœur",
-      "volume": "2",
-      "last_updated": "1656892800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "8": {
-      "title": "Une amitié à quatre",
-      "volume": "2",
-      "last_updated": "1656892800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "9": {
-      "title": "Grâce à Waguri",
-      "volume": "2",
-      "last_updated": "1657497600",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "10": {
-      "title": "Haine",
-      "volume": "2",
-      "last_updated": "1658102400",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "11": {
-      "title": "Amour",
-      "volume": "2",
-      "last_updated": "1658102400",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "12": {
-      "title": "Rintaro et Subaru",
-      "volume": "2",
-      "last_updated": "1658707200",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "13": {
-      "title": "Maman",
-      "volume": "2",
-      "last_updated": "1659398400",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "14": {
-      "title": "Mon endroit préféré",
-      "volume": "3",
-      "last_updated": "1659916800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "15": {
-      "title": "Un type cool",
-      "volume": "3",
-      "last_updated": "1661126400",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "16": {
-      "title": "Journée sportive",
-      "volume": "3",
-      "last_updated": "1661731200",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "17": {
-      "title": "Dégel hivernal",
-      "volume": "3",
-      "last_updated": "1662336000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "18": {
-      "title": "L'aquarium",
-      "volume": "3",
-      "last_updated": "1662336000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "19": {
-      "title": "Ce que je ressens vraiment",
-      "volume": "3",
-      "last_updated": "1662336000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "20": {
-      "title": "Et les nuages se séparent",
-      "volume": "3",
-      "last_updated": "1662336000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "21": {
-      "title": "Cheveux blonds et piercings",
-      "volume": "3",
-      "last_updated": "1662940800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "22": {
-      "title": "L'amour d'une mère",
-      "volume": "4",
-      "last_updated": "1662940800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "23": {
-      "title": "Un groupe d'étude à six",
-      "volume": "4",
-      "last_updated": "1662940800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "24": {
-      "title": "De l'autre coté du rideau",
-      "volume": "4",
-      "last_updated": "1673481600",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "25": {
-      "title": "Soucis de juillet",
-      "volume": "4",
-      "last_updated": "1674345600",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "26": {
-      "title": "Yorita et Rintaro",
-      "volume": "4",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "27": {
-      "title": "Discussion de groupe",
-      "volume": "4",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "28": {
-      "title": "L'anniversaire de Waguri",
-      "volume": "4",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "29": {
-      "title": "22 Juillet",
-      "volume": "4",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "30": {
-      "title": "L'anniversaire",
-      "volume": "5",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnz5jyr"
-      }
-    },
-    "31": {
-      "title": "Les sentiments contenus dans le gâteau",
-      "volume": "5",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wd3wxg4x"
-      }
-    },
-    "32": {
-      "title": "Comment passer ses vacances d'été",
-      "volume": "5",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9gqyd"
-      }
-    },
-    "33": {
-      "title": "Troubles à la plage",
-      "volume": "5",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zeza8d4j"
-      }
-    },
-    "34": {
-      "title": "Je veux être ici",
-      "volume": "5",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgo5j4j"
-      }
-    },
-    "35": {
-      "title": "Étincelles",
-      "volume": "5",
-      "last_updated": "1682726400",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp45pla5qy5"
-      }
-    },
-    "36": {
-      "title": "Je t'aime",
-      "volume": "5",
-      "last_updated": "1682812800",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24aqrz827l"
-      }
-    },
-    "37": {
-      "title": "Festival d'été",
-      "volume": "5",
-      "last_updated": "1682812800",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9249wropmyn"
-      }
-    },
-    "38": {
-      "title": "Les sentiments de Rintaro",
-      "volume": "6",
-      "last_updated": "1683072000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgve2qyx"
-      }
-    },
-    "39": {
-      "title": "Confession",
-      "volume": "6",
-      "last_updated": "1683072000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9w897l"
-      }
-    },
-    "40": {
-      "title": "Kaoruko et Rintaro",
-      "volume": "6",
-      "last_updated": "1683504000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw95jm4n"
-      }
-    },
-    "41": {
-      "title": "Le lendemain de la confession",
-      "volume": "6",
-      "last_updated": "1684022400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdm8kj45"
-      }
-    },
-    "42": {
-      "title": "Changement",
-      "volume": "6",
-      "last_updated": "1684368000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own6qr4p"
-      }
-    },
-    "43": {
-      "title": "Courses à deux",
-      "volume": "6",
-      "last_updated": "1685059200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxlnrn42"
-      }
-    },
-    "44": {
-      "title": "Annonce",
-      "volume": "6",
-      "last_updated": "1685923200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km63vb48"
-      }
-    },
-    "45": {
-      "title": "L'anniversaire de Natsusawa",
-      "volume": "6",
-      "last_updated": "1686355200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jplgyp"
-      }
-    },
-    "46": {
-      "title": "Cadeau",
-      "volume": "7",
-      "last_updated": "1686700800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxg8nyd"
-      }
-    },
-    "47": {
-      "title": "Natsusawa Mio",
-      "volume": "7",
-      "last_updated": "1686873600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9mqyd"
-      }
-    },
-    "48": {
-      "title": "Saku et Subaru",
-      "volume": "7",
-      "last_updated": "1686960000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgowj4j"
-      }
-    },
-    "49": {
-      "title": "début d'amitiés",
-      "volume": "7",
-      "last_updated": "1687046400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnzljyr"
-      }
-    },
-    "50": {
-      "title": "Amis",
-      "volume": "7",
-      "last_updated": "1687132800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zezand4j"
-      }
-    },
-    "51": {
-      "title": "Reconnaissant",
-      "volume": "7",
-      "last_updated": "1687219200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdbm57b"
-      }
-    },
-    "52": {
-      "title": "Le petit de Waguri",
-      "volume": "7",
-      "last_updated": "1687305600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp45plaqqy5"
-      }
-    },
-    "53": {
-      "title": "Une bonne personne",
-      "volume": "7",
-      "last_updated": "1687651200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/dl7pe2x8pyo"
-      }
-    },
-    "54": {
-      "title": "Le gâteau-récompense",
-      "volume": "8",
-      "last_updated": "1687737600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own68r4p"
-      }
-    },
-    "55": {
-      "title": "La maison de Waguri",
-      "volume": "8",
-      "last_updated": "1687910400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km638b48"
-      }
-    },
-    "56": {
-      "title": "Les preuves",
-      "volume": "8",
-      "last_updated": "1687996800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkar8x78"
-      }
-    },
-    "57": {
-      "title": "Waguri Kousuke",
-      "volume": "8",
-      "last_updated": "1688169600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxln2n42"
-      }
-    },
-    "58": {
-      "title": "Émotions naissantes",
-      "volume": "8",
-      "last_updated": "1688256000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9wqz7l"
-      }
-    },
-    "59": {
-      "title": "Nez à nez",
-      "volume": "8",
-      "last_updated": "1688428800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgveaxyx"
-      }
-    },
-    "60": {
-      "title": "Kikyo et chidori",
-      "volume": "8",
-      "last_updated": "1688515200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwvqayk"
-      }
-    },
-    "61": {
-      "title": "Entre fantaisie et réalité",
-      "volume": "8",
-      "last_updated": "1688601600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxga9yd"
-      }
-    },
-    "62": {
-      "title": "Résolution",
-      "volume": "9",
-      "last_updated": "1688688000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jpaxyp"
-      }
-    },
-    "63": {
-      "title": "Faits de la même étoffe",
-      "volume": "9",
-      "last_updated": "1688774400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9dmyd"
-      }
-    },
-    "64": {
-      "title": "Ces précieuses personnes",
-      "volume": "9",
-      "last_updated": "1688860800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnzdgyr"
-      }
-    },
-    "65": {
-      "title": "Face-à-face",
-      "volume": "9",
-      "last_updated": "1688947200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdbe27b"
-      }
-    },
-    "66": {
-      "title": "Ayumi Sawatari",
-      "volume": "9",
-      "last_updated": "1689033600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp45plamny5"
-      }
-    },
-    "67": {
-      "title": "Un échec",
-      "volume": "9",
-      "last_updated": "1689206400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a846wjv3zyx"
-      }
-    },
-    "68": {
-      "title": "Une lueur d'espoir",
-      "volume": "9",
-      "last_updated": "1689292800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24aqrz2d7l"
-      }
-    },
-    "69": {
-      "title": "Pareilles",
-      "volume": "9",
-      "last_updated": "1689379200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkmxb48"
-      }
-    },
-    "70": {
-      "title": "Au creux de sa poitrine",
-      "volume": "10",
-      "last_updated": "1689465600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw95nm4n"
-      }
-    },
-    "71": {
-      "title": "Le passé de Natsusawa",
-      "volume": "10",
-      "last_updated": "1689552000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/dl7pe2xvpyo"
-      }
-    },
-    "72": {
-      "title": "Progrès",
-      "volume": "10",
-      "last_updated": "1689638400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9249wrovmyn"
-      }
-    },
-    "73": {
-      "title": "Retour aux rendez-vous",
-      "volume": "10",
-      "last_updated": "1689724800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkar9x78"
-      }
-    },
-    "74": {
-      "title": "Rencontre officielle",
-      "volume": "10",
-      "last_updated": "1689811200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own69r4p"
-      }
-    },
-    "75": {
-      "title": "Mère et petite amie",
-      "volume": "10",
-      "last_updated": "1690070400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdm85j45"
-      }
-    },
-    "76": {
-      "title": "Gratitude",
-      "volume": "10",
-      "last_updated": "1690070400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgve9qyx"
-      }
-    },
-    "77": {
-      "title": "Juste pour s'amuser",
-      "volume": "10",
-      "last_updated": "1690070400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxlnvn42"
-      }
-    },
-    "78": {
-      "title": "Sortie scolaire",
-      "volume": "11",
-      "last_updated": "1690070400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9wd97l"
-      }
-    },
-    "79": {
-      "title": "Souvenirs du voyage",
-      "volume": "11",
-      "last_updated": "1690070400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jp5xyp"
-      }
-    },
-    "80": {
-      "title": "L'anniversaire de Subaru",
-      "volume": "11",
-      "last_updated": "1690588800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wd3wdg4x"
-      }
-    },
-    "81": {
-      "title": "Le grand frère de Rintaro",
-      "volume": "11",
-      "last_updated": "1691712000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wd3wqx4x"
-      }
-    },
-    "82": {
-      "title": "Sotaro et Rintaro",
-      "volume": "11",
-      "last_updated": "1692662400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km63ob48"
-      }
-    },
-    "83": {
-      "title": "Tout ira bien",
-      "volume": "11",
-      "last_updated": "1693094400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnzgjyr"
-      }
-    },
-    "84": {
-      "title": "Les inquiétudes de Rintaro",
-      "volume": "11",
-      "last_updated": "1693958400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jp9gyp"
-      }
-    },
-    "85": {
-      "title": "Une camarade du collège",
-      "volume": "11",
-      "last_updated": "1694476800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e92qyd"
-      }
-    },
-    "86": {
-      "title": "Satsuki Nabata",
-      "volume": "12",
-      "last_updated": "1694822400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwvmlyk"
-      }
-    },
-    "87": {
-      "title": "Premier amour et peine de cœur",
-      "volume": "12",
-      "last_updated": "1695427200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgojj4j"
-      }
-    },
-    "88": {
-      "title": "Soirée karaoké",
-      "volume": "12",
-      "last_updated": "1698624000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zezaed4j"
-      }
-    },
-    "89": {
-      "title": "Choix de carrière",
-      "volume": "12",
-      "last_updated": "1699488000",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdb227b"
-      }
-    },
-    "90": {
-      "title": "Le futur de Yorita",
-      "volume": "12",
-      "last_updated": "1700697600",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxgwnyd"
-      }
-    },
-    "91": {
-      "title": "Ce qui doit être dit",
-      "volume": "12",
-      "last_updated": "1700956800",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdbv57b"
-      }
-    },
-    "92": {
-      "title": "Rintaro et Yorita",
-      "volume": "12",
-      "last_updated": "1701734400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkmqj48"
-      }
-    },
-    "93": {
-      "title": "Lutins de noël",
-      "volume": "12",
-      "last_updated": "1702598400",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkmjb48"
-      }
-    },
-    "94": {
-      "title": "Le passé de Yorita",
-      "volume": "13",
-      "last_updated": "1702857600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9249wrolbyn"
-      }
-    },
-    "95": {
-      "title": "Sans intérêt",
-      "volume": "13",
-      "last_updated": "1703721600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw95kb4n"
-      }
-    },
-    "96": {
-      "title": "Une fois tout terminé",
-      "volume": "13",
-      "last_updated": "1705536000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/dl7pe2x53yo"
-      }
-    },
-    "97": {
-      "title": "La valeur du travail",
-      "volume": "13",
-      "last_updated": "1706227200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own6524p"
-      }
-    },
-    "98": {
-      "title": "La réponse de Yorita",
-      "volume": "13",
-      "last_updated": "1707177600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km635348"
-      }
-    },
-    "99": {
-      "title": "Notre Noël",
-      "volume": "13",
-      "last_updated": "1707609600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9wgz7l"
-      }
-    },
-    "100": {
-      "title": "Spéciale à tes yeux",
-      "volume": "13",
-      "last_updated": "1707868800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwzdpyq"
-      }
-    },
-    "101": {
-      "title": "26 décembre",
-      "volume": "14",
-      "last_updated": "1708819200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkar6378"
-      }
-    },
-    "102": {
-      "title": "Le cadeau de Kaoruko",
-      "volume": "14",
-      "last_updated": "1709596800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgve6xyx"
-      }
-    },
-    "103": {
-      "title": "Nouvel An",
-      "volume": "14",
-      "last_updated": "1710633600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxln6d42"
-      }
-    },
-    "104": {
-      "title": "Sotaro et Kaoruko",
-      "volume": "14",
-      "last_updated": "1710892800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwveayk"
-      }
-    },
-    "105": {
-      "title": "Nouvelle année, nouveau trimestre",
-      "volume": "14",
-      "last_updated": "1711670400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jp6xyp"
-      }
-    },
-    "106": {
-      "title": "Visite du parc d'attractions",
-      "volume": "14",
-      "last_updated": "1712361600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zezar54j"
-      }
-    },
-    "107": {
-      "title": "L'anniversaire de Rintaro",
-      "volume": "14",
-      "last_updated": "1712880000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdb927b"
-      }
-    },
-    "108": {
-      "title": "Les révisions de Saku et Subaru",
-      "volume": "14",
-      "last_updated": "1714003200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24aqrzmd7l"
-      }
-    },
-    "109": {
-      "title": "Le courage d'aller de l'avant",
-      "volume": "14",
-      "last_updated": "1714348800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a846wjv9zyx"
-      }
-    },
-    "110": {
-      "title": "Le février de chacun",
-      "volume": "15",
-      "last_updated": "1715644800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkmlb48"
-      }
-    },
-    "111": {
-      "title": "Le jour de la Saint-Valentin",
-      "volume": "15",
-      "last_updated": "1716422400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9249wro9byn"
-      }
-    },
-    "112": {
-      "title": "Examen blanc",
-      "volume": "15",
-      "last_updated": "1716422400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdm83m45"
-      }
-    },
-    "113": {
-      "title": "Les maux du coeur",
-      "volume": "15",
-      "last_updated": "1718064000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/dl7pe2x63yo"
-      }
-    },
-    "114": {
-      "title": "Natsusawa et Hidaka",
-      "volume": "15",
-      "last_updated": "1718064000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own6v24p"
-      }
-    },
-    "115": {
-      "title": "Après l'examen blanc",
-      "volume": "15",
-      "last_updated": "1718582400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw956b4n"
-      }
-    },
-    "116": {
-      "title": "Film d'horreur",
-      "volume": "15",
-      "last_updated": "1719705600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km63n348"
-      }
-    },
-    "117": {
-      "title": "La pâtisserie d'autrefois",
-      "volume": "15",
-      "last_updated": "1720137600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9wxz7l"
-      }
-    },
-    "118": {
-      "title": "Talents inégalés",
-      "volume": "16",
-      "last_updated": "1720742400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkar5378"
-      }
-    },
-    "119": {
-      "title": "Objectif",
-      "volume": "16",
-      "last_updated": "1724025600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9wx37l"
-      }
-    },
-    "120": {
-      "title": "Le White Day de Natsusawa",
-      "volume": "16",
-      "last_updated": "1721952000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jp3lyp"
-      }
-    },
-    "121": {
-      "title": "Pâtissier",
-      "volume": "16",
-      "last_updated": "1724198400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgvel3yx"
-      }
-    },
-    "122": {
-      "title": "Rentrée en terminale",
-      "volume": "16",
-      "last_updated": "1724371200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkar5978"
-      }
-    },
-    "123": {
-      "title": "Faire bonne figure",
-      "volume": "16",
-      "last_updated": "1724976000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxgjayd"
-      }
-    },
-    "124": {
-      "title": "Faiblesses",
-      "volume": "16",
-      "last_updated": "1725580800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnz2oyr"
-      }
-    },
-    "125": {
-      "title": "Soirée Takoyaki",
-      "volume": "16",
-      "last_updated": "1726099200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxlnmx42"
-      }
-    },
-    "126": {
-      "title": "Beau-père et Rintaro",
-      "volume": "17",
-      "last_updated": "1726704000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwz9pyq"
-      }
-    },
-    "127": {
-      "title": "Le dernier festival sportif",
-      "volume": "17",
-      "last_updated": "1727308800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9249wro2byn"
-      }
-    },
-    "127.5": {
-      "title": "Extra volume 17",
-      "volume": "17",
-      "last_updated": "1749481200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyv9e9ab78"
-      }
-    },
-    "127.6": {
-      "title": "Extra volume 17 - Full.Colo",
-      "volume": "17",
-      "last_updated": "1750528200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wxdpbgyx"
-      }
-    },
-    "128": {
-      "title": "Bonté d'âme",
-      "volume": "17",
-      "last_updated": "1728518400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw95vb4n"
-      }
-    },
-    "129": {
-      "title": "Le futur de Kaoruko",
-      "volume": "17",
-      "last_updated": "1729123200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own6a24p"
-      }
-    },
-    "130": {
-      "title": "Petit ami",
-      "volume": "17",
-      "last_updated": "1729728000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdm8lm45"
-      }
-    },
-    "131": {
-      "title": "Gynécologue-obstétricienne",
-      "volume": "17",
-      "last_updated": "1730419200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km63a348"
-      }
-    },
-    "132": {
-      "title": "Chacun sa voie",
-      "volume": "17",
-      "last_updated": "1732838400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/dl7pe2xa3yo"
-      }
-    },
-    "133": {
-      "title": "Grand frère Usami",
-      "volume": "17",
-      "last_updated": "1733529600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/5xy2a9woz7l"
-      }
-    },
-    "134": {
-      "title": "Les soucis de Subaru",
-      "volume": "18",
-      "last_updated": "1734912000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkarm378"
-      }
-    },
-    "135": {
-      "title": "Examens de premier trimestre",
-      "volume": "18",
-      "last_updated": "1735862400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgvewxyx"
-      }
-    },
-    "136": {
-      "title": "Sortie au Zoo",
-      "volume": "18",
-      "last_updated": "1737244800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxge9yd"
-      }
-    },
-    "137": {
-      "title": "Retour à la plage",
-      "volume": "18",
-      "last_updated": "1737676800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwv2ayk"
-      }
-    },
-    "138": {
-      "title": "Émotions naissantes",
-      "volume": "18",
-      "last_updated": "1738540800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxlnkd42"
-      }
-    },
-    "139": {
-      "title": "Plus qu'un ami",
-      "volume": "18",
-      "last_updated": "1739059200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9jpnxyp"
-      }
-    },
-    "140": {
-      "title": "Qu'est-ce que l'Amour ?",
-      "volume": "18",
-      "last_updated": "1740787200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zezap54j"
-      }
-    },
-    "141": {
-      "title": "Mots d'affection",
-      "volume": "18",
-      "last_updated": "1740787200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgoqq4j"
-      }
-    },
-    "142": {
-      "title": "La chambre de Kaoruko",
-      "volume": "19",
-      "last_updated": "1741564800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wd3wnx4x"
-      }
-    },
-    "143": {
-      "title": "Réunion parents-profs",
-      "volume": "19",
-      "last_updated": "1742169600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8vdb627b"
-      }
-    },
-    "144": {
-      "title": "L'été de Rintaro",
-      "volume": "19",
-      "last_updated": "1742688000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24aqrz6d7l"
-      }
-    },
-    "145": {
-      "title": "Le futur de Rintaro",
-      "volume": "19",
-      "last_updated": "1743379200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a846wjvozyx"
-      }
-    },
-    "146": {
-      "title": "Décompression",
-      "volume": "19",
-      "last_updated": "1744243200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkmnb48"
-      }
-    },
-    "147": {
-      "title": "Le Futur de Natsusawa",
-      "volume": "19",
-      "last_updated": "1744848000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwznpyq"
-      }
-    },
-    "148": {
-      "title": "Premier Anniversaire",
-      "volume": "19",
-      "last_updated": "1745452800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9249wrokbyn"
-      }
-    },
-    "149": {
-      "title": "Entretien D'embauche",
-      "volume": "19",
-      "last_updated": "1746144000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw95zb4n"
-      }
-    },
-    "150": {
-      "title": "Petite amie",
-      "volume": "20",
-      "last_updated": "1747267200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7own6b24p"
-      }
-    },
-    "151": {
-      "title": "Vers les Examens Blancs Nationaux",
-      "volume": "20",
-      "last_updated": "1747946040",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gelxjyr"
-      }
-    },
-    "152": {
-      "title": "Évaluation",
-      "volume": "20",
-      "last_updated": "1748516400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwgxrjyd"
-      }
-    },
-    "153": {
-      "title": "Le Mur à Franchir",
-      "volume": "20",
-      "last_updated": "1749834600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wxgapzyx"
-      }
-    },
-    "154": {
-      "title": "Kyoko et Keichiro",
-      "volume": "20",
-      "last_updated": "1750456200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wxdqmgyx"
-      }
-    },
-    "155": {
-      "title": "Keichiro et Kyoko",
-      "volume": "20",
-      "last_updated": "1751229000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg7356keg4r"
-      }
-    },
-    "156": {
-      "title": "Une Douceur et un Parfum Sucré",
-      "volume": "20",
-      "last_updated": "1752321600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24a8lneg7l"
-      }
-    },
-    "157": {
-      "title": "Le Festival d'Été de cette Année",
-      "volume": "",
-      "last_updated": "1752701400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jg2ev948"
-      }
-    },
-    "158": {
-      "title": "Étincelles",
-      "volume": "",
-      "last_updated": "1753293600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yx86mgk7q"
-      }
-    },
-    "159": {
-      "title": "Découverte",
-      "volume": "",
-      "last_updated": "1753909200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp455abdn45"
-      }
-    },
-    "160": {
-      "title": "Soutien",
-      "volume": "",
-      "last_updated": "1755532800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4j89g5378"
-      }
-    },
-    "161": {
-      "title": "Détermination",
-      "volume": "",
-      "last_updated": "1755716400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7k8mwnw78"
-      }
-    },
-    "162": {
-      "title": "Confrontation",
-      "volume": "",
-      "last_updated": "1756324800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7loodop7x"
-      }
-    },
-    "149.5": {
-      "title": "Chapitre Bonus - Kaoruko L'artiste",
-      "volume": "19",
-      "last_updated": "1757343600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24ajmw924l"
-      }
-    },
-    "163": {
-      "title": "Alliés",
-      "volume": "",
-      "last_updated": "1757696400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/xny8m88627b"
-      }
-    },
-    "164": {
-      "title": "M. Tsukada",
-      "volume": "",
-      "last_updated": "1758281400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yx3a9bmyq"
-      }
-    },
-    "165": {
-      "title": "Face-à-Face",
-      "volume": "",
-      "last_updated": "1758832200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/924938jaa4n"
-      }
-    },
-    "166": {
-      "title": "En tant que confrère",
-      "volume": "",
-      "last_updated": "1759959000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a8463gw5w4x"
-      }
-    },
-    "167": {
-      "title": "D'une sincérité déconcertante",
-      "volume": "",
-      "last_updated": "1760630400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a8463p6xv4x"
-      }
-    },
-    "136.5": {
-      "title": "L'affaire de la glace",
-      "volume": "18",
-      "last_updated": "1754838000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvrewak78"
-      }
-    },
-    "2.5": {
-      "title": "La Cliente Régulière",
-      "volume": "20",
-      "last_updated": "1751410800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp4556b2x45"
-      }
-    },
-    "5.5": {
-      "title": "Extras Volume 1",
-      "volume": "1",
-      "last_updated": "1685577600",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "13.5": {
-      "title": "Extras Volume 2",
-      "volume": "2",
-      "last_updated": "1694044800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "12.5": {
-      "title": "Après le coup de fil",
-      "volume": "2",
-      "last_updated": "1687132800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "16.5": {
-      "title": "Après le coup de fil",
-      "volume": "3",
-      "last_updated": "1694304000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "27.5": {
-      "title": "Subaru veut lui dire",
-      "volume": "4",
-      "last_updated": "1707868800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "29.6": {
-      "title": "Extra Twitter volume 4",
-      "volume": "4",
-      "last_updated": "1708560000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwv6lyk"
-      }
-    },
-    "29.5": {
-      "title": "Extra volume 4",
-      "volume": "4",
-      "last_updated": "1707868800",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "37.5": {
-      "title": "Un jour spécial",
-      "volume": "5",
-      "last_updated": "1682899200",
-      "collab": "BlueSolo",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a846wjv5oyx"
-      }
-    },
-    "37.6": {
-      "title": "Extra volume 5",
-      "volume": "5",
-      "last_updated": "1707955200",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvqkm9j48"
-      }
-    },
-    "37.7": {
-      "title": "Extra Twitter volume 5",
-      "volume": "5",
-      "last_updated": "1708646400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwz8qyq"
-      }
-    },
-    "45.5": {
-      "title": "Extra Twitter volume 6",
-      "volume": "6",
-      "last_updated": "1708992000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkargx78"
-      }
-    },
-    "53.5": {
-      "title": "Les inquiétudes d'une jeune fille",
-      "volume": "7",
-      "last_updated": "1708041600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwz3qyq"
-      }
-    },
-    "53.6": {
-      "title": "Extra volume 7",
-      "volume": "7",
-      "last_updated": "1708041600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nw958m4n"
-      }
-    },
-    "53.7": {
-      "title": "Extra Twitter volume 7",
-      "volume": "7",
-      "last_updated": "1708992000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdm8qj45"
-      }
-    },
-    "56.5": {
-      "title": "Frère et sœur",
-      "volume": "8",
-      "last_updated": "1708128000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgveoqyx"
-      }
-    },
-    "61.5": {
-      "title": "Extra volume 8",
-      "volume": "8",
-      "last_updated": "1708128000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkare378"
-      }
-    },
-    "61.6": {
-      "title": "Extra Twitter volume 8",
-      "volume": "8",
-      "last_updated": "1709078400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxlnad42"
-      }
-    },
-    "77.5": {
-      "title": "Extra volume 10",
-      "volume": "10",
-      "last_updated": "1708300800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/vj4jkarn378"
-      }
-    },
-    "76.5": {
-      "title": "Kyouko et Keichiro",
-      "volume": "10",
-      "last_updated": "1708300800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ljyqxln5d42"
-      }
-    },
-    "77.6": {
-      "title": "Extra Twitter volume 10",
-      "volume": "10",
-      "last_updated": "1709510400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwvnayk"
-      }
-    },
-    "85.5": {
-      "title": "Les pensées de Sotaro Tsumugi",
-      "volume": "11",
-      "last_updated": "1708387200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ej7mwxgv9yd"
-      }
-    },
-    "85.6": {
-      "title": "Extra volume 11",
-      "volume": "11",
-      "last_updated": "1708387200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnz6gyr"
-      }
-    },
-    "87.5": {
-      "title": "Kaoruko et l'uniforme scolaire",
-      "volume": "12",
-      "last_updated": "1719014400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9nmyd"
-      }
-    },
-    "93.5": {
-      "title": "Extra volume 12",
-      "volume": "12",
-      "last_updated": "1719014400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgopq4j"
-      }
-    },
-    "85.7": {
-      "title": "Extra Twitter volume 11",
-      "volume": "11",
-      "last_updated": "1709683200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qb4zezam54j"
-      }
-    },
-    "100.6": {
-      "title": "Extra volume 13",
-      "volume": "13",
-      "last_updated": "1724198400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/o24aqrznd7l"
-      }
-    },
-    "93.6": {
-      "title": "Extra Twitter volume 12",
-      "volume": "12",
-      "last_updated": "1719014400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp45pla6ny5"
-      }
-    },
-    "100.5": {
-      "title": "Le chemin du retour",
-      "volume": "13",
-      "last_updated": "1724198400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a846wjv6zyx"
-      }
-    },
-    "107.5": {
-      "title": "Le retour de l'anniversaire + Extra volume 14",
-      "volume": "14",
-      "last_updated": "1728432000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/qe4gjgo8q4j"
-      }
-    },
-    "112.5": {
-      "title": "En route pour l'examen blanc + Extra volume 15",
-      "volume": "15",
-      "last_updated": "1736553600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/m9yxrwzqpyq"
-      }
-    },
-    "124.5": {
-      "title": "Les courses + Extra volume 16",
-      "volume": "16",
-      "last_updated": "1744675200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9rydmwv36yk"
-      }
-    },
-    "21.5": {
-      "title": "Extras Volume 3",
-      "volume": "3",
-      "last_updated": "1705968000",
-      "licencied": true,
-      "groups": {
-        "Big_herooooo": ""
-      }
-    },
-    "21.6": {
-      "title": "Extra Twitter volume 2+3",
-      "volume": "3",
-      "last_updated": "1708473600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgved3yx"
-      }
-    },
-    "64.5": {
-      "title": "La détermination de Kaoruko",
-      "volume": "9",
-      "last_updated": "1708214400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/pg73gnz3oyr"
-      }
-    },
-    "69.5": {
-      "title": "Extra volume 9",
-      "volume": "9",
-      "last_updated": "1708214400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/n87wd3w2q4x"
-      }
-    },
-    "69.6": {
-      "title": "Extra Twitter volume 9",
-      "volume": "9",
-      "last_updated": "1709164800",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/lqye2e9ozyd"
-      }
-    },
-    "156.5": {
-      "title": "Extra volume 20",
-      "volume": "20",
-      "last_updated": "1760436000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/md7oaede9yp"
+      "1": {
+        "title": "Rintaro et Kaoruko",
+        "volume": "1",
+        "timestamp": 1726704000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "2": {
+        "title": "Chidori et Kikyo",
+        "volume": "1",
+        "timestamp": 1653868800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "3": {
+        "title": "Préparation des examens",
+        "volume": "1",
+        "timestamp": 1654473600,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "4": {
+        "title": "Les amis de Kaoruko",
+        "volume": "1",
+        "timestamp": 1655078400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "5": {
+        "title": "Camarades d'étude",
+        "volume": "1",
+        "timestamp": 1655683200,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "6": {
+        "title": "Subaru Hoshina",
+        "volume": "2",
+        "timestamp": 1656288000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "7": {
+        "title": "La chaleur d'un cœur",
+        "volume": "2",
+        "timestamp": 1656892800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "8": {
+        "title": "Une amitié à quatre",
+        "volume": "2",
+        "timestamp": 1656892800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "9": {
+        "title": "Grâce à Waguri",
+        "volume": "2",
+        "timestamp": 1657497600,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "10": {
+        "title": "Haine",
+        "volume": "2",
+        "timestamp": 1658102400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "11": {
+        "title": "Amour",
+        "volume": "2",
+        "timestamp": 1658102400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "12": {
+        "title": "Rintaro et Subaru",
+        "volume": "2",
+        "timestamp": 1658707200,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "13": {
+        "title": "Maman",
+        "volume": "2",
+        "timestamp": 1659398400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "14": {
+        "title": "Mon endroit préféré",
+        "volume": "3",
+        "timestamp": 1659916800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "15": {
+        "title": "Un type cool",
+        "volume": "3",
+        "timestamp": 1661126400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "16": {
+        "title": "Journée sportive",
+        "volume": "3",
+        "timestamp": 1661731200,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "17": {
+        "title": "Dégel hivernal",
+        "volume": "3",
+        "timestamp": 1662336000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "18": {
+        "title": "L'aquarium",
+        "volume": "3",
+        "timestamp": 1662336000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "19": {
+        "title": "Ce que je ressens vraiment",
+        "volume": "3",
+        "timestamp": 1662336000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "20": {
+        "title": "Et les nuages se séparent",
+        "volume": "3",
+        "timestamp": 1662336000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "21": {
+        "title": "Cheveux blonds et piercings",
+        "volume": "3",
+        "timestamp": 1662940800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "22": {
+        "title": "L'amour d'une mère",
+        "volume": "4",
+        "timestamp": 1662940800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "23": {
+        "title": "Un groupe d'étude à six",
+        "volume": "4",
+        "timestamp": 1662940800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "24": {
+        "title": "De l'autre coté du rideau",
+        "volume": "4",
+        "timestamp": 1673481600,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "25": {
+        "title": "Soucis de juillet",
+        "volume": "4",
+        "timestamp": 1674345600,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "26": {
+        "title": "Yorita et Rintaro",
+        "volume": "4",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ]
+      },
+      "27": {
+        "title": "Discussion de groupe",
+        "volume": "4",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ]
+      },
+      "28": {
+        "title": "L'anniversaire de Waguri",
+        "volume": "4",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ]
+      },
+      "29": {
+        "title": "22 Juillet",
+        "volume": "4",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ]
+      },
+      "30": {
+        "title": "L'anniversaire",
+        "volume": "5",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnz5jyr"
+        }
+      },
+      "31": {
+        "title": "Les sentiments contenus dans le gâteau",
+        "volume": "5",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wd3wxg4x"
+        }
+      },
+      "32": {
+        "title": "Comment passer ses vacances d'été",
+        "volume": "5",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "lqye2e9gqyd"
+        }
+      },
+      "33": {
+        "title": "Troubles à la plage",
+        "volume": "5",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qb4zeza8d4j"
+        }
+      },
+      "34": {
+        "title": "Je veux être ici",
+        "volume": "5",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qe4gjgo5j4j"
+        }
+      },
+      "35": {
+        "title": "Étincelles",
+        "volume": "5",
+        "timestamp": 1682726400,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "bp45pla5qy5"
+        }
+      },
+      "36": {
+        "title": "Je t'aime",
+        "volume": "5",
+        "timestamp": 1682812800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24aqrz827l"
+        }
+      },
+      "37": {
+        "title": "Festival d'été",
+        "volume": "5",
+        "timestamp": 1682812800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9249wropmyn"
+        }
+      },
+      "38": {
+        "title": "Les sentiments de Rintaro",
+        "volume": "6",
+        "timestamp": 1683072000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgve2qyx"
+        }
+      },
+      "39": {
+        "title": "Confession",
+        "volume": "6",
+        "timestamp": 1683072000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9w897l"
+        }
+      },
+      "40": {
+        "title": "Kaoruko et Rintaro",
+        "volume": "6",
+        "timestamp": 1683504000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw95jm4n"
+        }
+      },
+      "41": {
+        "title": "Le lendemain de la confession",
+        "volume": "6",
+        "timestamp": 1684022400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ne7bdm8kj45"
+        }
+      },
+      "42": {
+        "title": "Changement",
+        "volume": "6",
+        "timestamp": 1684368000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own6qr4p"
+        }
+      },
+      "43": {
+        "title": "Courses à deux",
+        "volume": "6",
+        "timestamp": 1685059200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxlnrn42"
+        }
+      },
+      "44": {
+        "title": "Annonce",
+        "volume": "6",
+        "timestamp": 1685923200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7km63vb48"
+        }
+      },
+      "45": {
+        "title": "L'anniversaire de Natsusawa",
+        "volume": "6",
+        "timestamp": 1686355200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jplgyp"
+        }
+      },
+      "46": {
+        "title": "Cadeau",
+        "volume": "7",
+        "timestamp": 1686700800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwxg8nyd"
+        }
+      },
+      "47": {
+        "title": "Natsusawa Mio",
+        "volume": "7",
+        "timestamp": 1686873600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "lqye2e9mqyd"
+        }
+      },
+      "48": {
+        "title": "Saku et Subaru",
+        "volume": "7",
+        "timestamp": 1686960000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qe4gjgowj4j"
+        }
+      },
+      "49": {
+        "title": "début d'amitiés",
+        "volume": "7",
+        "timestamp": 1687046400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnzljyr"
+        }
+      },
+      "50": {
+        "title": "Amis",
+        "volume": "7",
+        "timestamp": 1687132800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qb4zezand4j"
+        }
+      },
+      "51": {
+        "title": "Reconnaissant",
+        "volume": "7",
+        "timestamp": 1687219200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8vdbm57b"
+        }
+      },
+      "52": {
+        "title": "Le petit de Waguri",
+        "volume": "7",
+        "timestamp": 1687305600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "bp45plaqqy5"
+        }
+      },
+      "53": {
+        "title": "Une bonne personne",
+        "volume": "7",
+        "timestamp": 1687651200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "dl7pe2x8pyo"
+        }
+      },
+      "54": {
+        "title": "Le gâteau-récompense",
+        "volume": "8",
+        "timestamp": 1687737600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own68r4p"
+        }
+      },
+      "55": {
+        "title": "La maison de Waguri",
+        "volume": "8",
+        "timestamp": 1687910400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7km638b48"
+        }
+      },
+      "56": {
+        "title": "Les preuves",
+        "volume": "8",
+        "timestamp": 1687996800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkar8x78"
+        }
+      },
+      "57": {
+        "title": "Waguri Kousuke",
+        "volume": "8",
+        "timestamp": 1688169600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxln2n42"
+        }
+      },
+      "58": {
+        "title": "Émotions naissantes",
+        "volume": "8",
+        "timestamp": 1688256000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9wqz7l"
+        }
+      },
+      "59": {
+        "title": "Nez à nez",
+        "volume": "8",
+        "timestamp": 1688428800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgveaxyx"
+        }
+      },
+      "60": {
+        "title": "Kikyo et chidori",
+        "volume": "8",
+        "timestamp": 1688515200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwvqayk"
+        }
+      },
+      "61": {
+        "title": "Entre fantaisie et réalité",
+        "volume": "8",
+        "timestamp": 1688601600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwxga9yd"
+        }
+      },
+      "62": {
+        "title": "Résolution",
+        "volume": "9",
+        "timestamp": 1688688000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jpaxyp"
+        }
+      },
+      "63": {
+        "title": "Faits de la même étoffe",
+        "volume": "9",
+        "timestamp": 1688774400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "lqye2e9dmyd"
+        }
+      },
+      "64": {
+        "title": "Ces précieuses personnes",
+        "volume": "9",
+        "timestamp": 1688860800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnzdgyr"
+        }
+      },
+      "65": {
+        "title": "Face-à-face",
+        "volume": "9",
+        "timestamp": 1688947200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8vdbe27b"
+        }
+      },
+      "66": {
+        "title": "Ayumi Sawatari",
+        "volume": "9",
+        "timestamp": 1689033600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "bp45plamny5"
+        }
+      },
+      "67": {
+        "title": "Un échec",
+        "volume": "9",
+        "timestamp": 1689206400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a846wjv3zyx"
+        }
+      },
+      "68": {
+        "title": "Une lueur d'espoir",
+        "volume": "9",
+        "timestamp": 1689292800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24aqrz2d7l"
+        }
+      },
+      "69": {
+        "title": "Pareilles",
+        "volume": "9",
+        "timestamp": 1689379200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvqkmxb48"
+        }
+      },
+      "70": {
+        "title": "Au creux de sa poitrine",
+        "volume": "10",
+        "timestamp": 1689465600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw95nm4n"
+        }
+      },
+      "71": {
+        "title": "Le passé de Natsusawa",
+        "volume": "10",
+        "timestamp": 1689552000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "dl7pe2xvpyo"
+        }
+      },
+      "72": {
+        "title": "Progrès",
+        "volume": "10",
+        "timestamp": 1689638400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9249wrovmyn"
+        }
+      },
+      "73": {
+        "title": "Retour aux rendez-vous",
+        "volume": "10",
+        "timestamp": 1689724800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkar9x78"
+        }
+      },
+      "74": {
+        "title": "Rencontre officielle",
+        "volume": "10",
+        "timestamp": 1689811200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own69r4p"
+        }
+      },
+      "75": {
+        "title": "Mère et petite amie",
+        "volume": "10",
+        "timestamp": 1690070400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ne7bdm85j45"
+        }
+      },
+      "76": {
+        "title": "Gratitude",
+        "volume": "10",
+        "timestamp": 1690070400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgve9qyx"
+        }
+      },
+      "77": {
+        "title": "Juste pour s'amuser",
+        "volume": "10",
+        "timestamp": 1690070400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxlnvn42"
+        }
+      },
+      "78": {
+        "title": "Sortie scolaire",
+        "volume": "11",
+        "timestamp": 1690070400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9wd97l"
+        }
+      },
+      "79": {
+        "title": "Souvenirs du voyage",
+        "volume": "11",
+        "timestamp": 1690070400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jp5xyp"
+        }
+      },
+      "80": {
+        "title": "L'anniversaire de Subaru",
+        "volume": "11",
+        "timestamp": 1690588800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wd3wdg4x"
+        }
+      },
+      "81": {
+        "title": "Le grand frère de Rintaro",
+        "volume": "11",
+        "timestamp": 1691712000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wd3wqx4x"
+        }
+      },
+      "82": {
+        "title": "Sotaro et Rintaro",
+        "volume": "11",
+        "timestamp": 1692662400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7km63ob48"
+        }
+      },
+      "83": {
+        "title": "Tout ira bien",
+        "volume": "11",
+        "timestamp": 1693094400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnzgjyr"
+        }
+      },
+      "84": {
+        "title": "Les inquiétudes de Rintaro",
+        "volume": "11",
+        "timestamp": 1693958400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jp9gyp"
+        }
+      },
+      "85": {
+        "title": "Une camarade du collège",
+        "volume": "11",
+        "timestamp": 1694476800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "lqye2e92qyd"
+        }
+      },
+      "86": {
+        "title": "Satsuki Nabata",
+        "volume": "12",
+        "timestamp": 1694822400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwvmlyk"
+        }
+      },
+      "87": {
+        "title": "Premier amour et peine de cœur",
+        "volume": "12",
+        "timestamp": 1695427200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qe4gjgojj4j"
+        }
+      },
+      "88": {
+        "title": "Soirée karaoké",
+        "volume": "12",
+        "timestamp": 1698624000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qb4zezaed4j"
+        }
+      },
+      "89": {
+        "title": "Choix de carrière",
+        "volume": "12",
+        "timestamp": 1699488000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8vdb227b"
+        }
+      },
+      "90": {
+        "title": "Le futur de Yorita",
+        "volume": "12",
+        "timestamp": 1700697600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwxgwnyd"
+        }
+      },
+      "91": {
+        "title": "Ce qui doit être dit",
+        "volume": "12",
+        "timestamp": 1700956800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8vdbv57b"
+        }
+      },
+      "92": {
+        "title": "Rintaro et Yorita",
+        "volume": "12",
+        "timestamp": 1701734400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvqkmqj48"
+        }
+      },
+      "93": {
+        "title": "Lutins de noël",
+        "volume": "12",
+        "timestamp": 1702598400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvqkmjb48"
+        }
+      },
+      "94": {
+        "title": "Le passé de Yorita",
+        "volume": "13",
+        "timestamp": 1702857600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9249wrolbyn"
+        }
+      },
+      "95": {
+        "title": "Sans intérêt",
+        "volume": "13",
+        "timestamp": 1703721600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw95kb4n"
+        }
+      },
+      "96": {
+        "title": "Une fois tout terminé",
+        "volume": "13",
+        "timestamp": 1705536000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "dl7pe2x53yo"
+        }
+      },
+      "97": {
+        "title": "La valeur du travail",
+        "volume": "13",
+        "timestamp": 1706227200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own6524p"
+        }
+      },
+      "98": {
+        "title": "La réponse de Yorita",
+        "volume": "13",
+        "timestamp": 1707177600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7km635348"
+        }
+      },
+      "99": {
+        "title": "Notre Noël",
+        "volume": "13",
+        "timestamp": 1707609600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9wgz7l"
+        }
+      },
+      "100": {
+        "title": "Spéciale à tes yeux",
+        "volume": "13",
+        "timestamp": 1707868800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yxrwzdpyq"
+        }
+      },
+      "101": {
+        "title": "26 décembre",
+        "volume": "14",
+        "timestamp": 1708819200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkar6378"
+        }
+      },
+      "102": {
+        "title": "Le cadeau de Kaoruko",
+        "volume": "14",
+        "timestamp": 1709596800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgve6xyx"
+        }
+      },
+      "103": {
+        "title": "Nouvel An",
+        "volume": "14",
+        "timestamp": 1710633600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxln6d42"
+        }
+      },
+      "104": {
+        "title": "Sotaro et Kaoruko",
+        "volume": "14",
+        "timestamp": 1710892800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwveayk"
+        }
+      },
+      "105": {
+        "title": "Nouvelle année, nouveau trimestre",
+        "volume": "14",
+        "timestamp": 1711670400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jp6xyp"
+        }
+      },
+      "106": {
+        "title": "Visite du parc d'attractions",
+        "volume": "14",
+        "timestamp": 1712361600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qb4zezar54j"
+        }
+      },
+      "107": {
+        "title": "L'anniversaire de Rintaro",
+        "volume": "14",
+        "timestamp": 1712880000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8vdb927b"
+        }
+      },
+      "108": {
+        "title": "Les révisions de Saku et Subaru",
+        "volume": "14",
+        "timestamp": 1714003200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24aqrzmd7l"
+        }
+      },
+      "109": {
+        "title": "Le courage d'aller de l'avant",
+        "volume": "14",
+        "timestamp": 1714348800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a846wjv9zyx"
+        }
+      },
+      "110": {
+        "title": "Le février de chacun",
+        "volume": "15",
+        "timestamp": 1715644800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvqkmlb48"
+        }
+      },
+      "111": {
+        "title": "Le jour de la Saint-Valentin",
+        "volume": "15",
+        "timestamp": 1716422400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9249wro9byn"
+        }
+      },
+      "112": {
+        "title": "Examen blanc",
+        "volume": "15",
+        "timestamp": 1716422400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ne7bdm83m45"
+        }
+      },
+      "113": {
+        "title": "Les maux du coeur",
+        "volume": "15",
+        "timestamp": 1718064000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "dl7pe2x63yo"
+        }
+      },
+      "114": {
+        "title": "Natsusawa et Hidaka",
+        "volume": "15",
+        "timestamp": 1718064000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own6v24p"
+        }
+      },
+      "115": {
+        "title": "Après l'examen blanc",
+        "volume": "15",
+        "timestamp": 1718582400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw956b4n"
+        }
+      },
+      "116": {
+        "title": "Film d'horreur",
+        "volume": "15",
+        "timestamp": 1719705600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7km63n348"
+        }
+      },
+      "117": {
+        "title": "La pâtisserie d'autrefois",
+        "volume": "15",
+        "timestamp": 1720137600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9wxz7l"
+        }
+      },
+      "118": {
+        "title": "Talents inégalés",
+        "volume": "16",
+        "timestamp": 1720742400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkar5378"
+        }
+      },
+      "119": {
+        "title": "Objectif",
+        "volume": "16",
+        "timestamp": 1724025600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9wx37l"
+        }
+      },
+      "120": {
+        "title": "Le White Day de Natsusawa",
+        "volume": "16",
+        "timestamp": 1721952000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jp3lyp"
+        }
+      },
+      "121": {
+        "title": "Pâtissier",
+        "volume": "16",
+        "timestamp": 1724198400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgvel3yx"
+        }
+      },
+      "122": {
+        "title": "Rentrée en terminale",
+        "volume": "16",
+        "timestamp": 1724371200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkar5978"
+        }
+      },
+      "123": {
+        "title": "Faire bonne figure",
+        "volume": "16",
+        "timestamp": 1724976000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwxgjayd"
+        }
+      },
+      "124": {
+        "title": "Faiblesses",
+        "volume": "16",
+        "timestamp": 1725580800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnz2oyr"
+        }
+      },
+      "125": {
+        "title": "Soirée Takoyaki",
+        "volume": "16",
+        "timestamp": 1726099200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxlnmx42"
+        }
+      },
+      "126": {
+        "title": "Beau-père et Rintaro",
+        "volume": "17",
+        "timestamp": 1726704000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yxrwz9pyq"
+        }
+      },
+      "127": {
+        "title": "Le dernier festival sportif",
+        "volume": "17",
+        "timestamp": 1727308800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9249wro2byn"
+        }
+      },
+      "128": {
+        "title": "Bonté d'âme",
+        "volume": "17",
+        "timestamp": 1728518400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw95vb4n"
+        }
+      },
+      "129": {
+        "title": "Le futur de Kaoruko",
+        "volume": "17",
+        "timestamp": 1729123200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own6a24p"
+        }
+      },
+      "130": {
+        "title": "Petit ami",
+        "volume": "17",
+        "timestamp": 1729728000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ne7bdm8lm45"
+        }
+      },
+      "131": {
+        "title": "Gynécologue-obstétricienne",
+        "volume": "17",
+        "timestamp": 1730419200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7km63a348"
+        }
+      },
+      "132": {
+        "title": "Chacun sa voie",
+        "volume": "17",
+        "timestamp": 1732838400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "dl7pe2xa3yo"
+        }
+      },
+      "133": {
+        "title": "Grand frère Usami",
+        "volume": "17",
+        "timestamp": 1733529600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "5xy2a9woz7l"
+        }
+      },
+      "134": {
+        "title": "Les soucis de Subaru",
+        "volume": "18",
+        "timestamp": 1734912000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkarm378"
+        }
+      },
+      "135": {
+        "title": "Examens de premier trimestre",
+        "volume": "18",
+        "timestamp": 1735862400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgvewxyx"
+        }
+      },
+      "136": {
+        "title": "Sortie au Zoo",
+        "volume": "18",
+        "timestamp": 1737244800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwxge9yd"
+        }
+      },
+      "137": {
+        "title": "Retour à la plage",
+        "volume": "18",
+        "timestamp": 1737676800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwv2ayk"
+        }
+      },
+      "138": {
+        "title": "Émotions naissantes",
+        "volume": "18",
+        "timestamp": 1738540800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxlnkd42"
+        }
+      },
+      "139": {
+        "title": "Plus qu'un ami",
+        "volume": "18",
+        "timestamp": 1739059200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "6eyr9jpnxyp"
+        }
+      },
+      "140": {
+        "title": "Qu'est-ce que l'Amour ?",
+        "volume": "18",
+        "timestamp": 1740787200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qb4zezap54j"
+        }
+      },
+      "141": {
+        "title": "Mots d'affection",
+        "volume": "18",
+        "timestamp": 1740787200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qe4gjgoqq4j"
+        }
+      },
+      "142": {
+        "title": "La chambre de Kaoruko",
+        "volume": "19",
+        "timestamp": 1741564800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wd3wnx4x"
+        }
+      },
+      "143": {
+        "title": "Réunion parents-profs",
+        "volume": "19",
+        "timestamp": 1742169600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8vdb627b"
+        }
+      },
+      "144": {
+        "title": "L'été de Rintaro",
+        "volume": "19",
+        "timestamp": 1742688000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24aqrz6d7l"
+        }
+      },
+      "145": {
+        "title": "Le futur de Rintaro",
+        "volume": "19",
+        "timestamp": 1743379200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a846wjvozyx"
+        }
+      },
+      "146": {
+        "title": "Décompression",
+        "volume": "19",
+        "timestamp": 1744243200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvqkmnb48"
+        }
+      },
+      "147": {
+        "title": "Le Futur de Natsusawa",
+        "volume": "19",
+        "timestamp": 1744848000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yxrwznpyq"
+        }
+      },
+      "148": {
+        "title": "Premier Anniversaire",
+        "volume": "19",
+        "timestamp": 1745452800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9249wrokbyn"
+        }
+      },
+      "149": {
+        "title": "Entretien D'embauche",
+        "volume": "19",
+        "timestamp": 1746144000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw95zb4n"
+        }
+      },
+      "150": {
+        "title": "Petite amie",
+        "volume": "20",
+        "timestamp": 1747267200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7own6b24p"
+        }
+      },
+      "151": {
+        "title": "Vers les Examens Blancs Nationaux",
+        "volume": "20",
+        "timestamp": 1747946040,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gelxjyr"
+        }
+      },
+      "152": {
+        "title": "Évaluation",
+        "volume": "20",
+        "timestamp": 1748516400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwgxrjyd"
+        }
+      },
+      "153": {
+        "title": "Le Mur à Franchir",
+        "volume": "20",
+        "timestamp": 1749834600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wxgapzyx"
+        }
+      },
+      "154": {
+        "title": "Kyoko et Keichiro",
+        "volume": "20",
+        "timestamp": 1750456200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wxdqmgyx"
+        }
+      },
+      "155": {
+        "title": "Keichiro et Kyoko",
+        "volume": "20",
+        "timestamp": 1751229000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg7356keg4r"
+        }
+      },
+      "156": {
+        "title": "Une Douceur et un Parfum Sucré",
+        "volume": "20",
+        "timestamp": 1752321600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24a8lneg7l"
+        }
+      },
+      "157": {
+        "title": "Le Festival d'Été de cette Année",
+        "volume": "",
+        "timestamp": 1752701400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jg2ev948"
+        }
+      },
+      "158": {
+        "title": "Étincelles",
+        "volume": "",
+        "timestamp": 1753293600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yx86mgk7q"
+        }
+      },
+      "159": {
+        "title": "Découverte",
+        "volume": "",
+        "timestamp": 1753909200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "bp455abdn45"
+        }
+      },
+      "160": {
+        "title": "Soutien",
+        "volume": "",
+        "timestamp": 1755532800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4j89g5378"
+        }
+      },
+      "161": {
+        "title": "Détermination",
+        "volume": "",
+        "timestamp": 1755716400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "na7k8mwnw78"
+        }
+      },
+      "162": {
+        "title": "Confrontation",
+        "volume": "",
+        "timestamp": 1756324800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7loodop7x"
+        }
+      },
+      "163": {
+        "title": "Alliés",
+        "volume": "",
+        "timestamp": 1757696400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "xny8m88627b"
+        }
+      },
+      "164": {
+        "title": "M. Tsukada",
+        "volume": "",
+        "timestamp": 1758281400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yx3a9bmyq"
+        }
+      },
+      "165": {
+        "title": "Face-à-Face",
+        "volume": "",
+        "timestamp": 1758832200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "924938jaa4n"
+        }
+      },
+      "166": {
+        "title": "En tant que confrère",
+        "volume": "",
+        "timestamp": 1759959000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a8463gw5w4x"
+        }
+      },
+      "167": {
+        "title": "D'une sincérité déconcertante",
+        "volume": "",
+        "timestamp": 1760630400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a8463p6xv4x"
+        }
+      },
+      "127.5": {
+        "title": "Extra volume 17",
+        "volume": "17",
+        "timestamp": 1749481200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyv9e9ab78"
+        }
+      },
+      "127.6": {
+        "title": "Extra volume 17 - Full.Colo",
+        "volume": "17",
+        "timestamp": 1750528200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wxdpbgyx"
+        }
+      },
+      "149.5": {
+        "title": "Chapitre Bonus - Kaoruko L'artiste",
+        "volume": "19",
+        "timestamp": 1757343600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24ajmw924l"
+        }
+      },
+      "136.5": {
+        "title": "L'affaire de la glace",
+        "volume": "18",
+        "timestamp": 1754838000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvrewak78"
+        }
+      },
+      "2.5": {
+        "title": "La Cliente Régulière",
+        "volume": "20",
+        "timestamp": 1751410800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "bp4556b2x45"
+        }
+      },
+      "5.5": {
+        "title": "Extras Volume 1",
+        "volume": "1",
+        "timestamp": 1685577600,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "13.5": {
+        "title": "Extras Volume 2",
+        "volume": "2",
+        "timestamp": 1694044800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "12.5": {
+        "title": "Après le coup de fil",
+        "volume": "2",
+        "timestamp": 1687132800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "16.5": {
+        "title": "Après le coup de fil",
+        "volume": "3",
+        "timestamp": 1694304000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "27.5": {
+        "title": "Subaru veut lui dire",
+        "volume": "4",
+        "timestamp": 1707868800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "29.6": {
+        "title": "Extra Twitter volume 4",
+        "volume": "4",
+        "timestamp": 1708560000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwv6lyk"
+        }
+      },
+      "29.5": {
+        "title": "Extra volume 4",
+        "volume": "4",
+        "timestamp": 1707868800,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "37.5": {
+        "title": "Un jour spécial",
+        "volume": "5",
+        "timestamp": 1682899200,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo",
+          "BlueSolo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a846wjv5oyx"
+        }
+      },
+      "37.6": {
+        "title": "Extra volume 5",
+        "volume": "5",
+        "timestamp": 1707955200,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "agyvqkm9j48"
+        }
+      },
+      "37.7": {
+        "title": "Extra Twitter volume 5",
+        "volume": "5",
+        "timestamp": 1708646400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yxrwz8qyq"
+        }
+      },
+      "45.5": {
+        "title": "Extra Twitter volume 6",
+        "volume": "6",
+        "timestamp": 1708992000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkargx78"
+        }
+      },
+      "53.5": {
+        "title": "Les inquiétudes d'une jeune fille",
+        "volume": "7",
+        "timestamp": 1708041600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yxrwz3qyq"
+        }
+      },
+      "53.6": {
+        "title": "Extra volume 7",
+        "volume": "7",
+        "timestamp": 1708041600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9p4nw958m4n"
+        }
+      },
+      "53.7": {
+        "title": "Extra Twitter volume 7",
+        "volume": "7",
+        "timestamp": 1708992000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ne7bdm8qj45"
+        }
+      },
+      "56.5": {
+        "title": "Frère et sœur",
+        "volume": "8",
+        "timestamp": 1708128000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgveoqyx"
+        }
+      },
+      "61.5": {
+        "title": "Extra volume 8",
+        "volume": "8",
+        "timestamp": 1708128000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkare378"
+        }
+      },
+      "61.6": {
+        "title": "Extra Twitter volume 8",
+        "volume": "8",
+        "timestamp": 1709078400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxlnad42"
+        }
+      },
+      "77.5": {
+        "title": "Extra volume 10",
+        "volume": "10",
+        "timestamp": 1708300800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "vj4jkarn378"
+        }
+      },
+      "76.5": {
+        "title": "Kyouko et Keichiro",
+        "volume": "10",
+        "timestamp": 1708300800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ljyqxln5d42"
+        }
+      },
+      "77.6": {
+        "title": "Extra Twitter volume 10",
+        "volume": "10",
+        "timestamp": 1709510400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwvnayk"
+        }
+      },
+      "85.5": {
+        "title": "Les pensées de Sotaro Tsumugi",
+        "volume": "11",
+        "timestamp": 1708387200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "ej7mwxgv9yd"
+        }
+      },
+      "85.6": {
+        "title": "Extra volume 11",
+        "volume": "11",
+        "timestamp": 1708387200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnz6gyr"
+        }
+      },
+      "87.5": {
+        "title": "Kaoruko et l'uniforme scolaire",
+        "volume": "12",
+        "timestamp": 1719014400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "lqye2e9nmyd"
+        }
+      },
+      "93.5": {
+        "title": "Extra volume 12",
+        "volume": "12",
+        "timestamp": 1719014400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qe4gjgopq4j"
+        }
+      },
+      "85.7": {
+        "title": "Extra Twitter volume 11",
+        "volume": "11",
+        "timestamp": 1709683200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qb4zezam54j"
+        }
+      },
+      "100.6": {
+        "title": "Extra volume 13",
+        "volume": "13",
+        "timestamp": 1724198400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "o24aqrznd7l"
+        }
+      },
+      "93.6": {
+        "title": "Extra Twitter volume 12",
+        "volume": "12",
+        "timestamp": 1719014400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "bp45pla6ny5"
+        }
+      },
+      "100.5": {
+        "title": "Le chemin du retour",
+        "volume": "13",
+        "timestamp": 1724198400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "a846wjv6zyx"
+        }
+      },
+      "107.5": {
+        "title": "Le retour de l'anniversaire + Extra volume 14",
+        "volume": "14",
+        "timestamp": 1728432000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "qe4gjgo8q4j"
+        }
+      },
+      "112.5": {
+        "title": "En route pour l'examen blanc + Extra volume 15",
+        "volume": "15",
+        "timestamp": 1736553600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "m9yxrwzqpyq"
+        }
+      },
+      "124.5": {
+        "title": "Les courses + Extra volume 16",
+        "volume": "16",
+        "timestamp": 1744675200,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "9rydmwv36yk"
+        }
+      },
+      "21.5": {
+        "title": "Extras Volume 3",
+        "volume": "3",
+        "timestamp": 1705968000,
+        "licensed": true,
+        "teams": [
+          "Big_herooooo"
+        ]
+      },
+      "21.6": {
+        "title": "Extra Twitter volume 2+3",
+        "volume": "3",
+        "timestamp": 1708473600,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "wl7lgved3yx"
+        }
+      },
+      "64.5": {
+        "title": "La détermination de Kaoruko",
+        "volume": "9",
+        "timestamp": 1708214400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "pg73gnz3oyr"
+        }
+      },
+      "69.5": {
+        "title": "Extra volume 9",
+        "volume": "9",
+        "timestamp": 1708214400,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "n87wd3w2q4x"
+        }
+      },
+      "69.6": {
+        "title": "Extra Twitter volume 9",
+        "volume": "9",
+        "timestamp": 1709164800,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "lqye2e9ozyd"
+        }
+      },
+      "156.5": {
+        "title": "Extra volume 20",
+        "volume": "20",
+        "timestamp": 1760436000,
+        "licensed": false,
+        "teams": [
+          "Big_herooooo"
+        ],
+        "source": {
+          "service": "imagechest",
+          "id": "md7oaede9yp"
+        }
       }
     }
-  }
 }

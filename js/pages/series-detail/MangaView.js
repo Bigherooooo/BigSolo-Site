@@ -230,7 +230,7 @@ function displayChapterList({ sort, search }) {
  */
 function renderChapterItem(chapterData) {
   const seriesSlug = currentSeriesData.slug;
-  const isLicensed = chapterData.licencied === true;
+  const isLicensed = chapterData.licensed === true;
 
   const cardClasses = ["chapter-card-list-item"];
   if (isLicensed) {
@@ -260,7 +260,7 @@ function renderChapterItem(chapterData) {
     : 0;
   const displayComments = serverCommentCount;
 
-  const imgchestId = chapterData.groups?.Big_herooooo?.split("/").pop() || "";
+  const imgchestId = !chapterData.licensed && chapterData.source?.id;
 
   const viewsHtml = imgchestId
     ? `<span class="chapter-card-list-views detail-chapter-views" data-imgchest-id="${imgchestId}">

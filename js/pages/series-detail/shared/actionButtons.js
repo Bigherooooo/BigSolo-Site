@@ -12,11 +12,11 @@ function enrichEpisodesWithAbsoluteIndex(episodes) {
 
   const episodesWithSeason = episodes.map((ep) => ({
     ...ep,
-    saison_ep: ep.saison_ep || 1,
+    season: ep.season || 1,
   }));
 
   const episodesBySeason = episodesWithSeason.reduce((acc, ep) => {
-    const season = ep.saison_ep;
+    const season = ep.season;
     if (!acc[season]) acc[season] = [];
     acc[season].push(ep);
     return acc;
@@ -30,7 +30,7 @@ function enrichEpisodesWithAbsoluteIndex(episodes) {
 
   sortedSeasons.forEach((seasonNum) => {
     const seasonEpisodes = episodesBySeason[seasonNum].sort(
-      (a, b) => a.indice_ep - b.indice_ep
+      (a, b) => a.number - b.number
     );
     seasonEpisodes.forEach((ep) => {
       enrichedEpisodes.push({ ...ep, absolute_index: absoluteIndexCounter });
@@ -76,7 +76,7 @@ export function renderActionButtons(viewContainer, seriesData, viewType) {
 
   const labels = {
     manga: { singular: "chapitre", plural: "chapitres", prefix: "Ch." },
-    anime: { singular: "épisode", plural: "épisodes", prefix: "Ep." },
+    anime: { singular: "épisode", plural: "épisodes", prefix: "Ép." },
   };
   const currentLabels = labels[viewType];
   const urlPath = viewType === "manga" ? "" : "/episodes";
@@ -105,14 +105,14 @@ export function renderActionButtons(viewContainer, seriesData, viewType) {
       itemsExist = true;
       const lastEpisode = enrichedEpisodes[enrichedEpisodes.length - 1];
       lastItemKey = lastEpisode.absolute_index;
-      lastItemLabel = `S${lastEpisode.saison_ep} ${currentLabels.prefix} ${lastEpisode.indice_ep}`;
+      lastItemLabel = `S${lastEpisode.season} ${currentLabels.prefix} ${lastEpisode.number}`;
 
       if (savedProgress) {
         const continueEpisode = enrichedEpisodes.find(
           (e) => e.absolute_index.toString() === savedProgress
         );
         if (continueEpisode) {
-          continueItemLabel = `S${continueEpisode.saison_ep} ${currentLabels.prefix} ${continueEpisode.indice_ep}`;
+          continueItemLabel = `S${continueEpisode.season} ${currentLabels.prefix} ${continueEpisode.number}`;
         }
       }
     }

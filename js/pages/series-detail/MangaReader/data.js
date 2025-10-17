@@ -153,7 +153,7 @@ export async function fetchAndLoadPages(initialPageNumber = 1) {
 
     // 1. Récupérer la liste des URLs des pages
     const CONFIG = await loadGlobalConfig();
-    const chapterId = state.currentChapter.groups.Big_herooooo.split("/").pop();
+    const chapterId = state.currentChapter.source.id;
     const apiUrl = `${CONFIG.URL_API_IMGCHEST}?id=${chapterId}`;
     const pagesData = await fetch(apiUrl).then((res) => res.json());
 

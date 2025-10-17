@@ -10,7 +10,6 @@ import {
 } from "./navigation.js";
 import {
   init as initProgressBar,
-  render as renderProgressBar,
 } from "./components/progressBar.js";
 import { loadSettings, saveSettings } from "./settings.js";
 import { fetchSeriesStats } from "../../../utils/interactions.js";
@@ -65,7 +64,7 @@ export async function initMangaReader() {
       number: readerData.chapterNumber,
     };
     state.allChapterKeys = Object.keys(readerData.series.chapters)
-      .filter((key) => readerData.series.chapters[key].groups?.Big_herooooo)
+      .filter((key) => readerData.series.chapters[key].source?.id)
       .sort((a, b) => parseFloat(a) - parseFloat(b));
 
     saveReadingProgress();

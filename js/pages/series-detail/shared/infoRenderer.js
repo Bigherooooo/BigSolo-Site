@@ -43,7 +43,7 @@ function renderBannerAndCover(container, seriesData, viewType) {
   const coverImg = qs(".detail-cover", container);
   const seriesSlug = seriesData.slug;
 
-  const mangaCoverUrl = seriesData.cover_low || seriesData.cover_hq;
+  const mangaCoverUrl = seriesData.covers[0].url_hq || seriesData.covers[0].url_lq;
 
   let primaryCoverUrl;
 
@@ -84,7 +84,7 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
   const data = viewType === "anime" ? animeData : seriesData;
 
   const jpTitleElem = qs(".detail-jp-title", container);
-  if (jpTitleElem) jpTitleElem.textContent = seriesData.jp_title || "";
+  if (jpTitleElem) jpTitleElem.textContent = seriesData.ja_title || "";
 
   const titleElem = qs(".detail-title", container);
   if (titleElem) titleElem.textContent = seriesData.title || "";
@@ -99,9 +99,9 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
   const statusElem = qs(".status-indicator", container);
   if (statusElem) {
     const statusText =
-      (viewType === "anime"
-        ? animeData?.status_an
-        : seriesData.release_status) || "?";
+      (viewType === "anime" && animeData
+        ? animeData.status
+        : seriesData.status) || "?";
     let statusClass = "";
     const statusLower = statusText.toLowerCase();
     if (statusLower.includes("fini")) {
@@ -114,8 +114,8 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
       statusClass = "ongoing";
     }
     let dateText =
-      (viewType === "anime"
-        ? animeData?.date_start_an
+      (viewType === "anime" && animeData
+        ? animeData.date_start
         : seriesData.release_year) || "";
     statusElem.innerHTML = `<span class="status-dot ${statusClass}"></span>${statusText} ${dateText ? `- ${dateText}` : ""}`;
   }
@@ -133,7 +133,7 @@ function renderCreatorInfo(container, seriesData, animeData, viewType) {
   if (!metaElem) return;
 
   if (viewType === "anime") {
-    const studio = animeData?.studios_an?.join(", ") || "?";
+    const studio = animeData?.studios?.join(", ") || "?";
     metaElem.innerHTML = `Studio : ${studio}`;
   } else {
     if (
@@ -142,6 +142,9 @@ function renderCreatorInfo(container, seriesData, animeData, viewType) {
       seriesData.author === seriesData.artist
     ) {
       metaElem.innerHTML = `Auteur & Artiste : ${seriesData.author}`;
+      if (seriesData.teams) {
+        metaElem.innerHTML += `<br>Traduction : ${seriesData.teams.join(", ")}`;
+      }
     } else {
       metaElem.innerHTML = `Auteur : ${
         seriesData.author || "?"
@@ -177,7 +180,7 @@ function renderDescription(container, seriesData, viewType) {
     if (moreInfos) {
       const altTitles = (seriesData.alternative_titles || []).join(", ");
       moreInfos.innerHTML = `
-              <div><strong>Type :</strong> ${seriesData.manga_type || "?"}</div>
+              <div><strong>Type / Démographie :</strong> ${seriesData.demographic || "?"}</div>
               <div><strong>Magazine :</strong> ${
                 seriesData.magazine || "?"
               }</div>
