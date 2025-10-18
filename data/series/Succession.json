@@ -3,23 +3,33 @@
   "description": "Séduite par un manga anonyme qui s'efface mystérieusement de sa mémoire, une lectrice se met à en écrire sa propre version pour combattre cet oubli. Elle la publie à son tour, dans l'espoir de retrouver la trace de l'insaisissable auteur original.",
   "artist": "Tyomevv2",
   "author": "Tyomevv2",
-  "cover_hq": "https://cdn.imgchest.com/files/45xcv8828o7.png",
-  "cover_low": "https://cdn.imgchest.com/files/f8bda4461055.jpg",
-  "manga_type": "Seinen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/45xcv8828o7.png",
+      "url_lq": "https://cdn.imgchest.com/files/f8bda4461055.jpg"
+    }
+  ],
+  "demographic": "Seinen",
   "magazine": "Twitter",
   "release_year": 2024,
   "tags": ["Mystère", "Fantaisie", "Tranche de vie"],
-  "jp_title": "継ぎ穂",
+  "ja_title": "継ぎ穂",
   "alternative_titles": ["Greffon"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Succession",
-      "volume": "",
-      "last_updated": "1753214400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nj99q5yn"
+      "timestamp": 1753214400,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "9p4nj99q5yn"
       }
     }
   }

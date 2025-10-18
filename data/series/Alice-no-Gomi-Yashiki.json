@@ -3,23 +3,33 @@
   "description": "Plongée dans un univers de solitude, Alice s'accroche à des objets qui cachent ses blessures. Mais jusqu'à quand pourra-t-elle éviter d'affronter la réalité ?",
   "artist": "Izumi Mitsu",
   "author": "Izumi Mitsu",
-  "cover_hq": "https://cdn.imgchest.com/files/e87f2b4da7dd.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/224c315ee90e.jpg",
-  "manga_type": "Seinen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/e87f2b4da7dd.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/224c315ee90e.jpg"
+    }
+  ],
+  "demographic": "Seinen",
   "magazine": "Twitter",
   "release_year": 2014,
   "tags": ["Drame", "Histoire", "Tranche de vie"],
-  "jp_title": "アリスのごみ屋敷",
+  "ja_title": "アリスのごみ屋敷",
   "alternative_titles": ["Alice no Gomi Yashiki", "Alice in Trash Land"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Alice au pays des ordures",
-      "volume": "",
-      "last_updated": "1727301600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/agyvq3md948"
+      "timestamp": 1727301600,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "agyvq3md948"
       }
     }
   }

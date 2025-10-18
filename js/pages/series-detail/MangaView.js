@@ -201,8 +201,8 @@ function displayChapterList({ sort, search }) {
 
   chapters.sort((a, b) => {
     if (sort.type === "date") {
-      const dateA = parseDateToTimestamp(a.last_updated);
-      const dateB = parseDateToTimestamp(b.last_updated);
+      const dateA = parseDateToTimestamp(a.timestamp);
+      const dateB = parseDateToTimestamp(b.timestamp);
       return sort.order === "desc" ? dateB - dateA : dateA - dateB;
     }
     const numA = parseFloat(a.id);

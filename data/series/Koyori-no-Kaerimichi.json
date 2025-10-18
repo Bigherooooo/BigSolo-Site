@@ -3,23 +3,33 @@
   "description": "Un jour, Koyori, une jeune fille, voit soudain un fil rouge s'enrouler autour de son petit doigt. Séchant l'école, elle suit le fil et rencontre Beniko, une jeune fille voyageant seule. Que verront-elles toutes les deux au bout du fil ?",
   "artist": "Ashioka Rangyo",
   "author": "Ashioka Rangyo",
-  "cover_hq": "https://cdn.imgchest.com/files/ca4bfe21d70a.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/ffbf5113d54c.jpg",
-  "manga_type": "Shonen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/ca4bfe21d70a.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/ffbf5113d54c.jpg"
+    }
+  ],
+  "demographic": "Shonen",
   "magazine": "Shonen Jump Plus",
   "release_year": 2024,
   "tags": ["Drame", "Fantaisie", "Surnaturel"],
-  "jp_title": "こよりの帰り道",
+  "ja_title": "こよりの帰り道",
   "alternative_titles": ["Koyori no Kaerimichi"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Le fil rouge de Koyori",
-      "volume": "",
-      "last_updated": "1714514400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/a846wevbvyx"
+      "timestamp": 1714514400,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "a846wevbvyx"
       }
     }
   }

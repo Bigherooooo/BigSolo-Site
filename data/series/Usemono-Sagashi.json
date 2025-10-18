@@ -3,23 +3,33 @@
   "description": "Un chercheur d'objets perdus, engagé par un client mystérieux, découvre un secret troublant qui révèle les liens profonds entre humains et objets, mettant à l'épreuve sa propre mission et ses valeurs...",
   "artist": "Muji Mujina",
   "author": "Muji Mujina",
-  "cover_hq": "https://cdn.imgchest.com/files/5bf7b0d20674.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/9a8bbe1e2218.jpg",
-  "manga_type": "Shonen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/5bf7b0d20674.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/9a8bbe1e2218.jpg"
+    }
+  ],
+  "demographic": "Shonen",
   "magazine": "Weekly Shonen Jump",
   "release_year": 2024,
   "tags": ["Action", "Fantôme", "Samouraï", "Aventure", "Magie", "Surnaturel"],
-  "jp_title": "失せモノ探し",
+  "ja_title": "失せモノ探し",
   "alternative_titles": ["The Hunt for the Usemono"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Usemono Sagashi",
-      "volume": "",
-      "last_updated": "1722204000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/wl7lgnekpyx"
+      "timestamp": 1722204000,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "wl7lgnekpyx"
       }
     }
   }

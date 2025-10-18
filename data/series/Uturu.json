@@ -3,23 +3,33 @@
   "description": "One Shot de Uchida Akira",
   "artist": "Uchida Akira",
   "author": "Uchida Akira",
-  "cover_hq": "https://cdn.imgchest.com/files/4116fe17fe28.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/1128d0289663.jpg",
-  "manga_type": "Seinen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/4116fe17fe28.png",
+      "url_lq": "https://cdn.imgchest.com/files/1128d0289663.jpg"
+    }
+  ],
+  "demographic": "Seinen",
   "magazine": "Twitter",
   "release_year": 2023,
   "tags": ["Drame", "Fantaisie"],
-  "jp_title": "ウツル",
+  "ja_title": "ウツル",
   "alternative_titles": [""],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Uturu",
-      "volume": "",
-      "last_updated": "1718481600",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/ne7bdeomn45"
+      "timestamp": 1718481600,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "ne7bdeomn45"
       }
     }
   }

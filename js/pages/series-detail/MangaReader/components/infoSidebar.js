@@ -302,7 +302,7 @@ function renderChapterStats() {
   }">${displayLikes}</span></span>
             <span title="Commentaires"><i class="fas fa-comment"></i> ${displayComments}</span>
             <span title="Date de sortie"><i class="fas fa-clock"></i> ${timeAgo(
-              state.currentChapter.last_updated
+              state.currentChapter.timestamp
             )}</span>
         </div>`;
 }

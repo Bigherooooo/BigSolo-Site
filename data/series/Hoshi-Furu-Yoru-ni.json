@@ -3,23 +3,33 @@
   "description": "Deux amis partagent une nuit sous les étoiles, discutant et savourant chaque instant avant l'inévitable...",
   "artist": "Iwamune Haruo",
   "author": "Iwamune Haruo",
-  "cover_hq": "https://cdn.imgchest.com/files/95d20e38a75a.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/99636e8cdfcd.jpg",
-  "manga_type": "Seinen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/95d20e38a75a.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/99636e8cdfcd.jpg"
+    }
+  ],
+  "demographic": "Seinen",
   "magazine": "Harta 2021",
   "release_year": 2021,
   "tags": ["Tranche de vie", "Fantaisie", "Post-appocalyptique"],
-  "jp_title": "星降る夜に",
+  "ja_title": "星降る夜に",
   "alternative_titles": ["On a Starry Night", "Hoshi Furu Yoru ni"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Sous une nuit étoilée",
-      "volume": "",
-      "last_updated": "1711922400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9qpgeyp"
+      "timestamp": 1711922400,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "6eyr9qpgeyp"
       }
     }
   }

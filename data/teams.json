@@ -1,19 +1,23 @@
 {
-    "BigSolo": {
-        "name": "BigSolo"
-    },
     "Big_herooooo": {
         "name": "Big_herooooo"
+    },
+    "MaisonOS": {
+        "name": "La maison des OS",
+        "short": "OS"
+    },
+    "BigSolo": {
+        "name": "BigSolo"
     },
     "BlueSolo": {
         "name": "Blue Solo",
         "short": "BS"
     },
+    "apix": {
+        "name": "apix"
+    },
     "IsekaiMonarchy": {
         "name": "Isekai Monarchy",
         "short": "IM"
-    },
-    "apix": {
-        "name": "apix"
     }
 }

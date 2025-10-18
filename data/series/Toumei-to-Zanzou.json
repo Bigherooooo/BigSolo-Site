@@ -3,23 +3,33 @@
   "description": "Shoko, une artiste en herbe, gagne sa vie en dessinant des portraits. Un jour, un jeune homme enveloppé de bandages lui demande de faire son autoportrait, mais il s'avère qu'il s'agit en fait d'un homme invisible...",
   "artist": "Ashioka Rangyo",
   "author": "Ashioka Rangyo",
-  "cover_hq": "https://cdn.imgchest.com/files/a5ae415e378d.png",
-  "cover_low": "https://cdn.imgchest.com/files/0d63474e6629.jpg",
-  "manga_type": "Shonen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/a5ae415e378d.png",
+      "url_lq": "https://cdn.imgchest.com/files/0d63474e6629.jpg"
+    }
+  ],
+  "demographic": "Shonen",
   "magazine": "Shonen Jump Plus",
   "release_year": 2025,
   "tags": ["Drame", "Art", "Psychologie"],
-  "jp_title": "透明と残像",
+  "ja_title": "透明と残像",
   "alternative_titles": ["Toumei to Zanzou", "Drawing the Invisible"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Dessiner l'invisible",
-      "volume": "",
-      "last_updated": "1746655200",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/bp45pwaaxy5"
+      "timestamp": 1746655200,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "bp45pwaaxy5"
       }
     }
   }

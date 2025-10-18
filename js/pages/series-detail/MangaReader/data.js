@@ -1,10 +1,8 @@
 // --- File: js/pages/series-detail/MangaReader/data.js ---
 
 import { qs } from "../../../utils/domUtils.js";
-import { loadGlobalConfig } from "../../../utils/fetchUtils.js";
 import { state, domImages, setDomImages } from "./state.js";
 import { goToSpread } from "./navigation.js";
-import { render as renderViewer } from "./components/viewer.js";
 
 /**
  * Calcule la disposition des planches (spreads).
@@ -152,9 +150,8 @@ export async function fetchAndLoadPages(initialPageNumber = 1) {
     }
 
     // 1. Récupérer la liste des URLs des pages
-    const CONFIG = await loadGlobalConfig();
     const chapterId = state.currentChapter.source.id;
-    const apiUrl = `${CONFIG.URL_API_IMGCHEST}?id=${chapterId}`;
+    const apiUrl = `/api/imgchest-chapter-pages?id=${chapterId}`;
     const pagesData = await fetch(apiUrl).then((res) => res.json());
 
     if (

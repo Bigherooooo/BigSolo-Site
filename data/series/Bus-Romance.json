@@ -3,23 +3,33 @@
   "description": "Une jeune femme observe secrètement l'homme qu'elle aime dans le bus. Un jour, tout change...",
   "artist": "itukaki",
   "author": "itukaki",
-  "cover_hq": "https://cdn.imgchest.com/files/5aeeea9defc0.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/03cf772d5273.jpg",
-  "manga_type": "Shonen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/5aeeea9defc0.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/03cf772d5273.jpg"
+    }
+  ],
+  "demographic": "Shonen",
   "magazine": "Twitter",
   "release_year": 2023,
   "tags": ["Comedie", "Romance", "Tranche de vie"],
-  "jp_title": "バスロマンス",
+  "ja_title": "バスロマンス",
   "alternative_titles": [""],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Bus Romance",
-      "volume": "",
-      "last_updated": "1725660000",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/9p4nwp5lz4n"
+      "timestamp": 1725660000,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "9p4nwp5lz4n"
       }
     }
   }

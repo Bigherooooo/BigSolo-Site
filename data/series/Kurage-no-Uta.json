@@ -3,23 +3,33 @@
   "description": "Kazuma, passionné de course de haies, découvre qu'Otoha, une lycéenne devenue chanteuse populaire. S'encourageant mutuellement à surmonter leurs épreuves !",
   "artist": "Saka Mikami",
   "author": "Saka Mikami",
-  "cover_hq": "https://cdn.imgchest.com/files/ffcff507f252.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/b631c7dc2e1c.jpg",
-  "manga_type": "Shonen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/ffcff507f252.png",
+      "url_lq": "https://cdn.imgchest.com/files/b631c7dc2e1c.jpg"
+    }
+  ],
+  "demographic": "Shonen",
   "magazine": "Pocket Shonen Magazine",
   "release_year": 2021,
   "tags": ["Sports", "Drame", "Vie étudiante", "Tranche de vie", "Musique"],
-  "jp_title": "海月のうた",
+  "ja_title": "海月のうた",
   "alternative_titles": ["Kurage no Uta", "Song of the Jellyfish"],
-  "release_status": "Fini",
+  "status": "Fini",
   "os": true,
+  "teams": [
+    "Big_herooooo"
+  ],
   "chapters": {
     "0": {
       "title": "Kurage no Uta",
-      "volume": "",
-      "last_updated": "1714946400",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/6eyr9qp8gyp"
+      "timestamp": 1714946400,
+      "teams": [
+        "Big_herooooo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "6eyr9qp8gyp"
       }
     }
   }

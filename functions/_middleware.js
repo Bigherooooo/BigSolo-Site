@@ -57,6 +57,10 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
 
+  if (url.pathname.startsWith("/data/") && url.pathname.endsWith(".json")) {
+    return new Response("Not Found", { status: 404 });
+  }
+
   const knownPrefixes = [
     "/css/",
     "/js/",

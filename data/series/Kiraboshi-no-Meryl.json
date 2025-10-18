@@ -3,9 +3,13 @@
   "description": "Dans un monde où les étoiles cachent bien des secrets, Kosei découvre qu'un simple héritage peut bouleverser son destin et celui de la Terre... ",
   "artist": "Kawaguchi Yuuki",
   "author": "Kawaguchi Yuuki",
-  "cover_hq": "https://cdn.imgchest.com/files/926786a1f5d1.jpg",
-  "cover_low": "https://cdn.imgchest.com/files/d873d4ebe310.jpg",
-  "manga_type": "Shonen",
+  "covers": [
+    {
+      "url_hq": "https://cdn.imgchest.com/files/926786a1f5d1.jpg",
+      "url_lq": "https://cdn.imgchest.com/files/d873d4ebe310.jpg"
+    }
+  ],
+  "demographic": "Shonen",
   "magazine": "Shonen Jump Plus",
   "release_year": 2019,
   "tags": [
@@ -17,18 +21,33 @@
     "Aliens",
     "Surnaturel"
   ],
-  "jp_title": "綺羅星のメリル",
-  "alternative_titles": ["Meryl Of The Glittering Stars"],
-  "release_status": "Fini",
+  "ja_title": "綺羅星のメリル",
+  "alternative_titles": [
+    "Meryl Of The Glittering Stars"
+  ],
+  "status": "Fini",
   "os": true,
+  "teams": [
+    [
+      "MaisonOS",
+      "Big_herooooo"
+    ],
+    "BlueSolo"
+  ],
   "chapters": {
     "0": {
       "title": "Kiraboshi no Meryl",
-      "volume": "",
-      "last_updated": "1729375200",
-      "collab": "BlueSolo",
-      "groups": {
-        "Big_herooooo": "/proxy/api/imgchest/chapter/na7km93eb48"
+      "timestamp": 1729375200,
+      "teams": [
+        [
+          "MaisonOS",
+          "Big_herooooo"
+        ],
+        "BlueSolo"
+      ],
+      "source": {
+        "service": "imgchest",
+        "id": "na7km93eb48"
       }
     }
   }

@@ -34,49 +34,28 @@ function truncateText(text, maxLength) {
 // --- LOGIQUE DU HERO CAROUSEL ---
 
 function renderHeroSlide(series) {
-  const seriesData = series.data;
-  const jsonFilename = series.filename;
-  const heroColor = series.color;
-  const heroColorRgb = hexToRgb(heroColor);
-  const seriesSlug = slugify(seriesData.title);
+  const heroColorRgb = hexToRgb(series.color);
+  const seriesSlug = series.slug;
 
-  // --- LOGIQUE DE GÉNÉRATION DES BOUTONS ---
-  let latestChapter = null;
-  const chaptersArray = Object.entries(seriesData.chapters)
-    .map(([chapNum, chapData]) => ({ chapter: chapNum, ...chapData }))
-    .filter((chap) => chap.groups && chap.groups.Big_herooooo)
-    .sort(
-      (a, b) =>
-        parseFloat(String(b.chapter).replace(",", ".")) -
-        parseFloat(String(a.chapter).replace(",", "."))
-    );
-  if (chaptersArray.length > 0) {
-    latestChapter = chaptersArray[0];
-  }
-
-  let latestEpisode = null;
-  if (seriesData.episodes && seriesData.episodes.length > 0) {
-    latestEpisode = [...seriesData.episodes].sort(
-      (a, b) => b.indice_ep - a.indice_ep
-    )[0];
-  }
+  let latestChapter = series.last_chapter;
+  let latestEpisode = series.last_episode;
 
   const hasBothButtons = latestChapter && latestEpisode;
 
   // Création des boutons pour le DESKTOP (texte long)
   let desktopChapterButtonHtml = "";
   if (latestChapter) {
-    if (latestChapter.chapter == 0) {
+    if (latestChapter.number == 0) {
       desktopChapterButtonHtml = `<a href="/${seriesSlug}/0" class="hero-cta-button">Lire le One-shot</a>`;
     } else {
       desktopChapterButtonHtml = `<a href="/${seriesSlug}/${String(
-        latestChapter.chapter
-      )}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.chapter})</a>`;
+        latestChapter.number
+      )}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.number})</a>`;
     }
   }
   let desktopEpisodeButtonHtml = "";
   if (latestEpisode) {
-    desktopEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Dernier épisode (Ép. ${latestEpisode.indice_ep})</a>`;
+    desktopEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.number}" class="hero-cta-button-anime">Dernier épisode (Ép. ${latestEpisode.number})</a>`;
   }
 
   // Création des boutons pour le MOBILE
@@ -85,15 +64,15 @@ function renderHeroSlide(series) {
 
   if (hasBothButtons) {
     mobileChapterButtonHtml = `<a href="/${seriesSlug}/${String(
-      latestChapter.chapter
-    )}" class="hero-cta-button">Chapitre ${latestChapter.chapter}</a>`;
+      latestChapter.number
+    )}" class="hero-cta-button">Chapitre ${latestChapter.number}</a>`;
 
-    mobileEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.indice_ep}" class="hero-cta-button-anime">Épisode ${latestEpisode.indice_ep}</a>`;
+    mobileEpisodeButtonHtml = `<a href="/${seriesSlug}/episodes/${latestEpisode.number}" class="hero-cta-button-anime">Épisode ${latestEpisode.number}</a>`;
   }
 
   // --- FIN DE LA LOGIQUE DES BOUTONS ---
 
-  let statusText = seriesData.release_status || "En cours";
+  let statusText = series.status || "En cours";
   let statusClass = "";
   const statusLower = statusText.toLowerCase();
   if (statusLower.includes("fini")) {
@@ -111,31 +90,30 @@ function renderHeroSlide(series) {
   let mobileStatusHtml = `<div class="hero-mobile-status">${statusHtml}</div>`;
   let mobileActionsHtml = `<div class="hero-mobile-actions">${mobileChapterButtonHtml}${mobileEpisodeButtonHtml}</div>`;
 
-  const backgroundImageUrl = seriesData.cover_hq || seriesData.cover_low;
-  const characterImageUrl = `/img/reco/${jsonFilename.replace(".json", ".png")}`;
-  const description = seriesData.description
-    ? seriesData.description.replace(/"/g, "&quot;")
+  const backgroundImageUrl = series.cover.url_hq || series.cover.url_lq;
+  const description = series.description
+    ? series.description.replace(/"/g, "&quot;")
     : "Aucune description.";
 
-  const typeTag = seriesData.os
-    ? `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${heroColor};">One-shot</span>`
+  const typeTag = series.os
+    ? `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${series.color};">One-shot</span>`
     : "";
 
   return `
-    <div class="hero-slide" style="--bg-image: url('${backgroundImageUrl}'); --hero-color: ${heroColor}; --hero-color-rgb: ${heroColorRgb};">
+    <div class="hero-slide" style="--bg-image: url('${backgroundImageUrl}'); --hero-color: ${series.color}; --hero-color-rgb: ${heroColorRgb};">
       <div class="hero-slide-content">
         <div class="hero-info">
           <div class="hero-info-top">
             <p class="recommended-title">Recommandé</p>
             <a href="/${seriesSlug}" class="hero-title-link">
-              <h2 class="hero-series-title">${seriesData.title}</h2>
+              <h2 class="hero-series-title">${series.title}</h2>
             </a>
             <div class="hero-tags">
               ${typeTag}
-              ${(seriesData.tags || [])
-                .slice(0, 4)
-                .map((tag) => `<span class="tag">${tag}</span>`)
-                .join("")}
+              ${(series.tags || [])
+      .slice(0, 4)
+      .map((tag) => `<span class="tag">${tag}</span>`)
+      .join("")}
             </div>
             <div class="hero-mobile-status mobile-only">
               ${mobileStatusHtml}
@@ -150,14 +128,15 @@ function renderHeroSlide(series) {
           </div>
         </div>
         <div class="hero-image">
-          <img src="${characterImageUrl}" alt="${seriesData.title}" onerror="this.style.display='none'">
+          <img src="${series.character_image}" alt="${series.title}" onerror="this.style.display='none'">
         </div>
       </div>
     </div>
   `;
 }
 
-async function initHeroCarousel() {
+async function initHeroCarousel(allSeries) {
+  const recommendedSeries = allSeries.reco;
   const track = qs(".hero-carousel-track");
   const navContainer = qs(".hero-carousel-nav");
   const nextBtn = qs(".hero-carousel-arrow.next");
@@ -166,15 +145,8 @@ async function initHeroCarousel() {
   if (!track || !navContainer || !nextBtn || !prevBtn) return;
 
   try {
-    const recommendedItems = await fetchData("/data/reco.json");
-    if (!recommendedItems || recommendedItems.length === 0)
-      throw new Error("reco.json est vide ou introuvable.");
-
-    const seriesDataPromises = recommendedItems.map(async (item) => {
-      const data = await fetchData(`/data/series/${item.file}`);
-      return { data, filename: item.file, color: item.color };
-    });
-    const recommendedSeries = await Promise.all(seriesDataPromises);
+    if (!recommendedSeries || recommendedSeries.length === 0)
+      throw new Error("Recommendations vides ou introuvables.");
 
     track.innerHTML = recommendedSeries.map(renderHeroSlide).join("");
     navContainer.innerHTML = recommendedSeries
@@ -250,71 +222,45 @@ async function initHeroCarousel() {
 // --- LOGIQUE EXISTANTE POUR LES GRILLES DE SÉRIES ---
 
 function renderSeriesCard(series) {
-  if (!series || !series.chapters || !series.title) return "";
+  if (!series || !series.title) return "";
 
-  const seriesSlug = slugify(series.title);
+  const seriesSlug = series.slug;
 
-  const chaptersArray = Object.entries(series.chapters)
-    .map(([chapNum, chapData]) => ({
-      chapter: chapNum,
-      ...chapData,
-      last_updated_ts: parseDateToTimestamp(chapData.last_updated || 0),
-      url:
-        chapData.groups && chapData.groups.Big_herooooo !== ""
-          ? `/${seriesSlug}/${String(chapNum)}`
-          : null,
-    }))
-    .filter((chap) => chap.url)
-    .sort((a, b) => b.last_updated_ts - a.last_updated_ts);
-
-  const hasAnime = series.episodes && series.episodes.length > 0;
-  const lastChapterUrl =
-    chaptersArray.length > 0 ? chaptersArray[0].url : `/${seriesSlug}`;
-  const lastChapterNum =
-    chaptersArray.length > 0 ? chaptersArray[0].chapter : null;
-
-  let lastEpisodeUrl = null;
-  let lastEpisodeNum = null;
-  if (hasAnime && series.episodes.length > 0) {
-    const lastEpisode = [...series.episodes].sort(
-      (a, b) => b.indice_ep - a.indice_ep
-    )[0];
-    if (lastEpisode) {
-      lastEpisodeUrl = `/${seriesSlug}/episodes/${lastEpisode.indice_ep}`;
-      lastEpisodeNum = lastEpisode.indice_ep;
-    }
-  }
+  const lastChapter = series.last_chapter;
+  const lastChapterUrl = `/${seriesSlug}/${lastChapter.number}`;
+  const lastEpisode = series.last_episode;
+  const lastEpisodeUrl = `/${seriesSlug}/episodes/${lastEpisode?.number}`;
 
   let tagsHtml =
     Array.isArray(series.tags) && series.tags.length > 0
       ? `<div class="series-tags">${series.tags
-          .map((t) => `<span class="tag">${t}</span>`)
-          .join("")}</div>`
+        .map((t) => `<span class="tag">${t}</span>`)
+        .join("")}</div>`
       : "";
 
   const imageUrl =
-    series.cover_low || series.cover_hq || "img/placeholder_preview.png";
+    series.cover.url_lq || series.cover.url_hq || "img/placeholder_preview.png";
   const description = series.description || "Pas de description disponible.";
 
   let actionsHtml = "";
-  if (lastChapterNum && lastEpisodeNum) {
+  if (lastChapter && lastEpisode) {
     actionsHtml = `<div class="series-actions">
-      <a href="${lastChapterUrl}" class="series-action-btn">Ch. ${lastChapterNum}</a>
-      <a href="${lastEpisodeUrl}" class="series-action-btn">Ép. ${lastEpisodeNum}</a>
+      <a href="${lastChapterUrl}" class="series-action-btn">Ch. ${lastChapter.number}</a>
+      <a href="${lastEpisodeUrl}" class="series-action-btn">Ép. ${lastEpisode.number}</a>
     </div>`;
-  } else if (lastChapterNum > 0 && !series.os) {
+  } else if (lastChapter.number > 0 && !series.os) {
     actionsHtml = `<div class="series-actions">
-      <a href="${lastChapterUrl}" class="series-action-btn">Dernier chapitre (Ch. ${lastChapterNum})</a>
+      <a href="${lastChapterUrl}" class="series-action-btn">Dernier chapitre (Ch. ${lastChapter.number})</a>
     </div>`;
-  } else if (lastEpisodeNum) {
+  } else if (lastEpisode?.number) {
     actionsHtml = `<div class="series-actions">
-      <a href="${lastEpisodeUrl}" class="series-action-btn">Dernier épisode (Ép. ${lastEpisodeNum})</a>
+      <a href="${lastEpisodeUrl}" class="series-action-btn">Dernier épisode (Ép. ${lastEpisode.number})</a>
     </div>`;
-  } else if (lastChapterNum == 0) {
+  } else if (lastChapter.number == 0) {
     actionsHtml = `<div class="series-actions">
       <a href="${lastChapterUrl}" class="series-action-btn">Lire le One-shot</a>
     </div>`;
-  } else if (lastChapterNum > 0 && series.os) {
+  } else if (lastChapter.number > 0 && series.os) {
     actionsHtml = `<div class="series-actions">
       <a href="/${seriesSlug}" class="series-action-btn">Voir les One-shot</a>
     </div>`;
@@ -322,9 +268,9 @@ function renderSeriesCard(series) {
 
   return `
     <div class="series-card" style="background-image: url('${imageUrl}');" data-url="/${seriesSlug}" data-description="${description.replace(
-      /"/g,
-      "&quot;"
-    )}">
+    /"/g,
+    "&quot;"
+  )}">
       <div class="series-content">
         <h3 class="series-title">${series.title}</h3>
         <div class="series-extra">
@@ -460,20 +406,12 @@ export async function initHomepage() {
   const seriesGridOngoing = qs(".series-grid.on-going");
   const seriesGridOneShot = qs(".series-grid.one-shot");
 
-  await initHeroCarousel();
-
   try {
     const allSeries = await fetchAllSeriesData();
-    if (!Array.isArray(allSeries) || allSeries.length === 0) {
-      if (seriesGridOngoing)
-        seriesGridOngoing.innerHTML = "<p>Aucune série en cours.</p>";
-      if (seriesGridOneShot)
-        seriesGridOneShot.innerHTML = "<p>Aucun One-shot.</p>";
-      return;
-    }
+    initHeroCarousel(allSeries);
 
     if (seriesGridOngoing) {
-      const onGoingSeries = allSeries.filter((s) => s && !s.os);
+      const onGoingSeries = allSeries.series;
       seriesGridOngoing.innerHTML =
         onGoingSeries.length > 0
           ? onGoingSeries.map(renderSeriesCard).join("")
@@ -481,7 +419,7 @@ export async function initHomepage() {
     }
 
     if (seriesGridOneShot) {
-      const oneShots = allSeries.filter((s) => s && s.os);
+      const oneShots = allSeries.os;
       seriesGridOneShot.innerHTML =
         oneShots.length > 0
           ? oneShots.map(renderSeriesCard).join("")

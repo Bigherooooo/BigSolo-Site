@@ -1,8 +1,4 @@
 {
-  "ENV": "LOCAL_DEV",
-  "URL_GIT_CUBARI": "https://api.github.com/repos/Bigherooooo/Cubari/contents",
-  "URL_RAW_JSON_GITHUB": "raw/Bigherooooo/BigSolo-Site/refs/heads/master/data/series/",
-  "URL_API_IMGCHEST": "/api/imgchest-chapter-pages",
   "LOCAL_SERIES_FILES": [
     "Kaoru-Hana-wa-Rin-to-Saku.json",
     "Wakaba-sanchi-no-Aoi-Koi.json",
