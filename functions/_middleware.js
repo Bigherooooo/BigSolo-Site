@@ -57,10 +57,6 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
 
-  if (url.pathname.startsWith("/data/") && url.pathname.endsWith(".json")) {
-    return new Response("Not Found", { status: 404 });
-  }
-
   const knownPrefixes = [
     "/css/",
     "/js/",
@@ -196,8 +192,9 @@ export async function onRequest(context) {
       url.origin
     ).toString();
 
-    let alternativeTitles = (seriesData.alternative_titles || []);
-    alternativeTitles = alternativeTitles.length > 0 ? ` (${alternativeTitles.join(", ")})` : "";
+    let alternativeTitles = seriesData.alternative_titles || [];
+    alternativeTitles =
+      alternativeTitles.length > 0 ? ` (${alternativeTitles.join(", ")})` : "";
 
     const isChapterRoute =
       (pathSegments.length === 2 || pathSegments.length === 3) &&
@@ -208,12 +205,16 @@ export async function onRequest(context) {
       if (seriesData.chapters[chapterNumber]) {
         const metaData = {
           title: `Chapitre ${chapterNumber} VF | ${seriesData.title} – BigSolo`,
-          description: `Lisez le chapitre ${chapterNumber} de ${seriesData.title} ${seriesData.alternative_titles?.join(", ")} en VF. ${seriesData.description}`,
+          description: `Lisez le chapitre ${chapterNumber} de ${
+            seriesData.title
+          } ${seriesData.alternative_titles?.join(", ")} en VF. ${
+            seriesData.description
+          }`,
           image: ogImageUrl,
         };
-        
+
         if (seriesData.os) {
-          metaData.title = `${seriesData.chapters[chapterNumber].title} VF | ${seriesData.title} – BigSolo`
+          metaData.title = `${seriesData.chapters[chapterNumber].title} VF | ${seriesData.title} – BigSolo`;
         }
 
         const assetUrl = new URL("/templates/MangaReader.html", url.origin);
@@ -237,7 +238,8 @@ export async function onRequest(context) {
       }
     }
 
-    const isEpisodeRoute = pathSegments.length > 1 && pathSegments[1] === "episodes";
+    const isEpisodeRoute =
+      pathSegments.length > 1 && pathSegments[1] === "episodes";
 
     if (isEpisodeRoute) {
       if (pathSegments.length === 3) {
@@ -252,13 +254,21 @@ export async function onRequest(context) {
         if (currentEpisode) {
           const animeInfo = seriesData.anime?.[0];
 
-          const seasonText = currentEpisode.saison_ep && Math.max(seriesData.episodes.map(ep => ep.saison_ep || 1)) > 1 ? `S${currentEpisode.saison_ep}, ` : "";
+          const seasonText =
+            currentEpisode.saison_ep &&
+            Math.max(seriesData.episodes.map((ep) => ep.saison_ep || 1)) > 1
+              ? `S${currentEpisode.saison_ep}, `
+              : "";
 
           const metaData = {
-            title: `${seasonText}${seasonText ? "Ép." : "Épisode"} ${currentEpisode.indice_ep} | ${seriesData.title} VOSTFR – BigSolo`,
-            description: `Regardez l'épisode ${currentEpisode.indice_ep
-              } de la saison ${currentEpisode.saison_ep || 1} de l'anime ${seriesData.title
-              }${alternativeTitles} en VOSTFR.`,
+            title: `${seasonText}${seasonText ? "Ép." : "Épisode"} ${
+              currentEpisode.indice_ep
+            } | ${seriesData.title} VOSTFR – BigSolo`,
+            description: `Regardez l'épisode ${
+              currentEpisode.indice_ep
+            } de la saison ${currentEpisode.saison_ep || 1} de l'anime ${
+              seriesData.title
+            }${alternativeTitles} en VOSTFR.`,
             image: animeInfo?.cover_an || ogImageUrl,
           };
 

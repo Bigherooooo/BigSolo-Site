@@ -7,16 +7,33 @@ import {
 } from "../../../utils/interactions.js";
 
 /**
+ * Convertit une couleur HEX en une chaîne de valeurs R, G, B.
+ * @param {string} hex - La couleur au format #RRGGBB.
+ * @returns {string} Une chaîne comme "255, 100, 50".
+ */
+function hexToRgb(hex) {
+  if (!hex) return "128,128,128"; // Gris par défaut si la couleur est invalide
+  let c = hex.substring(1).split("");
+  if (c.length === 3) {
+    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+  }
+  c = "0x" + c.join("");
+  return [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",");
+}
+
+/**
  * Affiche l'ensemble des informations principales de la série (partie haute).
  * @param {HTMLElement} viewContainer - L'élément conteneur principal de la vue.
  * @param {object} seriesData - Les données complètes de la série.
  * @param {object} seriesStats - Les statistiques d'interaction de la série.
+ * @param {object|null} teamsData - Les données de toutes les équipes.
  * @param {'manga' | 'anime'} viewType - Le type de vue à rendre ('manga' ou 'anime').
  */
 export function renderSeriesInfo(
   viewContainer,
   seriesData,
   seriesStats,
+  teamsData,
   viewType
 ) {
   console.log(
@@ -26,9 +43,15 @@ export function renderSeriesInfo(
   const animeData = seriesData.anime?.[0];
 
   renderBannerAndCover(viewContainer, seriesData, viewType);
-  renderTitlesAndTags(viewContainer, seriesData, animeData, viewType);
+  renderTitlesAndTags(
+    viewContainer,
+    seriesData,
+    animeData,
+    teamsData,
+    viewType
+  );
   renderCreatorInfo(viewContainer, seriesData, animeData, viewType);
-  renderDescription(viewContainer, seriesData, viewType);
+  renderDescription(viewContainer, seriesData, teamsData, viewType);
   renderRatingComponent(viewContainer, seriesData, seriesStats);
 
   if (viewType === "anime") {
@@ -43,7 +66,8 @@ function renderBannerAndCover(container, seriesData, viewType) {
   const coverImg = qs(".detail-cover", container);
   const seriesSlug = seriesData.slug;
 
-  const mangaCoverUrl = seriesData.covers[0].url_hq || seriesData.covers[0].url_lq;
+  const mangaCoverUrl =
+    seriesData.covers[0].url_hq || seriesData.covers[0].url_lq;
 
   let primaryCoverUrl;
 
@@ -80,7 +104,13 @@ function renderBannerAndCover(container, seriesData, viewType) {
   }
 }
 
-function renderTitlesAndTags(container, seriesData, animeData, viewType) {
+function renderTitlesAndTags(
+  container,
+  seriesData,
+  animeData,
+  teamsData,
+  viewType
+) {
   const data = viewType === "anime" ? animeData : seriesData;
 
   const jpTitleElem = qs(".detail-jp-title", container);
@@ -91,9 +121,27 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
 
   const tagsDiv = qs(".detail-tags", container);
   if (tagsDiv) {
-    tagsDiv.innerHTML = (data.tags || [])
+    // Création du tag pour l'équipe active
+    let teamTagsHtml = "";
+    if (viewType === "manga" && teamsData && Array.isArray(seriesData.teams)) {
+      const activeTeams = seriesData.teams.filter((team) => team.active);
+      teamTagsHtml = activeTeams
+        .map((teamRef) => {
+          const teamInfo = teamsData[teamRef.id];
+          if (!teamInfo) return "";
+          const teamColor = teamInfo.color || "#808080";
+          const teamColorRgb = hexToRgb(teamColor);
+          return `<span class="detail-tag" style="background-color: rgba(${teamColorRgb}, 0.2); border-color: rgba(${teamColorRgb}, 0.4); color: ${teamColor};"><i class="fa-solid fa-users"></i> ${teamInfo.name}</span>`;
+        })
+        .join("");
+    }
+
+    // Ajout des tags de genre
+    const genreTagsHtml = (data.tags || [])
       .map((tag) => `<span class="detail-tag">${tag}</span>`)
       .join("");
+
+    tagsDiv.innerHTML = teamTagsHtml + genreTagsHtml;
   }
 
   const statusElem = qs(".status-indicator", container);
@@ -117,7 +165,9 @@ function renderTitlesAndTags(container, seriesData, animeData, viewType) {
       (viewType === "anime" && animeData
         ? animeData.date_start
         : seriesData.release_year) || "";
-    statusElem.innerHTML = `<span class="status-dot ${statusClass}"></span>${statusText} ${dateText ? `- ${dateText}` : ""}`;
+    statusElem.innerHTML = `<span class="status-dot ${statusClass}"></span>${statusText} ${
+      dateText ? `- ${dateText}` : ""
+    }`;
   }
 
   const yearElem = qs(".release-year", container);
@@ -142,9 +192,6 @@ function renderCreatorInfo(container, seriesData, animeData, viewType) {
       seriesData.author === seriesData.artist
     ) {
       metaElem.innerHTML = `Auteur & Artiste : ${seriesData.author}`;
-      if (seriesData.teams) {
-        metaElem.innerHTML += `<br>Traduction : ${seriesData.teams.join(", ")}`;
-      }
     } else {
       metaElem.innerHTML = `Auteur : ${
         seriesData.author || "?"
@@ -155,8 +202,7 @@ function renderCreatorInfo(container, seriesData, animeData, viewType) {
   }
 }
 
-// - Debut modification (Fonction entièrement réécrite)
-function renderDescription(container, seriesData, viewType) {
+function renderDescription(container, seriesData, teamsData, viewType) {
   const animeData = seriesData.anime?.[0];
   const descData = viewType === "anime" ? animeData : seriesData;
 
@@ -169,32 +215,51 @@ function renderDescription(container, seriesData, viewType) {
   const btnRow = qs(".series-see-more-row", container);
   const moreInfos = qs(".series-more-infos", container);
 
-  // Si la vue est 'anime', on cache toute la section "plus d'infos" (bouton et contenu).
   if (viewType === "anime") {
     if (btnRow) btnRow.style.display = "none";
     if (moreInfos) moreInfos.style.display = "none";
   } else {
-    // Si la vue est 'manga', on s'assure que le bouton est visible
-    // et on se contente de remplir le contenu. L'accordéon JS/CSS gère le reste.
     if (btnRow) btnRow.style.display = "flex";
     if (moreInfos) {
       const altTitles = (seriesData.alternative_titles || []).join(", ");
+
+      let teamsListHtml = "";
+      if (
+        teamsData &&
+        Array.isArray(seriesData.teams) &&
+        seriesData.teams.length > 0
+      ) {
+        const allTeamDetails = seriesData.teams
+          .map((teamRef) => {
+            const teamInfo = teamsData[teamRef.id];
+            if (!teamInfo) return null; // Filtre les cas où une team n'existerait plus
+            const statusText = teamRef.active ? "(active)" : "(inactive)";
+            return `${teamInfo.name} ${statusText}`;
+          })
+          .filter(Boolean) // Retire les éventuels résultats nuls
+          .join(", ");
+
+        const label = seriesData.teams.length > 1 ? "Teams :" : "Team :";
+        if (allTeamDetails) {
+          teamsListHtml = `<div><strong>${label}</strong> ${allTeamDetails}</div>`;
+        }
+      }
+
       moreInfos.innerHTML = `
-              <div><strong>Type / Démographie :</strong> ${seriesData.demographic || "?"}</div>
-              <div><strong>Magazine :</strong> ${
-                seriesData.magazine || "?"
-              }</div>
-              <div><strong>Titres alternatifs :</strong> ${
-                altTitles || "—"
-              }</div>
-            `;
+        <div><strong>Type / Démographie :</strong> ${
+          seriesData.demographic || "?"
+        }</div>
+        <div><strong>Magazine :</strong> ${seriesData.magazine || "?"}</div>
+        <div><strong>Titres alternatifs :</strong> ${altTitles || "—"}</div>
+        ${teamsListHtml}
+      `;
     }
   }
 }
-// - Fin modification
 
 function renderOpEdButtons(container, animeData) {
-  if (!animeData || (!animeData.op_an && !animeData.ed_an)) return;
+  if (!animeData || (!animeData.musics?.opening && !animeData.musics?.ending))
+    return;
 
   const actionsContainer = qs("#reading-actions-container", container);
   if (!actionsContainer) return;
@@ -202,26 +267,27 @@ function renderOpEdButtons(container, animeData) {
   const opEdWrapper = document.createElement("div");
   opEdWrapper.className = "op-ed-buttons-wrapper";
 
-  const createButton = (item, type, index) => {
+  const createButton = (item, type, index, total) => {
     const btn = document.createElement("a");
-    btn.href = item.youtube_url_op_an;
+    btn.href = item.youtube;
     btn.target = "_blank";
     btn.rel = "noopener noreferrer";
     btn.className = "detail-action-btn op-ed-btn";
-    btn.title = `${item.title_op_fr_an} - ${item.author_op_an}`;
+    btn.title = `${item.title} - ${item.artist}`;
     btn.innerHTML = `<i class="fab fa-youtube"></i> ${type} ${
-      (animeData.op_an.length > 1 || animeData.ed_an.length > 1) && index > 0
-        ? index + 1
-        : ""
+      total > 1 ? index + 1 : ""
     }`;
     return btn;
   };
 
-  (animeData.op_an || []).forEach((op, i) =>
-    opEdWrapper.appendChild(createButton(op, "Opening", i))
+  const openings = animeData.musics?.opening || [];
+  const endings = animeData.musics?.ending || [];
+
+  openings.forEach((op, i) =>
+    opEdWrapper.appendChild(createButton(op, "Opening", i, openings.length))
   );
-  (animeData.ed_an || []).forEach((ed, i) =>
-    opEdWrapper.appendChild(createButton(ed, "Ending", i))
+  endings.forEach((ed, i) =>
+    opEdWrapper.appendChild(createButton(ed, "Ending", i, endings.length))
   );
 
   actionsContainer.appendChild(opEdWrapper);

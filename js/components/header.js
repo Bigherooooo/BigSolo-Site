@@ -345,7 +345,8 @@ async function preloadHistoryData() {
     "[Action Log] Démarrage du préchargement des données de l'historique..."
   );
   try {
-    const allSeries = await fetchAllSeriesData();
+    const allSeriesObject = await fetchAllSeriesData();
+    const allSeries = [...allSeriesObject.series, ...allSeriesObject.os];
     const historyData = {};
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -546,7 +547,5 @@ export function initHeader() {
     updateAllNavigation();
   });
 }
-
-// - Fin modification
 
 export { setupMobileMenuInteractions };

@@ -3,6 +3,8 @@
 import { qs, qsa, slugify } from "../../utils/domUtils.js";
 import { timeAgo, parseDateToTimestamp } from "../../utils/dateUtils.js";
 import { initMainScrollObserver } from "../../components/observer.js";
+import { fetchData } from "../../utils/fetchUtils.js";
+
 import {
   queueAction,
   getLocalInteractionState,
@@ -31,6 +33,93 @@ let viewContainer = null;
 let resizeObserver = null; // Pour pouvoir le déconnecter plus tard
 
 /**
+ * Gère le tooltip d'information des équipes sur les cartes de chapitre.
+ * @param {object} teamsData - L'objet contenant les informations de toutes les équipes.
+ */
+function setupChapterCardTooltip(teamsData) {
+  const tooltip = qs("#chapter-card-tooltip");
+  if (!tooltip) return;
+
+  let showTimer = null;
+  let activeCard = null;
+  let lastMouseEvent = null;
+
+  function showTooltip(card) {
+    const chapterId = card.dataset.chapterId;
+    const chapterData = currentSeriesData.chapters[chapterId];
+
+    if (!chapterData || !chapterData.teams || chapterData.teams.length === 0) {
+      return; // Ne rien afficher si pas d'info de team
+    }
+
+    // Mapper les IDs des teams à leurs noms complets
+    const teamNames = chapterData.teams
+      .map((teamId) => teamsData[teamId]?.name)
+      .filter(Boolean) // Filtrer les noms non trouvés
+      .join(", ");
+
+    if (!teamNames) return;
+
+    // Construire le contenu du tooltip
+    tooltip.innerHTML = `<strong>Team${
+      chapterData.teams.length > 1 ? "s" : ""
+    }&nbsp;:</strong> ${teamNames}`;
+    tooltip.classList.add("visible");
+
+    if (lastMouseEvent) {
+      positionTooltip(lastMouseEvent);
+    }
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove("visible");
+    activeCard = null;
+    if (showTimer) {
+      clearTimeout(showTimer);
+      showTimer = null;
+    }
+  }
+
+  function positionTooltip(e) {
+    const tooltipRect = tooltip.getBoundingClientRect();
+    let left = e.clientX + 20; // Décalage de 20px à droite du curseur
+    let top = e.clientY + 20; // Décalage de 20px en dessous du curseur
+
+    if (left + tooltipRect.width > window.innerWidth - 10) {
+      left = window.innerWidth - tooltipRect.width - 10;
+    }
+    if (top + tooltipRect.height > window.innerHeight - 10) {
+      top = window.innerHeight - tooltipRect.height - 10;
+    }
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+  }
+
+  // Écouteur global pour la position
+  document.addEventListener("mousemove", (e) => {
+    lastMouseEvent = e;
+    if (activeCard && tooltip.classList.contains("visible")) {
+      positionTooltip(e);
+    }
+  });
+
+  // Attacher les écouteurs aux cartes
+  qsa(".chapter-card-list-item", viewContainer).forEach((card) => {
+    card.addEventListener("mouseenter", (e) => {
+      lastMouseEvent = e;
+      if (showTimer) clearTimeout(showTimer);
+      showTimer = setTimeout(() => {
+        activeCard = card;
+        showTooltip(card);
+      }, 600); // Délai de 600ms
+    });
+
+    card.addEventListener("mouseleave", hideTooltip);
+    card.addEventListener("mousedown", hideTooltip);
+  });
+}
+
+/**
  * Point d'entrée pour le rendu de la vue Manga.
  * @param {HTMLElement} mainContainer - L'élément <main> de la page.
  * @param {object} seriesData - Les données de la série.
@@ -47,19 +136,22 @@ export async function render(mainContainer, seriesData) {
 
   // 1. Lancer le chargement des statistiques en arrière-plan
   const statsPromise = fetchStats(currentSeriesData.slug);
+  const teamsPromise = fetchData("/data/teams.json");
 
   // 2. Rendre les informations statiques de la série et les boutons d'action immédiatement
-  renderSeriesInfo(viewContainer, currentSeriesData, {}, "manga");
+  renderSeriesInfo(viewContainer, currentSeriesData, {}, null, "manga"); // teamsData est null pour le premier rendu
   renderActionButtons(viewContainer, currentSeriesData, "manga");
 
-  // 3. Attendre que les statistiques soient récupérées
+  // 3. Attendre que les statistiques et les données des teams soient récupérées
   currentSeriesStats = await statsPromise;
+  const teamsData = await teamsPromise;
 
-  // 4. Mettre à jour l'interface avec les statistiques (notes, etc.)
+  // 4. Mettre à jour l'interface avec les statistiques et les noms des teams
   renderSeriesInfo(
     viewContainer,
     currentSeriesData,
     currentSeriesStats,
+    teamsData,
     "manga"
   );
 
@@ -94,6 +186,7 @@ export async function render(mainContainer, seriesData) {
   }
 
   // 9. Initialiser les fonctionnalités avancées
+  setupChapterCardTooltip(teamsData);
   setupResponsiveLayout(viewContainer);
   preloadAllImgChestViewsOnce();
   initCoverGallery(viewContainer, currentSeriesData);

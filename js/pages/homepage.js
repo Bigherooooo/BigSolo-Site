@@ -33,9 +33,42 @@ function truncateText(text, maxLength) {
 
 // --- LOGIQUE DU HERO CAROUSEL ---
 
-function renderHeroSlide(series) {
-  const heroColorRgb = hexToRgb(series.color);
+function renderHeroSlide(series, teamsData) {
+  // On utilise la couleur de la recommandation comme couleur principale
+  const heroColor = series.color;
+  const heroColorRgb = hexToRgb(heroColor);
   const seriesSlug = series.slug;
+
+  // Création des tags pour la/les équipe(s) active(s)
+  let teamTagsHtml = "";
+  if (
+    series.teams &&
+    Array.isArray(series.teams) &&
+    series.teams.length > 0 &&
+    teamsData
+  ) {
+    let activeTeams = [];
+    const firstTeamElement = series.teams[0];
+
+    // On s'assure de gérer les deux formats de données pour `teams`
+    if (typeof firstTeamElement === "string") {
+      // Ancien format: ["Big_herooooo"], on considère toutes les équipes comme actives
+      activeTeams = series.teams.map((id) => ({ id }));
+    } else if (typeof firstTeamElement === "object" && firstTeamElement.id) {
+      // Nouveau format: [{ id: "...", active: true }], on filtre sur la propriété 'active'
+      activeTeams = series.teams.filter((team) => team.active);
+    }
+
+    // On génère un tag pour chaque équipe active trouvée
+    teamTagsHtml = activeTeams
+      .map((teamRef) => {
+        const teamInfo = teamsData[teamRef.id];
+        if (!teamInfo) return "";
+        // On utilise la couleur de la recommandation (heroColor) pour le style
+        return `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${heroColor};"><i class="fa-solid fa-users"></i> ${teamInfo.name}</span>`;
+      })
+      .join("");
+  }
 
   let latestChapter = series.last_chapter;
   let latestEpisode = series.last_episode;
@@ -50,7 +83,9 @@ function renderHeroSlide(series) {
     } else {
       desktopChapterButtonHtml = `<a href="/${seriesSlug}/${String(
         latestChapter.number
-      )}" class="hero-cta-button">Dernier chapitre (Ch. ${latestChapter.number})</a>`;
+      )}" class="hero-cta-button">Dernier chapitre (Ch. ${
+        latestChapter.number
+      })</a>`;
     }
   }
   let desktopEpisodeButtonHtml = "";
@@ -95,12 +130,11 @@ function renderHeroSlide(series) {
     ? series.description.replace(/"/g, "&quot;")
     : "Aucune description.";
 
-  const typeTag = series.os
-    ? `<span class="tag" style="background-color: rgba(${heroColorRgb}, 0.25); border-color: rgba(${heroColorRgb}, 0.5); color: ${series.color};">One-shot</span>`
-    : "";
-
+  const typeTag = series.os ? `<span class="tag">One-shot</span>` : "";
   return `
-    <div class="hero-slide" style="--bg-image: url('${backgroundImageUrl}'); --hero-color: ${series.color}; --hero-color-rgb: ${heroColorRgb};">
+    <div class="hero-slide" style="--bg-image: url('${backgroundImageUrl}'); --hero-color: ${
+    series.color
+  }; --hero-color-rgb: ${heroColorRgb};">
       <div class="hero-slide-content">
         <div class="hero-info">
           <div class="hero-info-top">
@@ -109,11 +143,12 @@ function renderHeroSlide(series) {
               <h2 class="hero-series-title">${series.title}</h2>
             </a>
             <div class="hero-tags">
+              ${teamTagsHtml}
               ${typeTag}
               ${(series.tags || [])
-      .slice(0, 4)
-      .map((tag) => `<span class="tag">${tag}</span>`)
-      .join("")}
+                .slice(0, 4)
+                .map((tag) => `<span class="tag">${tag}</span>`)
+                .join("")}
             </div>
             <div class="hero-mobile-status mobile-only">
               ${mobileStatusHtml}
@@ -128,7 +163,9 @@ function renderHeroSlide(series) {
           </div>
         </div>
         <div class="hero-image">
-          <img src="${series.character_image}" alt="${series.title}" onerror="this.style.display='none'">
+          <img src="${series.character_image}" alt="${
+    series.title
+  }" onerror="this.style.display='none'">
         </div>
       </div>
     </div>
@@ -142,13 +179,18 @@ async function initHeroCarousel(allSeries) {
   const nextBtn = qs(".hero-carousel-arrow.next");
   const prevBtn = qs(".hero-carousel-arrow.prev");
 
+  // Charger les données des teams
+  const teamsData = await fetchData("/data/teams.json");
+
   if (!track || !navContainer || !nextBtn || !prevBtn) return;
 
   try {
     if (!recommendedSeries || recommendedSeries.length === 0)
       throw new Error("Recommendations vides ou introuvables.");
 
-    track.innerHTML = recommendedSeries.map(renderHeroSlide).join("");
+    track.innerHTML = recommendedSeries
+      .map((series) => renderHeroSlide(series, teamsData))
+      .join("");
     navContainer.innerHTML = recommendedSeries
       .map(
         (_, index) => `<div class="hero-nav-dot" data-index="${index}"></div>`
@@ -190,6 +232,10 @@ async function initHeroCarousel(allSeries) {
       autoPlayInterval = setInterval(next, 7500);
     }
 
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
     nextBtn.addEventListener("click", () => {
       next();
       stopAutoPlay();
@@ -221,7 +267,7 @@ async function initHeroCarousel(allSeries) {
 
 // --- LOGIQUE EXISTANTE POUR LES GRILLES DE SÉRIES ---
 
-function renderSeriesCard(series) {
+function renderSeriesCard(series, teamsData) {
   if (!series || !series.title) return "";
 
   const seriesSlug = series.slug;
@@ -231,12 +277,36 @@ function renderSeriesCard(series) {
   const lastEpisode = series.last_episode;
   const lastEpisodeUrl = `/${seriesSlug}/episodes/${lastEpisode?.number}`;
 
-  let tagsHtml =
+  // Logique pour créer les tags des équipes actives avec leurs couleurs
+  let teamTagsHtml = "";
+  if (teamsData && Array.isArray(series.teams) && series.teams.length > 0) {
+    let activeTeams = [];
+    const firstTeamElement = series.teams[0];
+
+    if (typeof firstTeamElement === "string") {
+      activeTeams = series.teams.map((id) => ({ id }));
+    } else if (typeof firstTeamElement === "object" && firstTeamElement.id) {
+      activeTeams = series.teams.filter((team) => team.active);
+    }
+
+    teamTagsHtml = activeTeams
+      .map((teamRef) => {
+        const teamInfo = teamsData[teamRef.id];
+        if (!teamInfo) return "";
+        const teamColor = teamInfo.color || "#808080";
+        const teamColorRgb = hexToRgb(teamColor);
+        return `<span class="tag" style="background-color: rgba(${teamColorRgb}, 0.2); border-color: rgba(${teamColorRgb}, 0.4); color: ${teamColor};"><i class="fa-solid fa-users"></i> ${teamInfo.name}</span>`;
+      })
+      .join("");
+  }
+
+  // Logique pour les tags de genre
+  let genreTagsHtml =
     Array.isArray(series.tags) && series.tags.length > 0
-      ? `<div class="series-tags">${series.tags
-        .map((t) => `<span class="tag">${t}</span>`)
-        .join("")}</div>`
+      ? series.tags.map((t) => `<span class="tag">${t}</span>`).join("")
       : "";
+
+  const tagsHtml = teamTagsHtml + genreTagsHtml;
 
   const imageUrl =
     series.cover.url_lq || series.cover.url_hq || "img/placeholder_preview.png";
@@ -274,7 +344,7 @@ function renderSeriesCard(series) {
       <div class="series-content">
         <h3 class="series-title">${series.title}</h3>
         <div class="series-extra">
-          ${tagsHtml}
+          <div class="series-tags">${tagsHtml}</div>
           ${actionsHtml}
         </div>
       </div>
@@ -408,13 +478,17 @@ export async function initHomepage() {
 
   try {
     const allSeries = await fetchAllSeriesData();
+    const teamsData = await fetchData("/data/teams.json"); // Chargement des données des teams
+
     initHeroCarousel(allSeries);
 
     if (seriesGridOngoing) {
       const onGoingSeries = allSeries.series;
       seriesGridOngoing.innerHTML =
         onGoingSeries.length > 0
-          ? onGoingSeries.map(renderSeriesCard).join("")
+          ? onGoingSeries
+              .map((series) => renderSeriesCard(series, teamsData))
+              .join("") // Passer teamsData ici
           : "<p>Aucune série en cours.</p>";
     }
 
@@ -422,7 +496,9 @@ export async function initHomepage() {
       const oneShots = allSeries.os;
       seriesGridOneShot.innerHTML =
         oneShots.length > 0
-          ? oneShots.map(renderSeriesCard).join("")
+          ? oneShots
+              .map((series) => renderSeriesCard(series, teamsData))
+              .join("") // Passer teamsData ici
           : "<p>Aucun One-shot.</p>";
     }
 

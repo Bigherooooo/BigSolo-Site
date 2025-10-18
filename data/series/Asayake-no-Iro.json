@@ -17,16 +17,12 @@
   "alternative_titles": ["The Colour of Sunrise", "The Colour of Sunrise"],
   "status": "Fini",
   "os": true,
-  "teams": [
-    "Big_herooooo"
-  ],
+  "teams": [{ "id": "Big_herooooo", "active": true }],
   "chapters": {
     "0": {
       "title": "Les nuances de l'aube",
       "timestamp": 1711922400,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "6eyr9qpgeyp"

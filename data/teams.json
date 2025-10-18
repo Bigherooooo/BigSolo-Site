@@ -1,23 +1,29 @@
 {
-    "Big_herooooo": {
-        "name": "Big_herooooo"
-    },
-    "MaisonOS": {
-        "name": "La maison des OS",
-        "short": "OS"
-    },
-    "BigSolo": {
-        "name": "BigSolo"
-    },
-    "BlueSolo": {
-        "name": "Blue Solo",
-        "short": "BS"
-    },
-    "apix": {
-        "name": "apix"
-    },
-    "IsekaiMonarchy": {
-        "name": "Isekai Monarchy",
-        "short": "IM"
-    }
+  "Big_herooooo": {
+    "name": "Big_herooooo",
+    "color": "#F3A683"
+  },
+  "MaisonOS": {
+    "name": "La maison des OS",
+    "short": "OS",
+    "color": "#574B90"
+  },
+  "BigSolo": {
+    "name": "BigSolo",
+    "color": "#ff6b6b"
+  },
+  "BlueSolo": {
+    "name": "Blue Solo",
+    "short": "BS",
+    "color": "#3B82F6"
+  },
+  "apix": {
+    "name": "apix",
+    "color": "#6AB04C"
+  },
+  "IsekaiMonarchy": {
+    "name": "Isekai Monarchy",
+    "short": "IM",
+    "color": "#F9A825"
+  }
 }

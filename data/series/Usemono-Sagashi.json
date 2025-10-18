@@ -17,16 +17,12 @@
   "alternative_titles": ["The Hunt for the Usemono"],
   "status": "Fini",
   "os": true,
-  "teams": [
-    "Big_herooooo"
-  ],
+  "teams": [{ "id": "Big_herooooo", "active": true }],
   "chapters": {
     "0": {
       "title": "Usemono Sagashi",
       "timestamp": 1722204000,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "wl7lgnekpyx"

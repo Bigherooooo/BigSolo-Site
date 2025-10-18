@@ -8,9 +8,15 @@
   "release_year": 2024,
   "tags": ["Romance", "Comédie", "Ecole", "Tranche de vie"],
   "ja_title": "若葉さんちの青い恋",
-  "alternative_titles": ["The Wakaba Home's Blue Loves", "Wakaba-san'chi no Aoi Koi"],
+  "alternative_titles": [
+    "The Wakaba Home's Blue Loves",
+    "Wakaba-san'chi no Aoi Koi"
+  ],
   "status": "En cours",
-  "teams": ["BigSolo"],
+  "teams": [
+    { "id": "Big_herooooo", "active": true },
+    { "id": "BigSolo", "active": true }
+  ],
   "covers": [
     {
       "url_hq": "https://cdn.imgchest.com/files/fe2eb5371538.jpg",
@@ -33,9 +39,7 @@
       "title": "Les quatre sœurs et leur premier amour",
       "volume": "1",
       "timestamp": 1747094400,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "ljyqxjeoo42"
@@ -45,9 +49,7 @@
       "title": "Je veux savoir",
       "volume": "1",
       "timestamp": 1747094401,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "vj4jkxjb278"
@@ -57,9 +59,7 @@
       "title": "Mauvais perdant",
       "volume": "1",
       "timestamp": 1747094402,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "wl7lgndbpyx"
@@ -69,9 +69,7 @@
       "title": "Être franche",
       "volume": "1",
       "timestamp": 1751486400,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "n87wxjvxbyx"
@@ -81,9 +79,7 @@
       "title": "En tête-à-tête",
       "volume": "2",
       "timestamp": 1758466800,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "agyvroaej78"
@@ -93,9 +89,7 @@
       "title": "Si seulement j'osais",
       "volume": "2",
       "timestamp": 1759255200,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "ne7bq88og75"
@@ -105,9 +99,7 @@
       "title": "En vérité",
       "volume": "2",
       "timestamp": 1759589400,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "na7kazkqq48"
@@ -117,9 +109,7 @@
       "title": "Notre moment à nous",
       "volume": "2",
       "timestamp": 1759590000,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "9rydq52dl4k"
@@ -129,9 +119,7 @@
       "title": "Le raccourci",
       "volume": "2",
       "timestamp": 1759766400,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "na7karvg348"

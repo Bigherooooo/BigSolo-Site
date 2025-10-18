@@ -22,29 +22,18 @@
     "Surnaturel"
   ],
   "ja_title": "綺羅星のメリル",
-  "alternative_titles": [
-    "Meryl Of The Glittering Stars"
-  ],
+  "alternative_titles": ["Meryl Of The Glittering Stars"],
   "status": "Fini",
   "os": true,
   "teams": [
-    [
-      "MaisonOS",
-      "Big_herooooo"
-    ],
-    "BlueSolo"
+    { "id": "Big_herooooo", "active": true },
+    { "id": "BlueSolo", "active": false }
   ],
   "chapters": {
     "0": {
       "title": "Kiraboshi no Meryl",
       "timestamp": 1729375200,
-      "teams": [
-        [
-          "MaisonOS",
-          "Big_herooooo"
-        ],
-        "BlueSolo"
-      ],
+      "teams": [["MaisonOS", "Big_herooooo"], "BlueSolo"],
       "source": {
         "service": "imgchest",
         "id": "na7km93eb48"

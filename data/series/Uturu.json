@@ -17,16 +17,12 @@
   "alternative_titles": [""],
   "status": "Fini",
   "os": true,
-  "teams": [
-    "Big_herooooo"
-  ],
+  "teams": [{ "id": "Big_herooooo", "active": true }],
   "chapters": {
     "0": {
       "title": "Uturu",
       "timestamp": 1718481600,
-      "teams": [
-        "Big_herooooo"
-      ],
+      "teams": ["Big_herooooo"],
       "source": {
         "service": "imgchest",
         "id": "ne7bdeomn45"
